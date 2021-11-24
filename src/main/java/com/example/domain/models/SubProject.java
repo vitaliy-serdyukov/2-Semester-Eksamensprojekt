@@ -3,6 +3,7 @@ package com.example.domain.models;
 public class SubProject {
 
   private int subProjectID;
+  private int projectID; // changes here +  in repo?
   private String subProjectName;
   private int hoursTotal;
   private String startDate;
