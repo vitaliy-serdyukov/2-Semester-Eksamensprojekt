@@ -9,6 +9,9 @@ public class User {
   private String companyName;
   private String phoneNumber;
 
+  public User() {
+  }
+
   public User(String email, String password, String firstName, String lastName, String companyName, String phoneNumber) {
     this.email = email;
     this.password = password;
