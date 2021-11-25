@@ -11,15 +11,15 @@ public class UserRepository {
     public void dbWrite(User user)/* throws LoginSampleException*/ {
         try {
             Connection con = DBManager.getConnection();
-            String SQL = "INSERT INTO users (email, password, first_name, last_name, address, age, phone_number)" +
-                    " VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String SQL = "INSERT INTO users (user_email, password, first_name, last_name, company_name, phone_number)" +
+                    " VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, user.getEmail());
             ps.setString(2, user.getPassword());
             ps.setString(3, user.getFirstName());
             ps.setString(4, user.getLastName());
-            ps.setString(6, user.getCompanyName());
-            ps.setString(7, user.getPhoneNumber());
+            ps.setString(5, user.getCompanyName());
+            ps.setString(6, user.getPhoneNumber());
             ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -31,7 +31,7 @@ public class UserRepository {
         User tmp = new User();
         try {
             Connection con = DBManager.getConnection();
-            String SQL = "SELECT * FROM users WHERE (email='" + email + "')";
+            String SQL = "SELECT * FROM users WHERE (user_email='" + email + "')";
             PreparedStatement ps = con.prepareStatement(SQL);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -50,7 +50,7 @@ public class UserRepository {
 
     public ResultSet dbRead() {
         ResultSet resSet = null;
-        String select = "SELECT email, password, first_name, last_name, age, address, phone_number FROM users";
+        String select = "SELECT user_email, password, first_name, last_name, company_name, phone_number FROM users";
         try {
             PreparedStatement ps = DBManager.getConnection().prepareStatement(select);
             resSet = ps.executeQuery();
@@ -62,7 +62,7 @@ public class UserRepository {
 
     public ResultSet getAllUsersFromDB() {
         ResultSet resSet = null;
-        String select = "SELECT email FROM users";
+        String select = "SELECT user_email FROM users";
         try {
             PreparedStatement ps = DBManager.getConnection().prepareStatement(select);
             resSet = ps.executeQuery();

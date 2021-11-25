@@ -7,79 +7,38 @@
     <link rel="stylesheet" href="/css/styling.css" type="text/css">
     <title>Dashboard</title>
 </head>
+
+<header>
+<nav>
+    <ul>
+        <li>
+            <a href="/dashboard">Dashboard</a>
+        </li>
+        <li>
+            <a href="#">Profile</a>
+        </li>
+        <li>
+            <a style="margin-left: 650px" href="/logout"> Logout </a>
+        </li>
+    </ul>
+</nav>
+</header>
 <body>
 
-
-<div class="flex-container">
+<div class="flex-container" style="margin-top: 100px">
 
     <div class="flex-item2-left">
-    </div>
+        <p><b>You have successfully logged in</b></p>
 
+    </div>
     <div class="flex-item2-middle">
-        <p><b> Hello, <span th:text="${userLogged.firstName}"/>! You have successfully logged in</b></p>
-    </div>
+        <p><b>You have successfully logged in</b></p>
 
-    <div class="flex-item2-right" style="text-align: right">
-        <button class="button1" onclick="location.href='/userinfo'" type="button">User info</button>
-        <button class="button1"style="height: 55px;padding-top: 16px; padding-bottom: 0px" onclick="location.href='/logout'" type="button">Logout</button>
+    </div>
+    <div class="flex-item2-right">
+        <p><b>You have successfully logged in</b></p>
+
     </div>
 </div>
-
-
-
-<!--<div class="flex-container">
-
-    <div class="flex-item-left" style="alignment: right">
-        <p style="text-align: left"> Create new Wishlist:</p>
-
-        <form style="border: none" action="#" method="post" th:action="@{/addWishlist}" th:object="${wishlist1}">
-            <table>
-                <thead>
-                <tr>
-                    <th> Wishlist name</th>
-                    <th> Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td><input type="text" th:field="*{wishlistName}"/></td>
-                    <td>
-                        <div class="button-wrapper-right">
-                            <button class="button1" onclick="location.href='/addWishlist'" type="submit">Add Wishlist
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </form>
-    </div>
-
-
-    <div class="flex-item-right" style="text-align: center">
-        <p style="text-align: left">Show available Wishlists:</p>
-
-        <table style="width: 200px">
-            <thead>
-            <tr>
-                <th> Wishlist name</th>
-                <th> Show list</th>
-                <th> Remove list</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="wishlist1 : ${wishlists}">
-                <td th:text="${wishlist1.wishlistName}"></td>
-                <td><a th:href="@{/showWishlist/{wishlistName}(wishlistName=${wishlist1.wishlistName})}">
-                    <img src="/images/eye2.png" alt="Eye">
-                </a></td>
-                <td><a th:href="@{/deleteWishlist/{wishlistName}(wishlistName=${wishlist1.wishlistName})}">
-                    <img src="/images/trashcan.png" alt="Trashcan">
-                </a></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-
-</div>-->
 </body>
 </html>
