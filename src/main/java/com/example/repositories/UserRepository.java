@@ -48,4 +48,28 @@ public class UserRepository {
         return tmp;
     }
 
+    public ResultSet dbRead() {
+        ResultSet resSet = null;
+        String select = "SELECT email, password, first_name, last_name, age, address, phone_number FROM users";
+        try {
+            PreparedStatement ps = DBManager.getConnection().prepareStatement(select);
+            resSet = ps.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resSet;
+    }
+
+    public ResultSet getAllUsersFromDB() {
+        ResultSet resSet = null;
+        String select = "SELECT email FROM users";
+        try {
+            PreparedStatement ps = DBManager.getConnection().prepareStatement(select);
+            resSet = ps.executeQuery();
+        } catch (SQLException e) {   // catches an exception, if we make user number 1
+            e.printStackTrace();
+        }
+        return resSet;
+    }
+
 }

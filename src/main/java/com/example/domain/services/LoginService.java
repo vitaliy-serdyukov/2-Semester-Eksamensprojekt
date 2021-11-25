@@ -1,5 +1,6 @@
 package com.example.domain.services;
 
+import com.example.domain.LoginSampleException;
 import com.example.domain.models.User;
 import com.example.repositories.UserRepository;
 
@@ -39,5 +40,13 @@ public class LoginService {
       e.printStackTrace();
     }
     return false;
+  }
+
+  public User findUserByEmail(String email) {
+    return userRepository.returnUserByEmail(email);
+  }
+
+  public void createUser(User user) throws LoginSampleException {
+    userRepository.dbWrite(user);
   }
 }
