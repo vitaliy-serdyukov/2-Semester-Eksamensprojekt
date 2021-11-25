@@ -61,6 +61,7 @@ import javax.servlet.http.HttpSession;
 
       User userLogged = loginService.findUserByEmail(email);
 
+
       // add attribute to session
       session.setAttribute("userLogged", userLogged);
       model.addAttribute("userLogged", userLogged);
@@ -72,8 +73,8 @@ import javax.servlet.http.HttpSession;
       model.addAttribute("wishlists", wishlists);
       */
 
-
-      Project projectNew = (Project) session.getAttribute("projectNew");
+      Project projectNew = new Project();
+      /*Project projectNew = (Project) session.getAttribute("projectNew");*/
       model.addAttribute("projectNew", projectNew);
      /* Project projectNew = new Project();// ??????
       // Assign model attribute for "wishlist1" object

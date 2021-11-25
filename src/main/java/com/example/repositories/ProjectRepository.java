@@ -1,5 +1,6 @@
 package com.example.repositories;
 
+import com.example.domain.LoginSampleException;
 import com.example.domain.models.Project;
 import com.example.domain.models.User;
 
@@ -9,17 +10,18 @@ public class ProjectRepository {
 
 
   //For inserting a project into the DB.
-  public void dbWrite(Project project) /*throws LoginSampleException*/ {
+  public void writeProject (Project project) throws LoginSampleException {
     try {
       Connection con = DBManager.getConnection();
-      String SQL = "INSERT INTO users (/*email, password, first_name, last_name, address, age, phone_number)" +
-          " VALUES (?, ?, ?, ?, ?, ?, ?*/)";
+      String SQL = "INSERT INTO projects (project_name, category, project_hours_total, project_start_date," +
+          " project_end_date, owner_email, description)" +
+          " VALUES (?, ?, ?, ?, ?, ?, ?)";
       PreparedStatement ps = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
       ps.setString(1, project.getProjectName());
       ps.setString(2, project.getCategory());
       ps.setInt(3, project.getHoursTotal());
-      ps.setString(4, project.getStartDate());
-      ps.setString(5, project.getEndDate());
+      ps.setObject(4, project.getStartDate());
+      ps.setObject(5, project.getEndDate());
       ps.setString(6, project.getOwnerEmail());
       ps.setString(7, project.getDescription());
       ps.executeUpdate();

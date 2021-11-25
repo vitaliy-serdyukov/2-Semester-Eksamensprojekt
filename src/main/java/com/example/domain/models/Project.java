@@ -1,17 +1,20 @@
 package com.example.domain.models;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 public class Project {
 
   private int projectID;
   private String projectName;
   private String category;
   private int hoursTotal;
-  private String startDate;
-  private String endDate;
+  private LocalDate startDate;
+  private LocalDate endDate;
   private String ownerEmail;
   private String description;
 
-  public Project(int projectID, String projectName, String category, int hoursTotal, String startDate, String endDate, String ownerEmail, String description) {
+  public Project(int projectID, String projectName, String category, int hoursTotal, LocalDate startDate, LocalDate endDate, String ownerEmail, String description) {
     this.projectID = projectID;
     this.projectName = projectName;
     this.category = category;
@@ -22,7 +25,7 @@ public class Project {
     this.description = description;
   }
 
-  public Project(String projectName, String category, int hoursTotal, String startDate, String endDate, String ownerEmail, String description) {
+  public Project(String projectName, String category, int hoursTotal, LocalDate startDate, LocalDate endDate, String ownerEmail, String description) {
     this.projectName = projectName;
     this.category = category;
     this.hoursTotal = hoursTotal;
@@ -67,19 +70,19 @@ public class Project {
     this.hoursTotal = hoursTotal;
   }
 
-  public String getStartDate() {
+  public LocalDate getStartDate() {
     return startDate;
   }
 
-  public void setStartDate(String startDate) {
+  public void setStartDate(LocalDate startDate) {
     this.startDate = startDate;
   }
 
-  public String getEndDate() {
+  public LocalDate getEndDate() {
     return endDate;
   }
 
-  public void setEndDate(String endDate) {
+  public void setEndDate(LocalDate endDate) {
     this.endDate = endDate;
   }
 

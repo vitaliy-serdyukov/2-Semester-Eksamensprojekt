@@ -9,6 +9,6 @@ public class ProjectService {
   private ProjectRepository projectRepository = new ProjectRepository();
 
   public void createProject(Project project) throws LoginSampleException {
-    projectRepository.dbWrite(project);
+    projectRepository.writeProject(project);
   }
 }
