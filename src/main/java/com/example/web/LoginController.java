@@ -1,6 +1,7 @@
 package com.example.web;
 
 import com.example.domain.LoginSampleException;
+import com.example.domain.models.Project;
 import com.example.domain.models.User;
 import com.example.domain.services.LoginService;
 import org.springframework.stereotype.Controller;
@@ -33,7 +34,7 @@ import javax.servlet.http.HttpSession;
 
     // gathering data from login form
     @PostMapping("/login")
-    public String loginUser(HttpServletRequest request, Model model) throws LoginSampleException {
+    public String loginUser(HttpServletRequest request) throws LoginSampleException {
       //Retrieve request from session
       HttpSession session = request.getSession();
       //Retrieve values from HTML form via HTTPServletRequest
@@ -69,11 +70,14 @@ import javax.servlet.http.HttpSession;
 
       //  Assign model attribute to arraylist med  items
       model.addAttribute("wishlists", wishlists);
+      */
 
-      Wishlist wishlist1 = new Wishlist();
 
+      Project projectNew = (Project) session.getAttribute("projectNew");
+      model.addAttribute("projectNew", projectNew);
+     /* Project projectNew = new Project();// ??????
       // Assign model attribute for "wishlist1" object
-      model.addAttribute("wishlist1", wishlist1);*/
+      model.addAttribute("projectNew", projectNew);*/
       return "dashboard";
     }
 

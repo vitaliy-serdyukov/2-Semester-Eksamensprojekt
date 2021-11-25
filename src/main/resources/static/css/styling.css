@@ -122,19 +122,23 @@ tr:nth-child(even) {
 
 .flex-item2-left {
     padding: 10px;
-    flex: 25%;
-
-
+    flex: 20%;
+    background-color: darkgray;
+    margin:10px;
 }
 
 .flex-item2-middle {
     padding: 10px;
-    flex: 50%;
+    flex: 45%;
+    background-color: darkgray;
+    margin:10px;
 }
 
 .flex-item2-right {
     padding: 10px;
-    flex: 25%;
+    flex: 20%;
+    background-color: darkgray;
+    margin:10px;
 }
 
 

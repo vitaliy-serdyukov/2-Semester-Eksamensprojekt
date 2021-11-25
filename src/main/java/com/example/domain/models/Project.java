@@ -22,6 +22,19 @@ public class Project {
     this.description = description;
   }
 
+  public Project(String projectName, String category, int hoursTotal, String startDate, String endDate, String ownerEmail, String description) {
+    this.projectName = projectName;
+    this.category = category;
+    this.hoursTotal = hoursTotal;
+    this.startDate = startDate;
+    this.endDate = endDate;
+    this.ownerEmail = ownerEmail;
+    this.description = description;
+  }
+
+  public Project() {
+  }
+
   public int getProjectID() {
     return projectID;
   }
