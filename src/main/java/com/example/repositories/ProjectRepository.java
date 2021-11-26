@@ -2,7 +2,7 @@ package com.example.repositories;
 
 import com.example.domain.LoginSampleException;
 import com.example.domain.models.Project;
-import com.example.domain.models.User;
+
 
 import java.sql.*;
 import java.time.LocalDate;
