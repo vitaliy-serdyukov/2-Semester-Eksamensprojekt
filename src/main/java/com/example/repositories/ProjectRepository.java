@@ -5,6 +5,8 @@ import com.example.domain.models.Project;
 import com.example.domain.models.User;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class ProjectRepository {
 
@@ -31,7 +33,7 @@ public class ProjectRepository {
   }
 
   //For reading a project from DB
-  public ResultSet dbRead() {
+  public ResultSet readProjectsUser() {
     ResultSet resSet = null;
     String select = "/*SELECT email, password, first_name, last_name, age, address, phone_number FROM users*/";
     try {
@@ -43,4 +45,30 @@ public class ProjectRepository {
     return resSet;
   }
 
+
+  public ArrayList<Project> readProjectsUser(String email) {
+    ArrayList<Project> projectsTemp = new ArrayList<>();
+    Project tmp = null;
+    try {
+      Connection con = DBManager.getConnection();
+      String SQL = "SELECT * FROM projects WHERE (owner_email='" + email + "')";
+      PreparedStatement ps = con.prepareStatement(SQL);
+      ResultSet rs = ps.executeQuery();
+      while (rs.next()) {
+        tmp = new Project(rs.getInt(1),
+                          rs.getString(2),
+                          rs.getString(3),
+                          rs.getInt(4),
+                          rs.getObject(5, LocalDate.class),
+                          rs.getObject(6, LocalDate.class),
+                          rs.getString(7),
+                          rs.getString(8));
+        projectsTemp.add(tmp);
+      }
+
+    } catch (SQLException ex) {
+      System.out.println(ex.getMessage());
+    }
+    return projectsTemp;
+  }
 }

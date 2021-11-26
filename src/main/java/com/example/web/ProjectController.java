@@ -56,13 +56,15 @@ public class ProjectController {
       // Make "projectNew" object and assign new values
       Project projectNew = new Project(projectName, projectCategory, hoursTotal, projectStartDate, projectEndDate,
           ownerEmail, projectDescription);
-    System.out.println("This is new project" + projectNew);
 
-    session.setAttribute("projectNew", projectNew);
+
+
     /*model.addAttribute("projectNew", projectNew);// ????*/
 
       // Work + data is delegated to login service
       projectService.createProject(projectNew);
+
+    session.setAttribute("projectNew", projectNew);
 
     // Go to page
     return "redirect:/dashboard";

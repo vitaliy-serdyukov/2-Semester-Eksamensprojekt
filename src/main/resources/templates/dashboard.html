@@ -28,38 +28,41 @@
 <div class="flex-container" style="margin-top: 100px">
 
     <div class="flex-item2-left">
-        <!--<p style="text-align: left">Show available Wishlists:</p>
+        <p style="text-align: left">Show available Projects:</p>
 
-        <table style="width: 200px">
+        <table style="width: 100px">
             <thead>
             <tr>
-                <th> Wishlist name</th>
+                <th> Project name</th>
                 <th> Show list</th>
                 <th> Remove list</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="wishlist1 : ${wishlists}">
-                <td th:text="${wishlist1.wishlistName}"></td>
-                <td><a th:href="@{/showWishlist/{wishlistName}(wishlistName=${wishlist1.wishlistName})}">
+            <tr th:each="projectNew : ${projects}">
+                <td th:text="${projectNew.projectName}"></td>
+                <td></td>
+                <td></td>
+                <!--<td><a th:href="@{/showWishlist/{wishlistName}(wishlistName=${wishlist1.wishlistName})}">
                     <img src="/images/eye2.png" alt="Eye">
                 </a></td>
                 <td><a th:href="@{/deleteWishlist/{wishlistName}(wishlistName=${wishlist1.wishlistName})}">
                     <img src="/images/trashcan.png" alt="Trashcan">
-                </a></td>
+                </a></td>-->
             </tr>
             </tbody>
-        </table>-->
+        </table>
 
     </div>
     <div class="flex-item2-middle">
 
 
         <form style="border: none" action="#" method="post" th:action="@{/addProject}" th:object="${projectNew}">
-            <table>
+            <table style="width:500px">
                 <thead>
                 <tr>
                     <th>Create new project her:</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -93,6 +96,8 @@
                         <button class="button1" onclick="location.href='/addProject'" type="submit">Add Project
                         </button>
                     </div>
+                    </td>
+                    <td>
                     </td>
                 </tr>
                 </tbody>

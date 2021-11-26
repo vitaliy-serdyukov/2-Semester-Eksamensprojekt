@@ -92,10 +92,13 @@ th, td {
 }
 
 
-tr:nth-child(even) {
+/*tr:nth-child(even) {
     background-color: #f2f2f2
-}
+}*/
 
+
+tr { background-color: #f2f2f2
+}
 
 * {
     box-sizing: border-box;
