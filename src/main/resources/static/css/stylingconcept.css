@@ -3,6 +3,7 @@
 /* tyv stjålet fra: https://codepen.io/danzawadzki/pen/EgqKRr*/
 
 html {
+
   background-color: #56baed;
 }
 
@@ -33,6 +34,7 @@ h2 {
 /* STRUCTURE */
 
 .wrapper {
+
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -63,6 +65,7 @@ h2 {
   text-align: center;
   -webkit-border-radius: 0 0 10px 10px;
   border-radius: 0 0 10px 10px;
+
 }
 
 
@@ -83,6 +86,7 @@ h2.active {
 /* FORM TYPOGRAPHY*/
 
 input[type=button], input[type=submit], input[type=reset]  {
+
   background-color: #56baed;
   border: none;
   color: white;
@@ -173,6 +177,7 @@ input[type=text]:placeholder {
 
 /* Simple CSS3 Fade-in-down Animation */
 .fadeInDown {
+
   -webkit-animation-name: fadeInDown;
   animation-name: fadeInDown;
   -webkit-animation-duration: 1s;
@@ -205,6 +210,7 @@ input[type=text]:placeholder {
     -webkit-transform: none;
     transform: none;
   }
+
 }
 
 /* Simple CSS3 Fade-in Animation */
@@ -213,6 +219,7 @@ input[type=text]:placeholder {
 @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
 
 .fadeIn {
+
   opacity:0;
   -webkit-animation:fadeIn ease-in 1;
   -moz-animation:fadeIn ease-in 1;
@@ -249,10 +256,12 @@ input[type=text]:placeholder {
   -webkit-animation-delay: 1s;
   -moz-animation-delay: 1s;
   animation-delay: 1s;
+
 }
 
 /* Simple CSS3 Fade-in Animation */
 .underlineHover:after {
+
   display: block;
   left: 0;
   bottom: -10px;
@@ -276,6 +285,7 @@ input[type=text]:placeholder {
 /* OTHERS */
 
 *:focus {
+
   outline: none;
 }
 
