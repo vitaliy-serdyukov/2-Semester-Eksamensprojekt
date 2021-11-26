@@ -1,5 +1,7 @@
 package com.example.domain.models;
 
+import java.util.ArrayList;
+
 public class User {
 
   private String email;
@@ -8,6 +10,7 @@ public class User {
   private String lastName;
   private String companyName;
   private String phoneNumber;
+  private ArrayList<Project> userProjects = new ArrayList<>();
 
   public User() {
   }
@@ -84,5 +87,13 @@ public class User {
         ", companyName='" + companyName + '\'' +
         ", phoneNumber='" + phoneNumber + '\'' +
         '}';
+  }
+
+  public ArrayList<Project> getUserProjects() {
+    return userProjects;
+  }
+
+  public void setUserProjects(ArrayList<Project> userProjects) {
+    this.userProjects = userProjects;
   }
 }

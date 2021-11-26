@@ -1,8 +1,10 @@
 package com.example.web;
 
 import com.example.domain.LoginSampleException;
+import com.example.domain.models.Project;
 import com.example.domain.models.User;
 import com.example.domain.services.LoginService;
+import com.example.domain.services.ProjectService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -12,6 +14,7 @@ import org.springframework.web.context.request.WebRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 
 @Controller
   public class LoginController {
@@ -33,7 +36,7 @@ import javax.servlet.http.HttpSession;
 
     // gathering data from login form
     @PostMapping("/login")
-    public String loginUser(HttpServletRequest request, Model model) throws LoginSampleException {
+    public String loginUser(HttpServletRequest request) throws LoginSampleException {
       //Retrieve request from session
       HttpSession session = request.getSession();
       //Retrieve values from HTML form via HTTPServletRequest
@@ -60,20 +63,24 @@ import javax.servlet.http.HttpSession;
 
       User userLogged = loginService.findUserByEmail(email);
 
+
       // add attribute to session
       session.setAttribute("userLogged", userLogged);
       model.addAttribute("userLogged", userLogged);
 
-      /*// Call arraylist and sort the wishlists by users email
-      ArrayList<Wishlist> wishlists = wishlistService.findAll(email); // search of wishlist objects by email
+   /*   Call arraylist and sort the wishlists by users email*/
+      ArrayList<Project> projects = new ProjectService().findAll(email); // DATABASE-agtig kodning???
+      //  Assign model attribute to arraylist med  projects
+      model.addAttribute("projects", projects);
+      System.out.println(projects.toString());
 
-      //  Assign model attribute to arraylist med  items
-      model.addAttribute("wishlists", wishlists);
 
-      Wishlist wishlist1 = new Wishlist();
-
+      Project projectNew = new Project();
+      /*Project projectNew = (Project) session.getAttribute("projectNew");*/
+      model.addAttribute("projectNew", projectNew);
+     /* Project projectNew = new Project();// ??????
       // Assign model attribute for "wishlist1" object
-      model.addAttribute("wishlist1", wishlist1);*/
+      model.addAttribute("projectNew", projectNew);*/
       return "dashboard";
     }
 
