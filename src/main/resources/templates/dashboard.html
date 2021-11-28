@@ -34,21 +34,19 @@
             <thead>
             <tr>
                 <th> Project name</th>
-                <th> Show list</th>
-                <th> Remove list</th>
+                <th> Show project</th>
+                <th> Remove project</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="projectNew : ${projects}">
                 <td th:text="${projectNew.projectName}"></td>
-                <td></td>
-                <td></td>
-                <!--<td><a th:href="@{/showWishlist/{wishlistName}(wishlistName=${wishlist1.wishlistName})}">
-                    <img src="/images/eye2.png" alt="Eye">
+                <td><a th:href="@{/showProject/{projectName}(projectName=${projectNew.projectName})}">
+                    <img class="icon" src="/images/eye2.png" alt="Eye">
                 </a></td>
-                <td><a th:href="@{/deleteWishlist/{wishlistName}(wishlistName=${wishlist1.wishlistName})}">
-                    <img src="/images/trashcan.png" alt="Trashcan">
-                </a></td>-->
+                <td><a th:href="@{/deleteProject/{projectName}(projectName=${projectNew.projectName})}">
+                    <img class="icon" src="/images/trashcan.png" alt="Trashcan">
+                </a></td>
             </tr>
             </tbody>
         </table>
@@ -58,7 +56,7 @@
 
 
         <form style="border: none" action="#" method="post" th:action="@{/addProject}" th:object="${projectNew}">
-            <table style="width:500px">
+            <table style="width:350px">
                 <thead>
                 <tr>
                     <th>Create new project her:</th>

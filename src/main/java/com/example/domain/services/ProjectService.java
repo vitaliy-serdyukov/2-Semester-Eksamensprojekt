@@ -17,4 +17,12 @@ public class ProjectService {
   public ArrayList<Project> findAll(String email) {
     return projectRepository.readProjectsUser(email);
   }
+
+  public Project showProjectInfo(String projectName) {
+    return projectRepository.readProjectInfo(projectName);
+  }
+
+  public void updateProject(Project project) throws LoginSampleException{
+    projectRepository.rewriteProject(project);
+  }
 }

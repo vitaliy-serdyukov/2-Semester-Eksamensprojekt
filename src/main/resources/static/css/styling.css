@@ -1,6 +1,7 @@
 body {
     background-color: beige;
     font-family: "Arial";
+
 }
 
 h1,h2 {
@@ -110,6 +111,7 @@ tr { background-color: #f2f2f2
     font-size: 20px;
     text-align: center;
     padding-left: 10px;
+    font-size: 18px;
 }
 
 .flex-item-left {
@@ -132,14 +134,14 @@ tr { background-color: #f2f2f2
 
 .flex-item2-middle {
     padding: 10px;
-    flex: 45%;
+    flex: 33%;
     background-color: darkgray;
     margin:10px;
 }
 
 .flex-item2-right {
     padding: 10px;
-    flex: 20%;
+    flex: 33%;
     background-color: darkgray;
     margin:10px;
 }
@@ -176,4 +178,9 @@ header li {
 header li a {
     color: blue;
     text-decoration: none;
+}
+
+
+img.icon{
+width: 25px;
 }

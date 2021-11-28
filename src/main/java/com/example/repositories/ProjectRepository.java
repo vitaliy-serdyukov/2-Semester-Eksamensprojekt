@@ -71,4 +71,60 @@ public class ProjectRepository {
     }
     return projectsTemp;
   }
+
+
+  public Project readProjectInfo(String projectName) {
+    Project tmp = null;
+    try {
+      Connection con = DBManager.getConnection();
+      String SQL = "SELECT * FROM projects WHERE (project_name='" + projectName + "')";
+      PreparedStatement ps = con.prepareStatement(SQL);
+      ResultSet rs = ps.executeQuery();
+      while (rs.next()) {
+        tmp = new Project(rs.getInt(1),
+            rs.getString(2),
+            rs.getString(3),
+            rs.getInt(4),
+            rs.getObject(5, LocalDate.class),
+            rs.getObject(6, LocalDate.class),
+            rs.getString(7),
+            rs.getString(8));
+
+      }
+
+    } catch (SQLException ex) {
+      System.out.println(ex.getMessage());
+    }
+    return tmp;
+  }
+
+
+  public void rewriteProject (Project project) throws LoginSampleException {
+    int projectID = project.getProjectID();
+    String projectName = project.getProjectName();
+    String category = project.getCategory();
+    int hoursTotal = project.getHoursTotal();
+    LocalDate startDate = project.getStartDate();
+    LocalDate endDate = project.getEndDate();
+
+    try {
+      Connection con = DBManager.getConnection();
+      String SQL = "UPDATE projects SET project_name= '" + projectName + "', category= '" + category + "'," +
+          "project_hours_total='" + hoursTotal + "', project_start_date='" + startDate + "', project_end_date='" + endDate + "'" +
+          " (WHERE project_id ='" + projectID + "')";
+
+      PreparedStatement ps = con.prepareStatement(SQL);
+      ps.setInt(1, project.getProjectID());
+      ps.setString(2, project.getProjectName());
+      ps.setString(3, project.getCategory());
+      ps.setInt(4, project.getHoursTotal());
+      ps.setObject(5, project.getStartDate());
+      ps.setObject(6, project.getEndDate());
+      ps.setString(7, project.getOwnerEmail());
+      ps.setString(8, project.getDescription());
+      ps.executeUpdate();
+    } catch (SQLException ex) {
+      ex.printStackTrace();
+    }
+  }
 }
