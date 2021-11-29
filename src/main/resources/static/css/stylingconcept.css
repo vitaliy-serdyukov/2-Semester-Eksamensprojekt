@@ -296,3 +296,23 @@ input[type=text]:placeholder {
 * {
   box-sizing: border-box;
 }
+
+.centerlogo{
+  margin-left: 580px;
+  margin-right: 540px;
+  padding-bottom: 30px;
+  padding-top: 30px;
+  height: 260px;
+  width: 260px;
+  position: center;
+}
+.logoSignup{
+  position: center;
+  margin-left: 550px;
+  margin-right: 550px;
+  padding-bottom: 30px;
+  padding-top: 30px;
+  height: 260px;
+  width: 260px;
+
+}
