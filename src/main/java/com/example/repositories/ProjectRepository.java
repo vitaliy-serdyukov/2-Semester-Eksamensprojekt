@@ -106,14 +106,14 @@ public class ProjectRepository {
     int hoursTotal = project.getHoursTotal();
     LocalDate startDate = project.getStartDate();
     LocalDate endDate = project.getEndDate();
-    System.out.println(project);
+    String description = project.getDescription();
 
     try {
       Connection con = DBManager.getConnection();
       String SQL = "UPDATE projects SET project_name= '" + projectName + "', category= '" + category + "'," +
-          "project_hours_total='" + hoursTotal + "', project_start_date='" + startDate + "', project_end_date='" + endDate + "'" +
-          " (WHERE project_id ='" + projectID + "')";
-
+          "project_hours_total='" + hoursTotal + "', project_start_date='" + startDate + "', project_end_date='" +
+          endDate + "', description='" + description + "' WHERE project_id ='" + projectID + "'";
+      System.out.println("Test" + project.getProjectName());
       PreparedStatement ps = con.prepareStatement(SQL);
       ps.setString(2, project.getProjectName());
       ps.setString(3, project.getCategory());
