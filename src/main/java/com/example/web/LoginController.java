@@ -68,11 +68,12 @@ import java.util.ArrayList;
       session.setAttribute("userLogged", userLogged);
       model.addAttribute("userLogged", userLogged);
 
-   /*   Call arraylist and sort the wishlists by users email*/
+   /*   Call arraylist and sort the projects by users email*/
       ArrayList<Project> projects = new ProjectService().findAll(email); // DATABASE-agtig kodning???
+      session.setAttribute("projects", projects);
+
       //  Assign model attribute to arraylist med  projects
       model.addAttribute("projects", projects);
-      System.out.println(projects.toString());
 
 
       Project projectNew = new Project();
@@ -130,6 +131,3 @@ import java.util.ArrayList;
 
     }
   }
-
-
-

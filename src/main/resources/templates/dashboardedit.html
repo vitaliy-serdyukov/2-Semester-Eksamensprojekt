@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/styling.css" type="text/css">
+    <title>Dashboard edit</title>
+</head>
+
+<header>
+    <nav>
+        <ul>
+            <li>
+                <a href="/dashboard">Dashboard</a>
+            </li>
+            <li>
+                <a href="#">Profile</a>
+            </li>
+            <li>
+                <a style="margin-left: 650px" href="/logout"> Logout </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<body>
+
+<div class="flex-container" style="margin-top: 100px">
+
+    <div class="flex-item2-left">
+        <p style="text-align: left">Show available Projects:</p>
+
+        <table style="width: 100px">
+            <thead>
+            <tr>
+                <th> Project name</th>
+                <th> Show list</th>
+                <th> Remove list</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="projectSelected : ${projectsCurrentUser}">
+                <!--  <td><a th:href="@{/showProject/{projectName}(projectName=${projectNew.projectName})}"
+                         th:value="${projectSelected.projectName}"></a></td>
+  -->             <td th:text="${projectSelected.projectName}"></td>
+                <td><a th:href="@{/showProject/{projectName}(projectName=${projectSelected.projectName})}">
+                    <img class="icon" src="/images/eye2.png" alt="Eye">
+                </a></td>
+                <td><a th:href="@{/deleteProject/{projectName}(projectName=${projectSelected.projectName})}">
+                    <img class="icon" src="/images/trashcan.png" alt="Trashcan">
+                </a></td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <div class="flex-item2-middle">
+
+
+    </div>
+    <div class="flex-item2-right">
+        <form style="border: none" action="#" method="post" th:action="@{/updateProject}" th:object="${projectEdited}">
+        <table style="width:370px">
+            <thead>
+            <tr>
+                <th>You are in Project:</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Project ID:</td>
+                <td th:text="${projectEdited.projectID}"></td>
+            </tr>
+            <tr>
+                <td>Project name:</td>
+                <td> <input type="text" th:field="${projectEdited.projectName}" th:value="${projectEdited.projectName}"/></td>
+            </tr>
+            <tr>
+                <td>Category:</td>
+                <td> <input type="text"  th:field="${projectEdited.category}" th:value="${projectEdited.category}"/></td>
+            </tr>
+            <tr>
+                <td>Hours total:</td>
+                <td> <input type="number"  th:field="${projectEdited.hoursTotal}" th:value="${projectEdited.hoursTotal}"/></td>
+            </tr>
+            <tr>
+                <td>Start date:</td>
+                <td> <input type="date"  th:field="${projectEdited.startDate}" th:required="required" th:text="${projectEdited.startDate}"/></td>
+            </tr>
+            <tr>
+                <td>End date:</td>
+                <td> <input type="date"  th:field="${projectEdited.endDate}" th:required="required" th:text="${projectEdited.endDate}"/></td>
+            </tr>
+            <tr>
+                <td>Owner email:</td>
+                <td th:text="${projectEdited.ownerEmail}"></td>
+            </tr>
+            <tr>
+                <td>Description:</td>
+                <td> <input type="text"  th:field="${projectEdited.description}" th:value="${projectEdited.description}"/></td>
+            </tr>
+            <tr>
+            <td><button class="button1" th:href="@{/updateProject}">
+                UPDATE!</button></td>
+            <td></td>
+            </tr>
+            </tbody>
+        </table>
+        </form>
+    </div>
+</div>
+</body>
+</html>

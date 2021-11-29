@@ -5,6 +5,8 @@ import com.example.domain.models.Project;
 import com.example.domain.services.ProjectService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 
@@ -12,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
+import java.util.ArrayList;
 
 
 @Controller
@@ -58,13 +60,72 @@ public class ProjectController {
           ownerEmail, projectDescription);
 
 
-
-    /*model.addAttribute("projectNew", projectNew);// ????*/
-
       // Work + data is delegated to login service
       projectService.createProject(projectNew);
 
     session.setAttribute("projectNew", projectNew);
+
+    // Go to page
+    return "redirect:/dashboard";
+  }
+
+  @GetMapping("/showProject/{projectName}")
+  public String showProject(HttpServletRequest request, Model model,
+                            @PathVariable(value = "projectName") String projectName) {
+    HttpSession session = request.getSession();
+
+    //  Assign model attribute to arraylist med  projects
+    ArrayList<Project> projectsCurrentUser = (ArrayList) session.getAttribute("projects");
+    model.addAttribute("projectsCurrentUser", projectsCurrentUser);
+
+    Project projectSelected = projectService.showProjectInfo(projectName);
+    session.setAttribute("projectSelected", projectSelected);
+    model.addAttribute("projectSelected", projectSelected);
+
+
+
+    return "dashboardselect";
+  }
+
+  @GetMapping("/editProject/{projectName}")
+  public String editProject(HttpServletRequest request, Model model,
+                            @PathVariable(value = "projectName") String projectName) { //TO DO path in browser
+    HttpSession session = request.getSession();
+    //  Assign model attribute to arraylist med  projects
+    ArrayList<Project> projectsCurrentUser = (ArrayList) session.getAttribute("projects");
+    model.addAttribute("projectsCurrentUser",projectsCurrentUser );
+
+    Project projectEdited = (Project) session.getAttribute("projectSelected");
+    model.addAttribute("projectEdited", projectEdited);// projectToEdit??? or previous projectSelected
+
+
+    return "dashboardedit";
+  }
+
+  @PostMapping("/updateProject")
+  public String updateProject(HttpServletRequest request, Model model) throws LoginSampleException {
+    //Retrieve request from session
+    HttpSession session = request.getSession();
+    // Retrieve values from HTML form via WebRequest
+    Project projectToUpdate = (Project) session.getAttribute("projectSelected");
+
+
+    Project projectUpdated = new Project(
+    (projectToUpdate.getProjectID()),
+    (request.getParameter("projectName")),
+    (request.getParameter("category")),
+    (Integer.parseInt(request.getParameter("hoursTotal"))),
+    (LocalDate.parse(request.getParameter("startDate"), DateTimeFormatter.ofPattern("yyyy-MM-dd"))),
+    (LocalDate.parse(request.getParameter("endDate"), DateTimeFormatter.ofPattern("yyyy-MM-dd"))),
+    ((String) session.getAttribute("email")),
+    (request.getParameter("description")));
+
+    System.out.println(projectUpdated);
+
+    projectService.updateProject(projectUpdated);
+
+
+    session.setAttribute("projectUpdated", projectUpdated);
 
     // Go to page
     return "redirect:/dashboard";

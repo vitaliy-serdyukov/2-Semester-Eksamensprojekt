@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/styling.css" type="text/css">
+    <title>Exception page</title>
+</head>
+<body>
+<h1>An Error Occured!</h1>
+<p><b><span th:text="${message}"></span></b></p>
+
+<div class="element-middle">
+    <button class="button1" style="width: 125px" onclick="location.href='/dashboard'" type="button">Back to dashboard</button>
+</div>
+</body>
+</html>
