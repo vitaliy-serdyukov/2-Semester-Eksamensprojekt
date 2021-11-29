@@ -98,9 +98,7 @@ public class ProjectRepository {
     return tmp;
   }
 
-// doesn't work yet
   public void rewriteProject (Project project) throws LoginSampleException {
-    //Virker ikke - Jeg mistænker at det er sql statementet der har forkert syntax
     try {
       Connection con = DBManager.getConnection();
 
