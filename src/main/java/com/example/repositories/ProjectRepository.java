@@ -18,7 +18,7 @@ public class ProjectRepository {
       String SQL = "INSERT INTO projects (project_name, category, project_hours_total, project_start_date," +
           " project_end_date, owner_email, description)" +
           " VALUES (?, ?, ?, ?, ?, ?, ?)";
-      PreparedStatement ps = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+      PreparedStatement ps = con.prepareStatement(SQL);
       ps.setString(1, project.getProjectName());
       ps.setString(2, project.getCategory());
       ps.setInt(3, project.getHoursTotal());

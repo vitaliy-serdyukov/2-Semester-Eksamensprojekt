@@ -1,7 +1,7 @@
 body {
     background-color: #56baed;
-    font-family: "Arial";
-
+    font-family: "Poppins", sans-serif;
+/*    height: 100vh;*/
 }
 
 h1,h2 {
@@ -26,10 +26,10 @@ li {
 
 form {
     border: 3px solid black;
-    border-radius: 6px;
+    border-radius: 10px;
     padding: 5px;
     margin-bottom: 30px;
-    width: 300px;
+    width: auto;
 }
 
 .form-mail {
@@ -77,7 +77,9 @@ table {
     border: 1px solid black;
     border-radius: 6px;
     border-spacing: 0;
-    width: 100%;
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
 
 }
 
@@ -92,12 +94,6 @@ th, td {
     padding: 8px;
 }
 
-
-/*tr:nth-child(even) {
-    background-color: #f2f2f2
-}*/
-
-
 tr { background-color: #f2f2f2
 }
 
@@ -108,21 +104,8 @@ tr { background-color: #f2f2f2
 .flex-container {
     display: flex;
     flex-wrap: wrap;
-    font-size: 20px;
     text-align: center;
-    padding-left: 10px;
-    font-size: 18px;
-}
-
-.flex-item-left {
-    padding: 10px;
-    flex: 50%;
-
-}
-
-.flex-item-right {
-    padding: 10px;
-    flex: 50%;
+    font-size: 18px;/*  font-size: 20px;*/
 }
 
 .flex-item2-left {
@@ -131,6 +114,7 @@ tr { background-color: #f2f2f2
     margin:10px;
     background-color: rgb(255, 255, 255);
     border-radius: 10px;
+    align-content: center;
 }
 
 .flex-item2-middle {
@@ -139,7 +123,7 @@ tr { background-color: #f2f2f2
     margin:10px;
     background-color: rgb(255, 255, 255);
     border-radius: 10px;
-
+    align-content: center;
 }
 
 .flex-item2-right {
@@ -148,8 +132,26 @@ tr { background-color: #f2f2f2
     margin:10px;
     background-color: rgb(255, 255, 255);
     border-radius: 10px;
+    align-content: center;
 }
 
+.flex-item-up {
+    padding: 10px;
+    flex: 50%;
+    margin:10px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    align-content: center;
+}
+
+.flex-item-down {
+    padding: 10px;
+    flex: 50%;
+    margin:10px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    align-content: center;
+}
 
 .element-middle {
     display: flex;

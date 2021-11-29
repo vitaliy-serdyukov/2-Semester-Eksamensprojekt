@@ -30,7 +30,7 @@
     <div class="flex-item2-left">
         <p style="text-align: left">Show available Projects:</p>
 
-        <table style="width: 100px">
+        <table>
             <thead>
             <tr>
                 <th> Project name</th>
@@ -54,13 +54,83 @@
         </table>
 
     </div>
+
     <div class="flex-item2-middle">
+        <form style="border: none" action="#" method="post" th:action="@{/addSubproject}" th:object="${subprojectNew}">
+            <table>
+                <thead>
+                <tr>
+                    <th>Create new Subproject here:</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Subproject name:</td>
+                    <td><input type="text" th:field="*{subprojectName}"/></td>
+                </tr>
+                <tr>
+                    <td>Hours total:</td>
+                    <td><input type="number" th:field="*{hoursTotal}"/></td>
+                </tr>
+                <tr>
+                    <td>Start date:</td>
+                    <td><input type="date" th:field="*{startDate}"/></td>
+                </tr>
+                <tr>
+                    <td>End date:</td>
+                    <td><input type="date" th:field="*{endDate}"/></td>
+                </tr>
+                <tr>
+                    <td>Description:</td>
+                    <td><input type="text" th:field="*{description}"/></td>
+                </tr>
+                 <tr>
+                    <td>
+                        <div class="button-wrapper-right">
+                            <button style="padding-right:70px" class="button1" onclick="location.href='/addSubroject'" type="submit">Add Subproject
+                            </button>
+                        </div>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+
+
+        <!--<p style="text-align: left">Show available Subprojects:</p>
+
+        <table>
+            <thead>
+            <tr>
+                <th> Subproject name</th>
+                <th> Show list</th>
+                <th> Remove list</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="subprojectNew : ${subprojectNew}">
+                &lt;!&ndash;  <td><a th:href="@{/showProject/{projectName}(projectName=${projectNew.projectName})}"
+                         th:value="${projectSelected.projectName}"></a></td>
+  &ndash;&gt;             <td th:text="${subprojectNew.subprojectName}"></td>
+                <td><a th:href="@{/showProject/{projectName}(projectName=${projectSelected.projectName})}">
+                    <img class="icon" src="/images/eye2.png" alt="Eye">
+                </a></td>
+                <td><a th:href="@{/deleteProject/{projectName}(projectName=${projectSelected.projectName})}">
+                    <img class="icon" src="/images/trashcan.png" alt="Trashcan">
+                </a></td>
+            </tr>
+            </tbody>
+        </table>-->
 
 
     </div>
+
     <div class="flex-item2-right">
         <form style="border: none" action="#" method="get" th:action="@{/editProject/{projectName}}" th:object="${projectSelected}">
-        <table style="width:370px">
+        <table>
             <thead>
             <tr>
                 <th>You are in Project:</th>
