@@ -100,29 +100,20 @@ public class ProjectRepository {
 
 // doesn't work yet
   public void rewriteProject (Project project) throws LoginSampleException {
-    int projectID = project.getProjectID();
-    String projectName = project.getProjectName();
-    String category = project.getCategory();
-    int hoursTotal = project.getHoursTotal();
-    LocalDate startDate = project.getStartDate();
-    LocalDate endDate = project.getEndDate();
-    System.out.println(project);
-
+    //Virker ikke - Jeg mistænker at det er sql statementet der har forkert syntax
     try {
       Connection con = DBManager.getConnection();
-      String SQL = "UPDATE projects SET project_name= '" + projectName + "', category= '" + category + "'," +
-          "project_hours_total='" + hoursTotal + "', project_start_date='" + startDate + "', project_end_date='" + endDate + "'" +
-          " (WHERE project_id ='" + projectID + "')";
 
-      PreparedStatement ps = con.prepareStatement(SQL);
-      ps.setString(2, project.getProjectName());
-      ps.setString(3, project.getCategory());
-      ps.setInt(4, project.getHoursTotal());
-      ps.setObject(5, project.getStartDate());
-      ps.setObject(6, project.getEndDate());
-      ps.setString(7, project.getOwnerEmail());
-      ps.setString(8, project.getDescription());
+      PreparedStatement ps = con.prepareStatement("UPDATE projects SET project_name = ?, category = ?, project_hours_total = ? " +
+          ", project_start_date = ?, project_end_date = ? WHERE project_id = ?");
+      ps.setString(1, project.getProjectName());
+      ps.setString(2, project.getCategory());
+      ps.setInt(3, project.getHoursTotal());
+      ps.setObject(4, project.getStartDate());
+      ps.setObject(5, project.getEndDate());
+      ps.setInt(6, project.getProjectID());
       ps.executeUpdate();
+
     } catch (SQLException ex) {
       ex.printStackTrace();
     }
