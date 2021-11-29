@@ -74,7 +74,7 @@
             </tr>
             <tr>
                 <td>Project name:</td>
-                <td> <input type="text"  th:field="${projectEdited.projectName}" th:value="${projectEdited.projectName}"/></td>
+                <td> <input type="text" th:field="${projectEdited.projectName}" th:value="${projectEdited.projectName}"/></td>
             </tr>
             <tr>
                 <td>Category:</td>
@@ -86,11 +86,11 @@
             </tr>
             <tr>
                 <td>Start date:</td>
-                <td> <input type="date"  th:field="${projectEdited.startDate}" th:value="${projectEdited.startDate}"/></td>
+                <td> <input type="date"  th:field="${projectEdited.startDate}" th:required="required" th:text="${projectEdited.startDate}"/></td>
             </tr>
             <tr>
                 <td>End date:</td>
-                <td> <input type="date"  th:field="${projectEdited.endDate}" th:value="${projectEdited.endDate}"/></td>
+                <td> <input type="date"  th:field="${projectEdited.endDate}" th:required="required" th:text="${projectEdited.endDate}"/></td>
             </tr>
             <tr>
                 <td>Owner email:</td>
@@ -107,7 +107,7 @@
             </tr>
             </tbody>
         </table>
-
+        </form>
     </div>
 </div>
 </body>

@@ -98,7 +98,7 @@ public class ProjectRepository {
     return tmp;
   }
 
-
+// doesn't work yet
   public void rewriteProject (Project project) throws LoginSampleException {
     int projectID = project.getProjectID();
     String projectName = project.getProjectName();
@@ -106,6 +106,7 @@ public class ProjectRepository {
     int hoursTotal = project.getHoursTotal();
     LocalDate startDate = project.getStartDate();
     LocalDate endDate = project.getEndDate();
+    System.out.println(project);
 
     try {
       Connection con = DBManager.getConnection();
@@ -114,7 +115,6 @@ public class ProjectRepository {
           " (WHERE project_id ='" + projectID + "')";
 
       PreparedStatement ps = con.prepareStatement(SQL);
-      ps.setInt(1, project.getProjectID());
       ps.setString(2, project.getProjectName());
       ps.setString(3, project.getCategory());
       ps.setInt(4, project.getHoursTotal());
