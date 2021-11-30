@@ -1,5 +1,8 @@
 package com.example.domain.models;
 
+
+import com.example.domain.services.ProjectService;
+
 import java.util.ArrayList;
 
 public class User {
@@ -10,9 +13,19 @@ public class User {
   private String lastName;
   private String companyName;
   private String phoneNumber;
-  private ArrayList<Project> userProjects = new ArrayList<>();
+  private ArrayList<Project> userProjects = new ProjectService().findAllProjectsUser(email);// to use List or LinkedList here?
 
   public User() {
+  }
+
+  public User(String email, String password, String firstName, String lastName, String companyName, String phoneNumber, ArrayList<Project> userProjects) {
+    this.email = email;
+    this.password = password;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.companyName = companyName;
+    this.phoneNumber = phoneNumber;
+    this.userProjects = userProjects;
   }
 
   public User(String email, String password, String firstName, String lastName, String companyName, String phoneNumber) {
@@ -22,11 +35,20 @@ public class User {
     this.lastName = lastName;
     this.companyName = companyName;
     this.phoneNumber = phoneNumber;
+
   }
 
   public User(String email, String password) {
     this.email = email;
     this.password = password;
+  }
+
+  public ArrayList<Project> getUserProjects() {
+    return userProjects;
+  }
+
+  public void setUserProjects(ArrayList<Project> userProjects) {
+    this.userProjects = userProjects;
   }
 
   public String getEmail() {
@@ -86,14 +108,7 @@ public class User {
         ", lastName='" + lastName + '\'' +
         ", companyName='" + companyName + '\'' +
         ", phoneNumber='" + phoneNumber + '\'' +
+        ", userProjects=" + userProjects +
         '}';
-  }
-
-  public ArrayList<Project> getUserProjects() {
-    return userProjects;
-  }
-
-  public void setUserProjects(ArrayList<Project> userProjects) {
-    this.userProjects = userProjects;
   }
 }

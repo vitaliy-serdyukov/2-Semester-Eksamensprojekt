@@ -12,13 +12,13 @@ public class ProjectRepository {
 
 
   //For inserting a project into the DB.
-  public void writeProject (Project project) throws LoginSampleException {
+  public void writeProject(Project project) throws LoginSampleException {
     try {
       Connection con = DBManager.getConnection();
       String SQL = "INSERT INTO projects (project_name, category, project_hours_total, project_start_date," +
           " project_end_date, owner_email, description)" +
           " VALUES (?, ?, ?, ?, ?, ?, ?)";
-      PreparedStatement ps = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+      PreparedStatement ps = con.prepareStatement(SQL);
       ps.setString(1, project.getProjectName());
       ps.setString(2, project.getCategory());
       ps.setInt(3, project.getHoursTotal());
@@ -56,13 +56,13 @@ public class ProjectRepository {
       ResultSet rs = ps.executeQuery();
       while (rs.next()) {
         tmp = new Project(rs.getInt(1),
-                          rs.getString(2),
-                          rs.getString(3),
-                          rs.getInt(4),
-                          rs.getObject(5, LocalDate.class),
-                          rs.getObject(6, LocalDate.class),
-                          rs.getString(7),
-                          rs.getString(8));
+            rs.getString(2),
+            rs.getString(3),
+            rs.getInt(4),
+            rs.getObject(5, LocalDate.class),
+            rs.getObject(6, LocalDate.class),
+            rs.getString(7),
+            rs.getString(8));
         projectsTemp.add(tmp);
       }
 
@@ -71,4 +71,53 @@ public class ProjectRepository {
     }
     return projectsTemp;
   }
+
+
+  public Project readProjectInfo(String projectName) {
+    Project tmp = null;
+    try {
+      Connection con = DBManager.getConnection();
+      String SQL = "SELECT * FROM projects WHERE (project_name='" + projectName + "')";
+      PreparedStatement ps = con.prepareStatement(SQL);
+      ResultSet rs = ps.executeQuery();
+      while (rs.next()) {
+        tmp = new Project(rs.getInt(1),
+            rs.getString(2),
+            rs.getString(3),
+            rs.getInt(4),
+            rs.getObject(5, LocalDate.class),
+            rs.getObject(6, LocalDate.class),
+            rs.getString(7),
+            rs.getString(8));
+
+      }
+
+    } catch (SQLException ex) {
+      System.out.println(ex.getMessage());
+    }
+    return tmp;
+  }
+
+
+  public void rewriteProject(Project project) throws LoginSampleException {
+
+    try {
+      Connection con = DBManager.getConnection();
+
+      PreparedStatement ps = con.prepareStatement("UPDATE projects SET project_name = ?, category = ?," +
+          " project_hours_total = ?, project_start_date = ?, project_end_date = ?, description = ? WHERE project_id = ?");
+      ps.setString(1, project.getProjectName());
+      ps.setString(2, project.getCategory());
+      ps.setInt(3, project.getHoursTotal());
+      ps.setObject(4, project.getStartDate());
+      ps.setObject(5, project.getEndDate());
+      ps.setString(6, project.getDescription());
+      ps.setInt(7, project.getProjectID());
+      ps.executeUpdate();
+
+    } catch (SQLException ex) {
+      ex.printStackTrace();
+    }
+  }
+
 }

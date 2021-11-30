@@ -23,7 +23,6 @@ import java.util.ArrayList;
     private final LoginService loginService = new LoginService();
 
 
-
     // main page "index"
     @GetMapping("/")
     public String index() { return "index";
@@ -48,6 +47,7 @@ import java.util.ArrayList;
       if (isExists) {
         // Set email in session
         session.setAttribute("email", email);
+
         // Go to next page after login
         return "redirect:/dashboard";
       } else {
@@ -68,19 +68,17 @@ import java.util.ArrayList;
       session.setAttribute("userLogged", userLogged);
       model.addAttribute("userLogged", userLogged);
 
-   /*   Call arraylist and sort the wishlists by users email*/
-      ArrayList<Project> projects = new ProjectService().findAll(email); // DATABASE-agtig kodning???
+   /*   Call arraylist and sort the projects by users email*/
+      ArrayList<Project> projects = new ProjectService().findAllProjectsUser(email); // DATABASE-agtig kodning???
+      session.setAttribute("projects", projects);
+
       //  Assign model attribute to arraylist med  projects
       model.addAttribute("projects", projects);
-      System.out.println(projects.toString());
 
 
       Project projectNew = new Project();
-      /*Project projectNew = (Project) session.getAttribute("projectNew");*/
       model.addAttribute("projectNew", projectNew);
-     /* Project projectNew = new Project();// ??????
-      // Assign model attribute for "wishlist1" object
-      model.addAttribute("projectNew", projectNew);*/
+
       return "dashboard";
     }
 
@@ -130,6 +128,3 @@ import java.util.ArrayList;
 
     }
   }
-
-
-
