@@ -30,7 +30,7 @@
     <div class="flex-item2-left">
         <p style="text-align: left">Show available Projects:</p>
 
-        <table style="width: 100px">
+        <table>
             <thead>
             <tr>
                 <th> Project name</th>
@@ -52,15 +52,14 @@
             </tr>
             </tbody>
         </table>
-
     </div>
+
     <div class="flex-item2-middle">
-
-
     </div>
+
     <div class="flex-item2-right">
-        <form style="border: none" action="#" method="post" th:action="@{/updateProject}" th:object="${projectEdited}">
-        <table style="width:370px">
+        <form style="border: none" action="#" method="post" th:action="@{/updateProject}" th:object="${projectSelected}">
+        <table>
             <thead>
             <tr>
                 <th>You are in Project:</th>
@@ -70,35 +69,35 @@
             <tbody>
             <tr>
                 <td>Project ID:</td>
-                <td th:text="${projectEdited.projectID}"></td>
+                <td th:text="${projectSelected.projectID}"></td>
             </tr>
             <tr>
                 <td>Project name:</td>
-                <td> <input type="text" th:field="${projectEdited.projectName}" th:value="${projectEdited.projectName}"/></td>
+                <td> <input type="text" th:field="${projectSelected.projectName}" th:value="${projectSelected.projectName}"/></td>
             </tr>
             <tr>
                 <td>Category:</td>
-                <td> <input type="text"  th:field="${projectEdited.category}" th:value="${projectEdited.category}"/></td>
+                <td> <input type="text"  th:field="${projectSelected.category}" th:value="${projectSelected.category}"/></td>
             </tr>
             <tr>
                 <td>Hours total:</td>
-                <td> <input type="number"  th:field="${projectEdited.hoursTotal}" th:value="${projectEdited.hoursTotal}"/></td>
+                <td> <input type="number"  th:field="${projectSelected.hoursTotal}" th:value="${projectSelected.hoursTotal}"/></td>
             </tr>
             <tr>
                 <td>Start date:</td>
-                <td> <input type="date"  th:field="${projectEdited.startDate}" th:required="required" th:text="${projectEdited.startDate}"/></td>
+                <td> <input type="date"  th:field="${projectSelected.startDate}" th:required="required" th:text="${projectSelected.startDate}"/></td>
             </tr>
             <tr>
                 <td>End date:</td>
-                <td> <input type="date"  th:field="${projectEdited.endDate}" th:required="required" th:text="${projectEdited.endDate}"/></td>
+                <td> <input type="date"  th:field="${projectSelected.endDate}" th:required="required" th:text="${projectSelected.endDate}"/></td>
             </tr>
             <tr>
                 <td>Owner email:</td>
-                <td th:text="${projectEdited.ownerEmail}"></td>
+                <td th:text="${projectSelected.ownerEmail}"></td>
             </tr>
             <tr>
                 <td>Description:</td>
-                <td> <input type="text"  th:field="${projectEdited.description}" th:value="${projectEdited.description}"/></td>
+                <td> <input type="text"  th:field="${projectSelected.description}" th:value="${projectSelected.description}"/></td>
             </tr>
             <tr>
             <td><button class="button1" th:href="@{/updateProject}">

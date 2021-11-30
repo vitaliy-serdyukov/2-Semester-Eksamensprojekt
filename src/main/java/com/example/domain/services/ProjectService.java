@@ -8,13 +8,13 @@ import java.util.ArrayList;
 
 public class ProjectService {
 
-  private ProjectRepository projectRepository = new ProjectRepository();
+  private final ProjectRepository projectRepository = new ProjectRepository();
 
   public void createProject(Project project) throws LoginSampleException {
     projectRepository.writeProject(project);
   }
 
-  public ArrayList<Project> findAll(String email) {
+  public ArrayList<Project> findAllProjectsUser(String email) {
     return projectRepository.readProjectsUser(email);
   }
 
@@ -22,7 +22,6 @@ public class ProjectService {
     return projectRepository.readProjectInfo(projectName);
   }
 
-  public void updateProject(Project project) throws LoginSampleException{
-    projectRepository.rewriteProject(project);
+  public void updateProject(Project project) throws LoginSampleException{projectRepository.rewriteProject(project);
   }
 }

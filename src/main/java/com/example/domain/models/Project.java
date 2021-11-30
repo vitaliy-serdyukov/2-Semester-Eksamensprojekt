@@ -1,7 +1,8 @@
 package com.example.domain.models;
 
 import java.time.LocalDate;
-import java.util.Date;
+import java.util.List;
+
 
 public class Project {
 
@@ -13,6 +14,10 @@ public class Project {
   private LocalDate endDate;
   private String ownerEmail;
   private String description;
+  private User user;
+  private List<Subproject> subprojectsOneProject;
+
+
 
   public Project(int projectID, String projectName, String category, int hoursTotal, LocalDate startDate, LocalDate endDate, String ownerEmail, String description) {
     this.projectID = projectID;
@@ -36,6 +41,22 @@ public class Project {
   }
 
   public Project() {
+  }
+
+  public User getUser() {
+    return user;
+  }
+
+  public void setUser(User user) {
+    this.user = user;
+  }
+
+  public List<Subproject> getSubprojectsOneProject() {
+    return subprojectsOneProject;
+  }
+
+  public void setSubprojectsOneProject(List<Subproject> subprojectsOneProject) {
+    this.subprojectsOneProject = subprojectsOneProject;
   }
 
   public int getProjectID() {

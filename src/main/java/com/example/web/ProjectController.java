@@ -2,7 +2,9 @@ package com.example.web;
 
 import com.example.domain.LoginSampleException;
 import com.example.domain.models.Project;
+import com.example.domain.models.Subproject;
 import com.example.domain.services.ProjectService;
+import com.example.domain.services.SubprojectService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +27,7 @@ public class ProjectController {
 
   // method for "Add project" fields and button on "dashboard"
   @PostMapping("/addProject")
-  public String saveWishlist(HttpServletRequest request, Model model) throws LoginSampleException {
+  public String saveProject(Project project,HttpServletRequest request, Model model) throws LoginSampleException {
 
     //Retrieve request from session
     HttpSession session = request.getSession();
@@ -74,6 +76,8 @@ public class ProjectController {
                             @PathVariable(value = "projectName") String projectName) {
     HttpSession session = request.getSession();
 
+
+
     //  Assign model attribute to arraylist med  projects
     ArrayList<Project> projectsCurrentUser = (ArrayList) session.getAttribute("projects");
     model.addAttribute("projectsCurrentUser", projectsCurrentUser);
@@ -82,7 +86,13 @@ public class ProjectController {
     session.setAttribute("projectSelected", projectSelected);
     model.addAttribute("projectSelected", projectSelected);
 
+    Subproject subprojectNew = new Subproject();
+    model.addAttribute("subprojectNew", subprojectNew);
 
+    //____________________________________________________________________
+    ArrayList<Subproject> subprojects = new SubprojectService().findAllSubprojectsInProject(projectSelected.getProjectID()); // DATABASE-agtig kodning???
+    session.setAttribute("subprojects", subprojects);
+    //----------------------------------------------------------------------------
 
     return "dashboardselect";
   }
@@ -95,15 +105,15 @@ public class ProjectController {
     ArrayList<Project> projectsCurrentUser = (ArrayList) session.getAttribute("projects");
     model.addAttribute("projectsCurrentUser",projectsCurrentUser );
 
-    Project projectEdited = (Project) session.getAttribute("projectSelected");
-    model.addAttribute("projectEdited", projectEdited);// projectToEdit??? or previous projectSelected
+    Project projectSelected = (Project) session.getAttribute("projectSelected");
+    model.addAttribute("projectSelected", projectSelected);//
 
 
     return "dashboardedit";
   }
 
   @PostMapping("/updateProject")
-  public String updateProject(HttpServletRequest request, Model model) throws LoginSampleException {
+  public String updateProject(HttpServletRequest request) throws LoginSampleException {
     //Retrieve request from session
     HttpSession session = request.getSession();
     // Retrieve values from HTML form via WebRequest
@@ -125,9 +135,7 @@ public class ProjectController {
     projectService.updateProject(projectUpdated);
 
 
-    session.setAttribute("projectUpdated", projectUpdated);
-
     // Go to page
-    return "redirect:/dashboard";
+    return "redirect:/dashboard";   // TO DO, evt return to dashboard select
   }
 }
