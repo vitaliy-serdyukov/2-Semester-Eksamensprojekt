@@ -29,9 +29,9 @@
 
 
 <div class="flex-container" style="margin-top: 100px">
-
-    <div class="flex-item2-left">
-        <p style="text-align: left">Show available Projects:</p>
+    <div class="flex-item2-middle">
+    <!--<div class="flex-item2-left">-->
+       <!-- <p style="text-align: left">Show available Projects:</p>-->
 
         <table style="width:auto">
             <thead>
@@ -39,6 +39,7 @@
                 <th> Project name</th>
                 <th> Show project</th>
                 <th> Remove project</th>
+                <th> Edit project</th>
             </tr>
             </thead>
             <tbody>
@@ -50,13 +51,15 @@
                 <td><a th:href="@{/deleteProject/{projectName}(projectName=${projectNew.projectName})}">
                     <img class="icon" src="/images/trashcan.png" alt="Trashcan">
                 </a></td>
+                <td></td>
             </tr>
             </tbody>
         </table>
     </div>
+   <!-- </div>-->
 
-    <div class="flex-item2-middle">
-        <form style="border:none" action="#" method="post" th:action="@{/addProject}" th:object="${projectNew}">
+<!--    <div class="flex-item2-middle">-->
+        <!--<form style="border:none" action="#" method="post" th:action="@{/addProject}" th:object="${projectNew}">
             <table>
                 <thead>
                 <tr>
@@ -101,12 +104,12 @@
                 </tr>
                 </tbody>
             </table>
-        </form>
-    </div>
+        </form>-->
+    <!--</div>
     <div class="flex-item2-right">
         <p><b>You have successfully logged in</b></p>
 
-    </div>
+    </div>-->
 </div>
 
 </body>
