@@ -120,7 +120,7 @@ import java.util.ArrayList;
       return "index";
     }
 
-
+    //Delete button
     @ExceptionHandler(LoginSampleException.class)
     public String handleError(Model model, Exception exception) {
       model.addAttribute("message", exception.getMessage());
