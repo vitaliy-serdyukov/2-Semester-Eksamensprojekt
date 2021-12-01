@@ -19,40 +19,51 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 
+
 @Controller
 public class ProjectController {
 
-  private ProjectService projectService = new ProjectService();
+
+  private final ProjectService projectService = new ProjectService();
+
+
+  @GetMapping("/createProject")
+  public String createProject(Model model){
+
+    Project projectNew = new Project();
+    model.addAttribute("projectNew", projectNew);
+
+    return "createproject";
+  }
 
 
   // method for "Add project" fields and button on "dashboard"
   @PostMapping("/addProject")
-  public String saveProject(Project project,HttpServletRequest request, Model model) throws LoginSampleException {
+  public String saveProject(HttpServletRequest request) throws LoginSampleException {
 
     //Retrieve request from session
     HttpSession session = request.getSession();
 
     // Retrieve values from HTML form via WebRequest
     String projectName = request.getParameter("projectName");
-    String projectCategory = request.getParameter("category");
+    String projectCategory  = request.getParameter("category");
+
     String hoursTotalStr = request.getParameter("hoursTotal");
     int hoursTotal = Integer.parseInt(hoursTotalStr);
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-
     String projectStartDateStr = request.getParameter("startDate");
+
     //convert String to LocalDate
     LocalDate projectStartDate = LocalDate.parse(projectStartDateStr, formatter);
-
     String projectEndDateStr = request.getParameter("endDate");
+
     //convert String to LocalDate
     LocalDate projectEndDate = LocalDate.parse(projectEndDateStr, formatter);
 
     // Retrieve "email" String object from HTTP session
     String ownerEmail = (String) session.getAttribute("email");
     String projectDescription = request.getParameter("description");
-
 
    /* if (projectName.equals("")) {
       return "redirect:/dashboard";
@@ -64,8 +75,11 @@ public class ProjectController {
 
       // Work + data is delegated to login service
       projectService.createProject(projectNew);
+      session.setAttribute("projectNew", projectNew);
 
-    session.setAttribute("projectNew", projectNew);
+    ArrayList<Project> projects = new ProjectService().findAllProjectsUser(ownerEmail); // DATABASE-agtig kodning???
+    session.setAttribute("projects", projects);
+
 
     // Go to page
     return "redirect:/dashboard";
