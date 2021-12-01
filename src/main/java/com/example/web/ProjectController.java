@@ -108,7 +108,6 @@ public class ProjectController {
     Project projectSelected = (Project) session.getAttribute("projectSelected");
     model.addAttribute("projectSelected", projectSelected);//
 
-
     return "dashboardedit";
   }
 
@@ -118,7 +117,6 @@ public class ProjectController {
     HttpSession session = request.getSession();
     // Retrieve values from HTML form via WebRequest
     Project projectToUpdate = (Project) session.getAttribute("projectSelected");
-
 
     Project projectUpdated = new Project(
     (projectToUpdate.getProjectID()),
@@ -133,9 +131,13 @@ public class ProjectController {
     System.out.println(projectUpdated);
 
     projectService.updateProject(projectUpdated);
-
-
     // Go to page
     return "redirect:/dashboard";   // TO DO, evt return to dashboard select
+  }
+
+  @GetMapping("/deleteProject/{projectName}")
+  public String deleteProject(@PathVariable(value = "projectName") String projectName) {
+    projectService.deleteProject(projectName);
+    return "redirect:/dashboard";
   }
 }

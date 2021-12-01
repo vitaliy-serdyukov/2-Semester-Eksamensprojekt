@@ -24,4 +24,7 @@ public class ProjectService {
 
   public void updateProject(Project project) throws LoginSampleException{projectRepository.rewriteProject(project);
   }
+  public void deleteProject(String wishlistName) { ////hvorfor kræver kaldet på deleteProject at deleteProject er static??
+    projectRepository.deleteProjectFromDB(wishlistName);
+  }
 }
