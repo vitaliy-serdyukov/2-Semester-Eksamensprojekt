@@ -76,9 +76,6 @@ import java.util.ArrayList;
       model.addAttribute("projects", projects);
 
 
-      Project projectNew = new Project();
-      model.addAttribute("projectNew", projectNew);
-
       return "dashboard";
     }
 

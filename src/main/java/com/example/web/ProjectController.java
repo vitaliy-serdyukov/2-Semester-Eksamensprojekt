@@ -128,8 +128,6 @@ public class ProjectController {
     ((String) session.getAttribute("email")),
     (request.getParameter("description")));
 
-    System.out.println(projectUpdated);
-
     projectService.updateProject(projectUpdated);
     // Go to page
     return "redirect:/dashboard";   // TO DO, evt return to dashboard select
