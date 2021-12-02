@@ -147,4 +147,10 @@ public class ProjectController {
     // Go to page
     return "redirect:/dashboard";   // TO DO, evt return to dashboard select
   }
+
+  @GetMapping("/deleteProject/{projectName}")
+  public String deleteProject(@PathVariable(value = "projectName") String projectName) {
+    projectService.deleteProject(projectName);
+    return "redirect:/dashboard";
+  }
 }

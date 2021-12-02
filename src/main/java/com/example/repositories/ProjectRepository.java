@@ -115,7 +115,17 @@ public class ProjectRepository {
       ps.setString(6, project.getDescription());
       ps.setInt(7, project.getProjectID());
       ps.executeUpdate();
+    } catch (SQLException ex) {
+      ex.printStackTrace();
+    }
+  }
 
+  public void deleteProjectFromDB(String projectName) {
+    try {
+      Connection con = DBManager.getConnection();
+      String SQL = "DELETE FROM projects WHERE (project_name='" + projectName + "')";
+      PreparedStatement ps = con.prepareStatement(SQL);
+      ps.executeUpdate();
     } catch (SQLException ex) {
       ex.printStackTrace();
     }
