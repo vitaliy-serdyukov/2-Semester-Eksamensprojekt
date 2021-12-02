@@ -90,11 +90,9 @@ public class ProjectController {
                             @PathVariable(value = "projectName") String projectName) {
     HttpSession session = request.getSession();
 
-
-
     //  Assign model attribute to arraylist med  projects
-    ArrayList<Project> projectsCurrentUser = (ArrayList) session.getAttribute("projects");
-    model.addAttribute("projectsCurrentUser", projectsCurrentUser);
+   /* ArrayList<Project> projectsCurrentUser = (ArrayList) session.getAttribute("projects");*/
+   /* model.addAttribute("projectsCurrentUser", projectsCurrentUser);*/ //fjernes
 
     Project projectSelected = projectService.showProjectInfo(projectName);
     session.setAttribute("projectSelected", projectSelected);
@@ -104,12 +102,11 @@ public class ProjectController {
     model.addAttribute("subprojectNew", subprojectNew);
 
 
-    //____________________________________________________________________
     ArrayList<Subproject> subprojects = new SubprojectService().findAllSubprojectsInProject(projectSelected.getProjectID()); // DATABASE-agtig kodning???
+    session.setAttribute("subprojects", subprojects);// vi take this out of session in SubprojectController ShowSubproject method
 
-    session.setAttribute("subprojects", subprojects);
     model.addAttribute("subprojects", subprojects);
-    //----------------------------------------------------------------------------
+
 
     return "showproject";
   }
@@ -146,6 +143,7 @@ public class ProjectController {
     (request.getParameter("description")));
 
     projectService.updateProject(projectUpdated);
+
     // Go to page
     return "redirect:/dashboard";   // TO DO, evt return to dashboard select
   }
