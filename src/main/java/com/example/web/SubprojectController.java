@@ -37,7 +37,7 @@ public class SubprojectController {
 
   // method for "Add Subproject" fields and button on "dashboardselect"
   @PostMapping("/addSubproject")
-  public String saveSubproject(HttpServletRequest request, RedirectAttributes redirectAttrs, Model model)  {
+  public String saveSubproject(HttpServletRequest request, RedirectAttributes redirectAttrs)  {
 
     //Retrieve request from session
     HttpSession session = request.getSession();
@@ -106,4 +106,17 @@ public class SubprojectController {
 
     return "showsubproject";
   }
+
+  @GetMapping("/deleteSubproject/{subprojectName}")
+  public String deleteSubroject(HttpServletRequest request, RedirectAttributes redirectAttrs, @PathVariable(value = "subprojectName") String subprojectName) {
+    subprojectService.deleteSubproject(subprojectName);
+
+    HttpSession session = request.getSession();
+    Project projectSelected = (Project) session.getAttribute("projectSelected");
+
+    redirectAttrs.addAttribute("projectName", projectSelected.getProjectName()).
+        addFlashAttribute("message", "Redirecting til project page...");
+    return "redirect:/showProject/{projectName}";
+  }
+
 }

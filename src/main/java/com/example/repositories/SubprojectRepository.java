@@ -82,4 +82,15 @@ public class SubprojectRepository {
     }
     return tmp;
   }
+
+  public void deleteSubprojectFromDB(String subprojectName) {
+    try {
+      Connection con = DBManager.getConnection();
+      String SQL = "DELETE FROM subprojects WHERE (subproject_name='" + subprojectName + "')";
+      PreparedStatement ps = con.prepareStatement(SQL);
+      ps.executeUpdate();
+    } catch (SQLException ex) {
+      ex.printStackTrace();
+    }
+  }
 }
