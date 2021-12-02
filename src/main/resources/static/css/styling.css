@@ -126,6 +126,17 @@ tr { background-color: rgb(255, 255, 255);
     justify-content: center;
 
 }
+#start_date {
+    padding-left: 27px;
+}
+
+#end_date{
+    padding-left: 27px;
+}
+
+#category{
+    padding-left: 55px;
+}
 
 .flex-item2-left {
     padding: 10px;
