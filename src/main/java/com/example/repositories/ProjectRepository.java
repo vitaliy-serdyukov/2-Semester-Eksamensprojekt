@@ -81,7 +81,8 @@ public class ProjectRepository {
       PreparedStatement ps = con.prepareStatement(SQL);
       ResultSet rs = ps.executeQuery();
       while (rs.next()) {
-        tmp = new Project(rs.getInt(1),
+        tmp = new Project(
+            rs.getInt(1),
             rs.getString(2),
             rs.getString(3),
             rs.getInt(4),

@@ -103,12 +103,15 @@ public class ProjectController {
     Subproject subprojectNew = new Subproject();
     model.addAttribute("subprojectNew", subprojectNew);
 
+
     //____________________________________________________________________
     ArrayList<Subproject> subprojects = new SubprojectService().findAllSubprojectsInProject(projectSelected.getProjectID()); // DATABASE-agtig kodning???
+
     session.setAttribute("subprojects", subprojects);
+    model.addAttribute("subprojects", subprojects);
     //----------------------------------------------------------------------------
 
-    return "dashboardselect";
+    return "showproject";
   }
 
   @GetMapping("/editProject/{projectName}")
