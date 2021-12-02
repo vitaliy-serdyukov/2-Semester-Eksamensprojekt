@@ -3,6 +3,7 @@ package com.example.web;
 
 import com.example.domain.models.Project;
 import com.example.domain.models.Subproject;
+import com.example.domain.models.Task;
 import com.example.domain.services.ProjectService;
 import com.example.domain.services.SubprojectService;
 import org.springframework.stereotype.Controller;
@@ -76,4 +77,33 @@ public class SubprojectController {
     return "redirect:/showProject/{projectName}";
   }
 
+
+  @GetMapping("/showSubproject/{subprojectName}")
+  public String showSubproject(HttpServletRequest request, Model model,
+                            @PathVariable(value = "subprojectName") String subprojectName) {
+    HttpSession session = request.getSession();
+
+
+    //  Assign model attribute to arraylist med  projects
+  /*  ArrayList<Subproject> subprojectsCurrentProject = (ArrayList) session.getAttribute("subprojects");
+    model.addAttribute("subprojectsCurrentProject", subprojectsCurrentProject);*/
+
+
+    Subproject subprojectSelected = subprojectService.showSubprojectInfo(subprojectName);
+    session.setAttribute("subprojectSelected", subprojectSelected);
+    model.addAttribute("subprojectSelected", subprojectSelected);
+
+
+   /* Task taskNew = new Task();
+    model.addAttribute("taskNew", taskNew);*/
+
+    // tasks
+   /* ArrayList<Subproject> subprojects = new SubprojectService().findAllSubprojectsInProject(projectSelected.getProjectID()); // DATABASE-agtig kodning???
+
+    session.setAttribute("subprojects", subprojects);
+    model.addAttribute("subprojects", subprojects);*/
+
+
+    return "showsubproject";
+  }
 }

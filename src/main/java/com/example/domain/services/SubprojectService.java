@@ -19,4 +19,7 @@ public class SubprojectService {
     return subprojectRepository.readSubprojectsProject(projectID);
   }
 
+  public Subproject showSubprojectInfo(String subprojectName) {
+    return subprojectRepository.readSubprojectInfo(subprojectName);
+  }
 }

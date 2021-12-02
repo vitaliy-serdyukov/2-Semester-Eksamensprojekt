@@ -59,4 +59,27 @@ public class SubprojectRepository {
     return subprojectsTemp;
   }
 
+  public Subproject readSubprojectInfo(String subprojectName) {
+    Subproject tmp = null;
+    try {
+      Connection con = DBManager.getConnection();
+      String SQL = "SELECT * FROM subprojects WHERE (subproject_name='" + subprojectName + "')";
+      PreparedStatement ps = con.prepareStatement(SQL);
+      ResultSet rs = ps.executeQuery();
+      while (rs.next()) {
+        tmp = new Subproject(
+            rs.getInt(1),
+            rs.getInt(2),
+            rs.getString(3),
+            rs.getInt(4),
+            rs.getObject(5, LocalDate.class),
+            rs.getObject(6, LocalDate.class),
+            rs.getString(7));
+      }
+
+    } catch (SQLException ex) {
+      System.out.println(ex.getMessage());
+    }
+    return tmp;
+  }
 }

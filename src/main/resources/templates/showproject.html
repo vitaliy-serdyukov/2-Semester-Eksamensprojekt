@@ -27,7 +27,7 @@
 
 <div class="flex-container">
     <div class="flex-show-project-left">
-        <form style="border: none" action="#" method="get" th:action="@{/editProject/{projectName}}" th:object="${projectSelected}">
+        <form style="border: none" method="get" th:action="@{/createSubproject}">
             <table>
                 <thead>
                     <tr>
@@ -69,17 +69,18 @@
                         <td th:text="${projectSelected.description}"></td>
                     </tr>
                     <tr>
-                        <td><button class="button1" th:href="@{/editProject/{projectName}(projectName=${projectSelected.projectName})}">
-                        Edit project</button></td>
-                        <td>
-                        </td>
+                        <td> <button style="padding-right:70px" class="button1" onclick="location.href='/createSubproject'" type="submit">Add new Subproject
+                        </button></td>
+                        <td></td>
                     </tr>
                 </tbody>
             </table>
         </form>
         <div class="flex-item2-left">
-            <button style="padding-right:70px" class="button1" onclick="location.href='/createSubproject'" type="submit">Add new Subproject
-            </button>
+
+
+            <button class="button1" th:href="@{/editProject/{projectName}(projectName=${projectSelected.projectName})}">
+            Edit project</button>
         </div>
     </div>
 
@@ -97,12 +98,12 @@
             <tbody>
             <tr th:each="subprojectNew : ${subprojects}">
              <td th:text="${subprojectNew.subprojectName}"></td>
-                <td><a th:href="@{/showProject/{projectName}(projectName=${projectSelected.projectName})}">
+                <td><a th:href="@{/showSubproject/{subprojectName}(subprojectName=${subprojectNew.subprojectName})}">
                     <img class="icon" src="/images/eye2.png" alt="Eye">
                 </a></td>
-                <td><a th:href="@{/deleteProject/{projectName}(projectName=${projectSelected.projectName})}">
+               <!-- <td><a th:href="@{/deleteProject/{projectName}(projectName=${projectSelected.projectName})}">
                     <img class="icon" src="/images/trashcan.png" alt="Trashcan">
-                </a></td>
+                </a></td>-->
             </tr>
             </tbody>
         </table>
