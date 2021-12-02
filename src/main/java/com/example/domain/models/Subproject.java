@@ -18,6 +18,15 @@ public class Subproject {
   public Subproject() {
   }
 
+  public Subproject(int projectID, String subprojectName, int hoursTotal, LocalDate startDate, LocalDate endDate, String description) {
+    this.projectID = projectID;
+    this.subprojectName = subprojectName;
+    this.hoursTotal = hoursTotal;
+    this.startDate = startDate;
+    this.endDate = endDate;
+    this.description = description;
+  }
+
   public Subproject(int SubprojectID, int projectID, String subprojectName, int hoursTotal, LocalDate startDate, LocalDate endDate, String description) {
     this.subprojectID = SubprojectID;
     this.projectID = projectID;
@@ -28,22 +37,7 @@ public class Subproject {
     this.description = description;
   }
 
-  public Subproject(int projectID, String subprojectName, int hoursTotal, LocalDate startDate, LocalDate endDate, String description) {
-    this.projectID = projectID;
-    this.subprojectName = subprojectName;
-    this.hoursTotal = hoursTotal;
-    this.startDate = startDate;
-    this.endDate = endDate;
-    this.description = description;
-  }
 
-  public int getProjectID() {
-    return projectID;
-  }
-
-  public void setProjectID(int projectID) {
-    this.projectID = projectID;
-  }
 
  /* public Project getProject() {
     return project;
@@ -61,12 +55,22 @@ public class Subproject {
     this.tasksOneSubproject = tasksOneSubproject;
   }*/
 
+
+
   public int getSubprojectID() {
     return subprojectID;
   }
 
   public void setSubprojectID(int subprojectID) {
     this.subprojectID = subprojectID;
+  }
+
+  public int getProjectID() {
+    return projectID;
+  }
+
+  public void setProjectID(int projectID) {
+    this.projectID = projectID;
   }
 
   public String getSubprojectName() {
