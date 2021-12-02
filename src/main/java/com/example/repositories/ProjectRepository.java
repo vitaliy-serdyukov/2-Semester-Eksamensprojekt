@@ -107,7 +107,7 @@ public class ProjectRepository {
       PreparedStatement ps = con.prepareStatement("UPDATE projects SET project_name = ?, category = ?," +
           " project_hours_total = ?, project_start_date = ?, project_end_date = ?, description = ? WHERE project_id = ?");
       ps.setString(1, project.getProjectName());
-      ps.setString(2, project.getCategory());
+      ps.setObject(2, project.getCategory());
       ps.setInt(3, project.getHoursTotal());
       ps.setObject(4, project.getStartDate());
       ps.setObject(5, project.getEndDate());

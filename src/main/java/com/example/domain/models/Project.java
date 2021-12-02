@@ -1,5 +1,7 @@
 package com.example.domain.models;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -9,9 +11,15 @@ public class Project {
   private int projectID;
   private String projectName;
   private String category;
+
   private int hoursTotal;
+
+  @DateTimeFormat(pattern = "yyyy-MM-dd")
   private LocalDate startDate;
+
+  @DateTimeFormat(pattern = "yyyy-MM-dd")
   private LocalDate endDate;
+
   private String ownerEmail;
   private String description;
   private User user;
