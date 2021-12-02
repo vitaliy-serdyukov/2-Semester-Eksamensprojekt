@@ -63,18 +63,16 @@ import java.util.ArrayList;
 
       User userLogged = loginService.findUserByEmail(email);
 
-
       // add attribute to session
-      session.setAttribute("userLogged", userLogged);
-      model.addAttribute("userLogged", userLogged);
+      session.setAttribute("userLogged", userLogged); // evt. remove later?
 
-   /*   Call arraylist and sort the projects by users email*/
-      ArrayList<Project> projects = new ProjectService().findAllProjectsUser(email); // DATABASE-agtig kodning???
-      session.setAttribute("projects", projects);
+   /* Call arraylist and sort the projects by users email*/
+      ArrayList<Project> projectsUserLogged = new ProjectService().findAllProjectsUser(email); // DATABASE-agtig kodning???
+
+      session.setAttribute("projectsUserLogged", projectsUserLogged);
 
       //  Assign model attribute to arraylist med  projects
-      model.addAttribute("projects", projects);
-
+      model.addAttribute("projectsUserLogged", projectsUserLogged);
 
       return "dashboard";
     }

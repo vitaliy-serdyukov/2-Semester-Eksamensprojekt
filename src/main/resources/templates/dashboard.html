@@ -30,11 +30,20 @@
 
 <div class="flex-container" style="margin-top: 100px">
     <div class="flex-item2-middle">
-    <!--<div class="flex-item2-left">-->
+
        <!-- <p style="text-align: left">Show available Projects:</p>-->
+
 
         <table style="width:auto">
             <thead>
+            <tr>
+                <th> <button style="padding-right:70px" class="button1" onclick="location.href='/createProject'" type="submit">Add new Project
+                </button></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+
             <tr>
                 <th> Project name</th>
                 <th> Show project</th>
@@ -43,7 +52,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="projectNew : ${projects}">
+            <tr th:each="projectNew : ${projectsUserLogged}">
                 <td th:text="${projectNew.projectName}"></td>
                 <td><a th:href="@{/showProject/{projectName}(projectName=${projectNew.projectName})}">
                     <img class="icon" src="/images/eye2.png" alt="Eye">
