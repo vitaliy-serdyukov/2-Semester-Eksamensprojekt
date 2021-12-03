@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/styling.css" type="text/css">
+    <title>Create task</title>
+
+</head>
+<header>
+    <nav>
+        <ul>
+            <li>
+                <a href="/dashboard">Dashboard</a>
+            </li>
+            <li>
+                <a href="#">Profile</a>
+            </li>
+            <li>
+                <a style="margin-left: 700px" href="/logout"> Logout </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<body>
+
+<div class="element-middle-create-project">
+
+    <form class="create-project" action="#" method="post" th:action="@{/addTask}" th:object="${taskNew}">
+
+        <p>Create new Task here:</p>
+
+        <div class="main">
+            <div class="field">
+                <label for="task_name">Task name:</label>
+                <input type="text" id="task_name" name="task_name" th:field="*{taskName}" required/></td>
+            </div>
+        </div>
+        <div class="field">
+            <label for="hours_total">Hours total:</label>
+            <input type="number" id="hours_total" name="hours_total" th:field="*{hoursTotal}"/></td>
+        </div>
+        <div class="field">
+            <label for="start_date">Start date:</label>
+            <input type="date" id="start_date" name="start_date" th:field="*{startDate}"/></td>
+        </div>
+        <div class="field">
+            <label for="end_date">End date:</label>
+            <input type="date" id="end_date" name="end_date" th:field="*{endDate}"/></td>
+        </div>
+        <div class="field">
+            <label for="description">Description:</label>
+            <input type="text" id="description" name="description" th:field="*{description}"/></td>
+        </div>
+        <div class="button-wrapper-right">
+            <button class="button1"  type="submit">Add Task</button>
+            <!--   <button style="padding-right:70px" class="button1" onclick="location.href='/addSubroject'" type="submit">Add Subproject-->
+            </button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
