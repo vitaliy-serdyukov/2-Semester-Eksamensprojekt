@@ -19,4 +19,11 @@ public class SubprojectService {
     return subprojectRepository.readSubprojectsProject(projectID);
   }
 
+  public Subproject showSubprojectInfo(String subprojectName) {
+    return subprojectRepository.readSubprojectInfo(subprojectName);
+  }
+
+  public void deleteSubproject(String subprojectName) { ////hvorfor kræver kaldet på deleteProject at deleteProject er static??
+    subprojectRepository.deleteSubprojectFromDB(subprojectName);
+  }
 }
