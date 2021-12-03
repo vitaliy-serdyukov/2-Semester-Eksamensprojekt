@@ -18,46 +18,14 @@
                 <a href="#">Profile</a>
             </li>
             <li>
-                <a style="margin-left: 650px" href="/logout"> Logout </a>
+                <a style="margin-left: 700px" href="/logout"> Logout </a>
             </li>
         </ul>
     </nav>
 </header>
+
 <body>
-
 <div class="flex-container" style="margin-top: 100px">
-
-    <div class="flex-item2-left">
-        <p style="text-align: left">Show available Projects:</p>
-
-        <table>
-            <thead>
-            <tr>
-                <th> Project name</th>
-                <th> Show list</th>
-                <th> Remove list</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="projectSelected : ${projectsCurrentUser}">
-                <!--  <td><a th:href="@{/showProject/{projectName}(projectName=${projectNew.projectName})}"
-                         th:value="${projectSelected.projectName}"></a></td>
-  -->             <td th:text="${projectSelected.projectName}"></td>
-                <td><a th:href="@{/showProject/{projectName}(projectName=${projectSelected.projectName})}">
-                    <img class="icon" src="/images/eye2.png" alt="Eye">
-                </a></td>
-                <td><a th:href="@{/deleteProject/{projectName}(projectName=${projectSelected.projectName})}">
-                    <img class="icon" src="/images/trashcan.png" alt="Trashcan">
-                </a></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="flex-item2-middle">
-    </div>
-
-    <div class="flex-item2-right">
         <form style="border: none" action="#" method="post" th:action="@{/updateProject}" th:object="${projectSelected}">
         <table>
             <thead>
@@ -76,8 +44,15 @@
                 <td> <input type="text" th:field="${projectSelected.projectName}" th:value="${projectSelected.projectName}"/></td>
             </tr>
             <tr>
-                <td>Category:</td>
-                <td> <input type="text"  th:field="${projectSelected.category}" th:value="${projectSelected.category}"/></td>
+                <td>Category:
+                <select style="margin-left: 70px" name="category" id="category">  <!--that JDBC does not support Enums, despite MySQL does...-->
+                    <option value="IT">IT</option>
+                    <option value="BYGGERI">Byggeri</option>
+                    <option value="TRANSPORT">Transport</option>
+                    <option value="LANDBRUG">Landbrug</option>
+                    <option value="PRODUKTION">Produktion</option>
+                </select>
+                </td>
             </tr>
             <tr>
                 <td>Hours total:</td>
@@ -107,7 +82,6 @@
             </tbody>
         </table>
         </form>
-    </div>
 </div>
 </body>
 </html>
