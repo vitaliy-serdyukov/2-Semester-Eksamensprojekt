@@ -60,7 +60,11 @@
                 <td><a th:href="@{/deleteProject/{projectName}(projectName=${projectNew.projectName})}">
                     <img class="icon" src="/images/trashcan.png" alt="Trashcan">
                 </a></td>
-                <td></td>
+                <td>
+                    <a th:href="@{/editProject/{projectName}(projectName=${projectNew.projectName})}">
+                        <img class="icon" src="/images/trashcan.png" alt="Trashcan">
+                    </a>
+                </td>
             </tr>
             </tbody>
         </table>
