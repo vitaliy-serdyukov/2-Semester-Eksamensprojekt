@@ -1,6 +1,5 @@
 package com.example.repositories;
 
-import com.example.domain.models.Project;
 import com.example.domain.models.Subproject;
 
 import java.sql.Connection;
@@ -50,7 +49,6 @@ public class SubprojectRepository {
             rs.getObject(6, LocalDate.class),
             rs.getString(7));
         subprojectsTemp.add(tmp);
-        System.out.println(tmp);
       }
 
     } catch (SQLException ex) {

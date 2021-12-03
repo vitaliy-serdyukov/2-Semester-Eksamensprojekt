@@ -43,8 +43,23 @@ form.create-project {
     border: 1px solid black;
 }
 
+form.show-model-info {
+    border-radius: 10px;
+    margin-bottom: 30px;
+    width: max-content;
+    background-color: white;
+    border: 1px solid black;
+}
+
+table.show-model-info {
+
+    border-spacing: 0;
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
 
 
+}
 
 .form-mail {
     border: 1px black;
@@ -89,14 +104,16 @@ label {
 
 table {
     border: 1px solid black;
-    border-radius: 6px;
-    border-spacing: 0;
+    border-radius: 10px;
+/*    border-spacing: 0;*/
     width: auto;
     margin-left: auto;
     margin-right: auto;
     background-color: white;
 
 }
+
+
 
 table.user-info {
     border: 1px solid black;
@@ -107,6 +124,10 @@ table.user-info {
 th, td {
     text-align: left;
     padding: 8px;
+}
+
+th.extra-line-in-top {
+    font-style: italic;
 }
 
 tr { background-color: rgb(255, 255, 255);
@@ -223,6 +244,32 @@ header li a {
 
 
 img.icon{
-width: 25px;
+    width: 25px;
 
+}
+
+th.dashboard-add-button{
+    text-align:center;
+}
+
+button.dashboard-add-button{
+    width: 150px;
+    color: #fff;
+    text-decoration: none;
+    user-select: none;
+    background: rgb(56, 129, 212);
+    padding: .7em 1.5em;
+    outline: none;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    border-radius: 8px;
+}
+
+button.dashboard-add-button:hover {
+    background: rgb(12, 27, 84);
+}
+
+button.dashboard-add-button:active {
+    background: rgb(3, 18, 65);
 }
