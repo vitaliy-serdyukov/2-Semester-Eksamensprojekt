@@ -112,23 +112,21 @@ public class ProjectController {
   }
 
   @GetMapping("/editProject/{projectName}")
-  public String editProject(HttpServletRequest request, Model model,
-                            @PathVariable(value = "projectName") String projectName) { //TO DO path in browser
+  public String editProject(HttpServletRequest request, Model model, @PathVariable(value = "projectName") String projectName) { //TO DO path in browser
     HttpSession session = request.getSession();
-    //  Assign model attribute to arraylist med  projects
-    ArrayList<Project> projectsCurrentUser = (ArrayList) session.getAttribute("projects");
-    model.addAttribute("projectsCurrentUser",projectsCurrentUser );
-
-    Project projectSelected = (Project) session.getAttribute("projectSelected");
-    model.addAttribute("projectSelected", projectSelected);//
-
+    Project projectSelected = projectService.showProjectInfo(projectName);
+    session.setAttribute("projectSelected", projectSelected);
+    model.addAttribute("projectSelected", projectSelected);
     return "dashboardedit";
   }
+
 
   @PostMapping("/updateProject")
   public String updateProject(HttpServletRequest request) throws LoginSampleException {
     //Retrieve request from session
+
     HttpSession session = request.getSession();
+
     // Retrieve values from HTML form via WebRequest
     Project projectToUpdate = (Project) session.getAttribute("projectSelected");
 
