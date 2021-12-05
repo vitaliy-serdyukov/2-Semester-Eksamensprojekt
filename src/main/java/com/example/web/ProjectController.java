@@ -19,20 +19,16 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 
-
 @Controller
 public class ProjectController {
-
 
   private final ProjectService projectService = new ProjectService();
 
 
   @GetMapping("/createProject")
   public String createProject(Model model){
-
     Project projectNew = new Project();
     model.addAttribute("projectNew", projectNew);
-
     return "createproject";
   }
 
@@ -80,7 +76,6 @@ public class ProjectController {
     ArrayList<Project> projects = new ProjectService().findAllProjectsUser(ownerEmail); // DATABASE-agtig kodning???
     session.setAttribute("projects", projects);
 
-
     // Go to page
     return "redirect:/dashboard";
   }
@@ -89,10 +84,6 @@ public class ProjectController {
   public String showProject(HttpServletRequest request, Model model,
                             @PathVariable(value = "projectName") String projectName) {
     HttpSession session = request.getSession();
-
-    //  Assign model attribute to arraylist med  projects
-   /* ArrayList<Project> projectsCurrentUser = (ArrayList) session.getAttribute("projects");*/
-   /* model.addAttribute("projectsCurrentUser", projectsCurrentUser);*/ //fjernes
 
     Project projectSelected = projectService.showProjectInfo(projectName);
     session.setAttribute("projectSelected", projectSelected);
@@ -106,7 +97,6 @@ public class ProjectController {
     session.setAttribute("subprojects", subprojects);// vi take this out of session in SubprojectController ShowSubproject method
 
     model.addAttribute("subprojects", subprojects);
-
 
     return "showproject";
   }
@@ -124,10 +114,9 @@ public class ProjectController {
   @PostMapping("/updateProject")
   public String updateProject(HttpServletRequest request) throws LoginSampleException {
     //Retrieve request from session
-
     HttpSession session = request.getSession();
 
-    // Retrieve values from HTML form via WebRequest
+    // Retrieve values from HTML form via HttpServletRequest
     Project projectToUpdate = (Project) session.getAttribute("projectSelected");
 
     Project projectUpdated = new Project(

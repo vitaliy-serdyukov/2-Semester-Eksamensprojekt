@@ -1,5 +1,7 @@
 package com.example.domain.models;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -9,8 +11,13 @@ public class Subproject {
   private int projectID; // changes here +  in repo?  private String subprojectName;
   private String subprojectName;
   private int hoursTotal;
+
+  @DateTimeFormat(pattern = "yyyy-MM-dd")
   private LocalDate startDate;
+
+  @DateTimeFormat(pattern = "yyyy-MM-dd")
   private LocalDate endDate;
+
   private String description;
 /*  private Project project;*/
 /*  private List<Task> tasksOneSubproject;*/

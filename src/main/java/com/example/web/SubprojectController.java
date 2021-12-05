@@ -5,8 +5,8 @@ import com.example.domain.LoginSampleException;
 import com.example.domain.models.Project;
 import com.example.domain.models.Subproject;
 import com.example.domain.models.Task;
-import com.example.domain.services.ProjectService;
 import com.example.domain.services.SubprojectService;
+import com.example.domain.services.TaskService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,12 +26,11 @@ public class SubprojectController {
 
   private final SubprojectService subprojectService = new SubprojectService();
 
+
   @GetMapping("/createSubproject")
   public String createSubroject(Model model){
-
     Subproject subprojectNew = new Subproject();
     model.addAttribute("subprojectNew", subprojectNew);
-
     return "createsubproject";
   }
 
@@ -68,7 +67,7 @@ public class SubprojectController {
   }
 
 
-  // method for "Add Subproject" fields and button on "dashboardselect"
+  // method for "Add Subproject" fields and button on "createsubproject"
   @PostMapping("/addSubproject")
   public String saveSubproject(HttpServletRequest request, RedirectAttributes redirectAttrs)  {
 
@@ -92,7 +91,7 @@ public class SubprojectController {
     //convert String to LocalDate
     LocalDate subprojectEndDate = LocalDate.parse(subprojectEndDateStr, formatter);
 
-    String projectDescription = request.getParameter("description");
+    String subprojectDescription = request.getParameter("description");
 /*
  if (subprojectName.equals("")) {
       return "redirect:/dashboard";
@@ -100,12 +99,11 @@ public class SubprojectController {
 */
     // Make "subprojectNew" object and assign new values
     Subproject subprojectNew = new Subproject(projectID, subprojectName, hoursTotal, subprojectStartDate,
-        subprojectEndDate, projectDescription);
+        subprojectEndDate, subprojectDescription);
 
     // Work + data is delegated to login service
     subprojectService.createSubproject(subprojectNew);
-    redirectAttrs.addAttribute("projectName", projectSelected.getProjectName()).
-        addFlashAttribute("message", "Redirecting til project page...");
+    redirectAttrs.addAttribute("projectName", projectSelected.getProjectName());
     // Go to page
     return "redirect:/showProject/{projectName}";
   }
@@ -115,41 +113,38 @@ public class SubprojectController {
   public String showSubproject(HttpServletRequest request, Model model,
                             @PathVariable(value = "subprojectName") String subprojectName) {
     HttpSession session = request.getSession();
-
-
-    //  Assign model attribute to arraylist med  projects
-  /*  ArrayList<Subproject> subprojectsCurrentProject = (ArrayList) session.getAttribute("subprojects");
-    model.addAttribute("subprojectsCurrentProject", subprojectsCurrentProject);*/
-
-
     Subproject subprojectSelected = subprojectService.showSubprojectInfo(subprojectName);
     session.setAttribute("subprojectSelected", subprojectSelected);
     model.addAttribute("subprojectSelected", subprojectSelected);
 
+    Task taskNew = new Task();
+    model.addAttribute("taskNew", taskNew);
 
-   /* Task taskNew = new Task();
-    model.addAttribute("taskNew", taskNew);*/
+    ArrayList<Task> tasks = new TaskService().findAllTasksInSubproject(subprojectSelected.getSubprojectID());
+    // DATABASE-agtig kodning???
 
-    // tasks
-   /* ArrayList<Subproject> subprojects = new SubprojectService().findAllSubprojectsInProject(projectSelected.getProjectID()); // DATABASE-agtig kodning???
-
-    session.setAttribute("subprojects", subprojects);
-    model.addAttribute("subprojects", subprojects);*/
-
-
+    session.setAttribute("tasks", tasks);
+    model.addAttribute("tasks", tasks);
     return "showsubproject";
   }
 
   @GetMapping("/deleteSubproject/{subprojectName}")
-  public String deleteSubroject(HttpServletRequest request, RedirectAttributes redirectAttrs, @PathVariable(value = "subprojectName") String subprojectName) {
+  public String deleteSubroject(HttpServletRequest request, RedirectAttributes redirectAttrs,
+                                @PathVariable(value = "subprojectName") String subprojectName) {
     subprojectService.deleteSubproject(subprojectName);
 
     HttpSession session = request.getSession();
     Project projectSelected = (Project) session.getAttribute("projectSelected");
 
-    redirectAttrs.addAttribute("projectName", projectSelected.getProjectName()).
-        addFlashAttribute("message", "Redirecting til project page...");
+    redirectAttrs.addAttribute("projectName", projectSelected.getProjectName());
     return "redirect:/showProject/{projectName}";
   }
 
+  @GetMapping("/returnToProject")
+  public String returnToProject(HttpServletRequest request, RedirectAttributes redirectAttrs) {
+    HttpSession session = request.getSession();
+    Project projectSelected = (Project) session.getAttribute("projectSelected");
+    redirectAttrs.addAttribute("projectName", projectSelected.getProjectName());
+    return "redirect:/showProject/{projectName}";
+  }
 }
