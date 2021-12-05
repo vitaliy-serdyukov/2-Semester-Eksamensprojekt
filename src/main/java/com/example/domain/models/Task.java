@@ -1,19 +1,50 @@
 package com.example.domain.models;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDate;
+
 public class Task {
 
+  private int subprojectID;
   private String taskName;
   private int hoursTotal;
-  private String startDate;
-  private String endDate;
+
+  @DateTimeFormat(pattern = "yyyy-MM-dd")
+  private LocalDate startDate;
+
+  @DateTimeFormat(pattern = "yyyy-MM-dd")
+  private LocalDate endDate;
+
   private String description;
 
-  public Task(String taskName, int hoursTotal, String startDate, String endDate, String description) {
+
+  public Task(int subprojectID, String taskName, int hoursTotal, LocalDate startDate, LocalDate endDate, String description) {
+    this.subprojectID = subprojectID;
     this.taskName = taskName;
     this.hoursTotal = hoursTotal;
     this.startDate = startDate;
     this.endDate = endDate;
     this.description = description;
+  }
+
+  public Task() {
+  }
+
+  public Task(String taskName, int hoursTotal, LocalDate startDate, LocalDate endDate, String description) {
+    this.taskName = taskName;
+    this.hoursTotal = hoursTotal;
+    this.startDate = startDate;
+    this.endDate = endDate;
+    this.description = description;
+  }
+
+  public int getSubprojectID() {
+    return subprojectID;
+  }
+
+  public void setSubprojectID(int subprojectID) {
+    this.subprojectID = subprojectID;
   }
 
   public String getTaskName() {
@@ -32,19 +63,19 @@ public class Task {
     this.hoursTotal = hoursTotal;
   }
 
-  public String getStartDate() {
+  public LocalDate getStartDate() {
     return startDate;
   }
 
-  public void setStartDate(String startDate) {
+  public void setStartDate(LocalDate startDate) {
     this.startDate = startDate;
   }
 
-  public String getEndDate() {
+  public LocalDate getEndDate() {
     return endDate;
   }
 
-  public void setEndDate(String endDate) {
+  public void setEndDate(LocalDate endDate) {
     this.endDate = endDate;
   }
 
@@ -59,7 +90,8 @@ public class Task {
   @Override
   public String toString() {
     return "Task{" +
-        "taskName='" + taskName + '\'' +
+        "subprojectID=" + subprojectID +
+        ", taskName='" + taskName + '\'' +
         ", hoursTotal=" + hoursTotal +
         ", startDate='" + startDate + '\'' +
         ", endDate='" + endDate + '\'' +

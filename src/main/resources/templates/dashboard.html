@@ -37,18 +37,15 @@
         <table style="width:auto">
             <thead>
             <tr>
-                <th> <button style="padding-right:70px" class="button1" onclick="location.href='/createProject'" type="submit">Add new Project
+                <th class="dashboard-add-button" colspan="4"> <button class="dashboard-add-button" onclick="location.href='/createProject'" type="submit">Add new Project
                 </button></th>
-                <th></th>
-                <th></th>
-                <th></th>
             </tr>
 
             <tr>
-                <th> Project name</th>
-                <th> Show project</th>
-                <th> Remove project</th>
-                <th> Edit project</th>
+                <th class="extra-line-in-top"> Project name</th>
+                <th class="extra-line-in-top"> Show project</th>
+                <th class="extra-line-in-top"> Remove project</th>
+                <th class="extra-line-in-top"> Edit project</th>
             </tr>
             </thead>
             <tbody>
@@ -62,7 +59,7 @@
                 </a></td>
                 <td>
                     <a th:href="@{/editProject/{projectName}(projectName=${projectNew.projectName})}">
-                        <img class="icon" src="/images/trashcan.png" alt="Trashcan">
+                        <img class="icon" src="/images/gears.png" alt="Gears">
                     </a>
                 </td>
             </tr>
