@@ -30,49 +30,52 @@
         <form style="border: none" method="get" th:action="@{/createSubproject}">
             <table>
                 <thead>
-                    <tr>
-                        <th>You are in Project:</th>
-                        <th></th>
-                    </tr>
+                <tr>
+                    <th>You are in Project:</th>
+                    <th></th>
+                </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Project ID:</td>
-                        <td th:text="${projectSelected.projectID}"></td>
-                    </tr>
-                    <tr>
-                        <td>Project name:</td>
-                        <td th:text="${projectSelected.projectName}"></td>
-                    </tr>
-                    <tr>
-                        <td>Category:</td>
-                        <td th:text="${projectSelected.category}"></td>
-                    </tr>
-                    <tr>
-                        <td>Hours total:</td>
-                        <td th:text="${projectSelected.hoursTotal}"></td>
-                    </tr>
-                    <tr>
-                        <td>Start date:</td>
-                        <td th:text="${projectSelected.startDate}"></td>
-                    </tr>
-                    <tr>
-                        <td>End date:</td>
-                        <td th:text="${projectSelected.endDate}"></td>
-                    </tr>
-                    <tr>
-                        <td>Owner email:</td>
-                        <td th:text="${projectSelected.ownerEmail}"></td>
-                    </tr>
-                    <tr>
-                        <td>Description:</td>
-                        <td th:text="${projectSelected.description}"></td>
-                    </tr>
-                    <tr>
-                        <td> <button style="padding-right:70px" class="button1" onclick="location.href='/createSubproject'" type="submit">Add new Subproject
-                        </button></td>
-                        <td></td>
-                    </tr>
+                <tr>
+                    <td>Project ID:</td>
+                    <td th:text="${projectSelected.projectID}"></td>
+                </tr>
+                <tr>
+                    <td>Project name:</td>
+                    <td th:text="${projectSelected.projectName}"></td>
+                </tr>
+                <tr>
+                    <td>Category:</td>
+                    <td th:text="${projectSelected.category}"></td>
+                </tr>
+                <tr>
+                    <td>Hours total:</td>
+                    <td th:text="${projectSelected.hoursTotal}"></td>
+                </tr>
+                <tr>
+                    <td>Start date:</td>
+                    <td th:text="${projectSelected.startDate}"></td>
+                </tr>
+                <tr>
+                    <td>End date:</td>
+                    <td th:text="${projectSelected.endDate}"></td>
+                </tr>
+                <tr>
+                    <td>Owner email:</td>
+                    <td th:text="${projectSelected.ownerEmail}"></td>
+                </tr>
+                <tr>
+                    <td>Description:</td>
+                    <td th:text="${projectSelected.description}"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <button style="padding-right:70px" class="button1" onclick="location.href='/createSubproject'"
+                                type="submit">Add new Subproject
+                        </button>
+                    </td>
+                    <td></td>
+                </tr>
                 </tbody>
             </table>
         </form>
@@ -80,7 +83,8 @@
 
 
             <button class="button1" th:href="@{/editProject/{projectName}(projectName=${projectSelected.projectName})}">
-            Edit project</button>
+                Edit project
+            </button>
         </div>
     </div>
 
@@ -93,23 +97,31 @@
                 <th> Subproject name</th>
                 <th> Show list</th>
                 <th> Remove list</th>
+                <th> Edit</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="subprojectNew : ${subprojects}">
-             <td th:text="${subprojectNew.subprojectName}"></td>
+                <td th:text="${subprojectNew.subprojectName}"></td>
+
                 <td><a th:href="@{/showSubproject/{subprojectName}(subprojectName=${subprojectNew.subprojectName})}">
                     <img class="icon" src="/images/eye2.png" alt="Eye">
                 </a></td>
+
                 <td><a th:href="@{/deleteSubproject/{subprojectName}(subprojectName=${subprojectNew.subprojectName})}">
                     <img class="icon" src="/images/trashcan.png" alt="Trashcan">
                 </a></td>
+
+                <td><a th:href="@{/editSubproject/{subprojectName}(subprojectName=${subprojectNew.subprojectName})}">
+                    <img class="icon" src="/images/trashcan.png" alt="Trashcan">
+                </a></td>
+
             </tr>
             </tbody>
         </table>
 
     </div>
-    </div>
+</div>
 
 </body>
 </html>

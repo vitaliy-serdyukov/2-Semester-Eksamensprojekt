@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/styling.css" type="text/css">
+    <title>Project edit</title>
+</head>
+
+<header>
+    <nav>
+        <ul>
+            <li>
+                <a href="/dashboard">Dashboard</a>
+            </li>
+            <li>
+                <a href="#">Profile</a>
+            </li>
+            <li>
+                <a style="margin-left: 700px" href="/logout"> Logout </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+<body>
+<div class="flex-container" style="margin-top: 100px">
+    <form style="border: none" action="#" method="post" th:action="@{/updateSubproject}" th:object="${subProjectSelected}">
+        <table>
+            <thead>
+            <tr>
+                <th>You are editing:</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Project ID:</td>
+                <td th:text="${subProjectSelected.subprojectID}"></td>
+            </tr>
+            <tr>
+                <td>Project name:</td>
+                <td> <input type="text" th:field="${subProjectSelected.subprojectName}" th:value="${subProjectSelected.subprojectName}"/></td>
+            </tr>
+
+            <tr>
+                <td>Hours total:</td>
+                <td> <input type="number"  th:field="${subProjectSelected.hoursTotal}" th:value="${subProjectSelected.hoursTotal}"/></td>
+            </tr>
+            <tr>
+                <td>Start date:</td>
+                <td> <input type="date"  th:field="${subProjectSelected.startDate}" th:required="required" th:text="${subProjectSelected.startDate}"/></td>
+            </tr>
+            <tr>
+                <td>End date:</td>
+                <td> <input type="date"  th:field="${subProjectSelected.endDate}" th:required="required" th:text="${subProjectSelected.endDate}"/></td>
+            </tr>
+            <tr>
+                <td>Description:</td>
+                <td> <input type="text"  th:field="${subProjectSelected.description}" th:value="${subProjectSelected.description}"/></td>
+            </tr>
+            <tr>
+                <td><button class="button1" th:href="@{/updateSubproject}">
+                    UPDATE!</button></td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
+</body>
+</html>

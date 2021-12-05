@@ -1,6 +1,7 @@
 package com.example.web;
 
 
+import com.example.domain.LoginSampleException;
 import com.example.domain.models.Project;
 import com.example.domain.models.Subproject;
 import com.example.domain.models.Task;
@@ -32,6 +33,38 @@ public class SubprojectController {
     model.addAttribute("subprojectNew", subprojectNew);
 
     return "createsubproject";
+  }
+
+  @GetMapping("/editSubproject/{subprojectName}")
+  public String editSubProject(HttpServletRequest request, Model model, @PathVariable(value = "subprojectName") String subProjectName) { //TO DO path in browser
+    HttpSession session = request.getSession();
+    Subproject subProjectSelected = subprojectService.showSubprojectInfo(subProjectName);
+    session.setAttribute("subProjectSelected", subProjectSelected);
+    model.addAttribute("subProjectSelected", subProjectSelected);
+    return "subprojectedit";
+  }
+
+  @PostMapping("/updateSubproject")
+  public String updateSubproject(HttpServletRequest request) throws LoginSampleException {
+    //Retrieve request from session
+
+    HttpSession session = request.getSession();
+
+    // Retrieve values from HTML form via WebRequest
+    Subproject subProjectToUpdate = (Subproject) session.getAttribute("subProjectSelected");
+
+    Subproject subProjectUpdated = new Subproject(
+        (subProjectToUpdate.getSubprojectID()),
+        (request.getParameter("projectName")),
+        (Integer.parseInt(request.getParameter("hoursTotal"))),
+        (LocalDate.parse(request.getParameter("startDate"), DateTimeFormatter.ofPattern("yyyy-MM-dd"))),
+        (LocalDate.parse(request.getParameter("endDate"), DateTimeFormatter.ofPattern("yyyy-MM-dd"))),
+        (request.getParameter("description")));
+
+    subprojectService.updateSubProject(subProjectUpdated);
+
+    // Go to page
+    return "redirect:/dashboard";   // TO DO, evt return to dashboard select
   }
 
 
