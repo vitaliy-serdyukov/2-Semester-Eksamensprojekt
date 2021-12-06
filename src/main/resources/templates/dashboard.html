@@ -46,6 +46,7 @@
                 <th class="extra-line-in-top"> Show project</th>
                 <th class="extra-line-in-top"> Remove project</th>
                 <th class="extra-line-in-top"> Edit project</th>
+                <th class="extra-line-in-top"> Add teammate</th>
             </tr>
             </thead>
             <tbody>
@@ -59,6 +60,11 @@
                 </a></td>
                 <td>
                     <a th:href="@{/editProject/{projectName}(projectName=${projectNew.projectName})}">
+                        <img class="icon" src="/images/gears.png" alt="Gears">
+                    </a>
+                </td>
+                <td>
+                    <a th:href="@{/createTeammate/{projectName}(projectName=${projectNew.projectName})}">
                         <img class="icon" src="/images/gears.png" alt="Gears">
                     </a>
                 </td>

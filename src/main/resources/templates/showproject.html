@@ -113,7 +113,7 @@
                 </a></td>
 
 
-                <td><a th:href="@{/editSubroject/{subprojectName}(subprojectName=${subprojectNew.subprojectName})}">
+                <td><a th:href="@{/editSubproject/{subprojectName}(subprojectName=${subprojectNew.subprojectName})}">
                     <img class="icon" src="/images/gears.png" alt="Gears">
                 </a></td>
 
@@ -122,6 +122,26 @@
         </table>
 
     </div>
+    <div class="flex-show-project-right">
+        <table>
+            <thead>
+            <tr>
+
+                <th colspan="3">Available Subprojects in this Project:</th>
+            </tr>
+            <tr>
+                <th class="extra-line-in-top">Email</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="teammateNew : ${teammates}">
+                <td th:text="${teammateNew}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+
 </div>
 
 </body>

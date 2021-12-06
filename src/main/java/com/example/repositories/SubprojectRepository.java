@@ -85,7 +85,7 @@ public class SubprojectRepository {
     return tmp;
   }
 
-  public void rewriteSubProject(Subproject subProject) throws LoginSampleException {
+  public void rewriteSubProject(Subproject subProject)  {
 
     try {
       Connection con = DBManager.getConnection();
