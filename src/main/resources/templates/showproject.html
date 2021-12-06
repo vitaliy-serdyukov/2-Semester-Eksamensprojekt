@@ -30,12 +30,14 @@
         <form class="show-model-info" method="get" th:action="@{/createSubproject}">
             <table class="show-model-info">
                 <thead>
-                    <tr>
-                        <th>You are in Project:</th>
-                        <th></th>
-                    </tr>
+                <tr>
+                    <th>You are in Project:</th>
+                    <th></th>
+                </tr>
                 </thead>
                 <tbody>
+
+
                     <tr>
                         <td>Project ID:</td>
                         <td th:text="${projectSelected.projectID}"></td>
@@ -80,12 +82,14 @@
                 </tbody>
             </table>
         </form>
+
     </div>
 
     <div class="flex-show-project-right">
           <table>
             <thead>
             <tr>
+
                 <th colspan="3">Available Subprojects in this Project:</th>
             </tr>
             <tr>
@@ -93,26 +97,32 @@
                 <th class="extra-line-in-top">Show</th>
                 <th class="extra-line-in-top">Remove</th>
                 <th class="extra-line-in-top">Edit</th>
+
             </tr>
             </thead>
             <tbody>
             <tr th:each="subprojectNew : ${subprojects}">
-             <td th:text="${subprojectNew.subprojectName}"></td>
+                <td th:text="${subprojectNew.subprojectName}"></td>
+
                 <td><a th:href="@{/showSubproject/{subprojectName}(subprojectName=${subprojectNew.subprojectName})}">
                     <img class="icon" src="/images/eye2.png" alt="Eye">
                 </a></td>
+
                 <td><a th:href="@{/deleteSubproject/{subprojectName}(subprojectName=${subprojectNew.subprojectName})}">
                     <img class="icon" src="/images/trashcan.png" alt="Trashcan">
                 </a></td>
+
+
                 <td><a th:href="@{/editSubroject/{subprojectName}(subprojectName=${subprojectNew.subprojectName})}">
                     <img class="icon" src="/images/gears.png" alt="Gears">
                 </a></td>
+
             </tr>
             </tbody>
         </table>
 
     </div>
-    </div>
+</div>
 
 </body>
 </html>

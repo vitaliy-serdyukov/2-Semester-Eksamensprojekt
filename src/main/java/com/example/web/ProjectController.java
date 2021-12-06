@@ -107,7 +107,7 @@ public class ProjectController {
     Project projectSelected = projectService.showProjectInfo(projectName);
     session.setAttribute("projectSelected", projectSelected);
     model.addAttribute("projectSelected", projectSelected);
-    return "dashboardedit";
+    return "projectedit";
   }
 
 

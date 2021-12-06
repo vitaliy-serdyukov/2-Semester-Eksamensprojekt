@@ -1,5 +1,9 @@
 package com.example.repositories;
 
+
+import com.example.domain.LoginSampleException;
+import com.example.domain.models.Project;
+
 import com.example.domain.models.Subproject;
 
 import java.sql.Connection;
@@ -79,6 +83,25 @@ public class SubprojectRepository {
       System.out.println(ex.getMessage());
     }
     return tmp;
+  }
+
+  public void rewriteSubProject(Subproject subProject) throws LoginSampleException {
+
+    try {
+      Connection con = DBManager.getConnection();
+
+      PreparedStatement ps = con.prepareStatement("UPDATE subprojects SET subproject_name = ?, " +
+          " subproject_hours_total = ?, subproject_start_date = ?, subproject_end_date = ?, subproject_description = ? WHERE subproject_id = ?");
+      ps.setString(1, subProject.getSubprojectName());
+      ps.setInt(2, subProject.getHoursTotal());
+      ps.setObject(3, subProject.getStartDate());
+      ps.setObject(4, subProject.getEndDate());
+      ps.setString(5, subProject.getDescription());
+      ps.setInt(6, subProject.getSubprojectID());
+      ps.executeUpdate();
+    } catch (SQLException ex) {
+      ex.printStackTrace();
+    }
   }
 
   public void deleteSubprojectFromDB(String subprojectName) {

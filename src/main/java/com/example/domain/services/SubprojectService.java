@@ -21,6 +21,11 @@ public class SubprojectService {
     return subprojectRepository.readSubprojectInfo(subprojectName);
   }
 
+  public void updateSubProject(Subproject subProject) throws LoginSampleException
+  {
+    subprojectRepository.rewriteSubProject(subProject);
+  }
+
   public void deleteSubproject(String subprojectName) { ////hvorfor kræver kaldet på deleteProject at deleteProject er static??
     subprojectRepository.deleteSubprojectFromDB(subprojectName);
   }
