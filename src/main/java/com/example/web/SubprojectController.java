@@ -51,8 +51,10 @@ public class SubprojectController {
 
     // Retrieve values from HTML form via WebRequest
     Subproject subProjectToUpdate = (Subproject) session.getAttribute("subProjectSelected");
+    System.out.println(subProjectToUpdate);
 
     Subproject subProjectUpdated = new Subproject(
+        (subProjectToUpdate.getProjectID()),
         (subProjectToUpdate.getSubprojectID()),
         (request.getParameter("projectName")),
         (Integer.parseInt(request.getParameter("hoursTotal"))),
@@ -61,6 +63,7 @@ public class SubprojectController {
         (request.getParameter("description")));
 
     subprojectService.updateSubProject(subProjectUpdated);
+    System.out.println(subProjectUpdated);
 
     // Go to page
     return "redirect:/dashboard";   // TO DO, evt return to dashboard select

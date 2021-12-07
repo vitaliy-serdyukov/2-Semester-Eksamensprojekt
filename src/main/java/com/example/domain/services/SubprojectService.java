@@ -1,5 +1,6 @@
 package com.example.domain.services;
 
+import com.example.domain.LoginSampleException;
 import com.example.domain.models.Subproject;
 import com.example.repositories.SubprojectRepository;
 
@@ -21,8 +22,7 @@ public class SubprojectService {
     return subprojectRepository.readSubprojectInfo(subprojectName);
   }
 
-  public void updateSubProject(Subproject subProject) throws LoginSampleException
-  {
+  public void updateSubProject(Subproject subProject)  {
     subprojectRepository.rewriteSubProject(subProject);
   }
 
