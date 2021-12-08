@@ -42,6 +42,20 @@ public class TeammateRepository {
   }
 
 
+  public void removeTeammate(String teammateEmail, int projectID) {
+
+    try {
+      Connection con = DBManager.getConnection();
+      String SQL = "DELETE FROM teammates WHERE (member_email='" + teammateEmail + "') AND (project_id='" + projectID + "')";
+      PreparedStatement ps = con.prepareStatement(SQL);
+      ps.executeUpdate();
+    } catch (SQLException ex) {
+      ex.printStackTrace();
+    }
+  }
+
+
+
   public int countTeammates (int projectID){
    int amount;
     try {
@@ -61,3 +75,4 @@ public class TeammateRepository {
      return 0;
   }
 }
+
