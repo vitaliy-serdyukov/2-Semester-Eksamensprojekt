@@ -95,8 +95,11 @@ public class ProjectController {
     model.addAttribute("subprojectNew", subprojectNew);
     String teammateNew = new String();
     model.addAttribute("teammateNew", teammateNew);
+
     ArrayList<String> teammates = teammateService.readTeammates(projectSelected.getProjectID());
     model.addAttribute("teammates", teammates);
+    int amountPersonsInTeam = teammateService.countTeammates(projectSelected.getProjectID());
+    model.addAttribute("amountPersonsInTeam", amountPersonsInTeam);
 
     ArrayList<Subproject> subprojects = new SubprojectService().findAllSubprojectsInProject(projectSelected.getProjectID()); // DATABASE-agtig kodning???
     session.setAttribute("subprojects", subprojects);// vi take this out of session in SubprojectController ShowSubproject method
