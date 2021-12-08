@@ -12,7 +12,7 @@ public class ProjectRepository {
 
 
   //For inserting a project into the DB.
-  public void writeProject(Project project) throws LoginSampleException {
+  public Project writeProject(Project project) throws LoginSampleException {
     try {
       Connection con = DBManager.getConnection();
       String SQL = "INSERT INTO projects (project_name, category, project_hours_total, project_start_date," +
@@ -30,6 +30,7 @@ public class ProjectRepository {
     } catch (SQLException ex) {
       ex.printStackTrace();
     }
+    return project;
   }
 
   //For reading a project from DB

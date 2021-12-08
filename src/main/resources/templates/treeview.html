@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/styling.css" type="text/css">
+    <title>Tree view over project</title>
+</head>
+
+<header>
+    <nav>
+        <ul>
+            <li>
+                <a href="/dashboard">Dashboard</a>
+            </li>
+            <li>
+                <a href="#">Profile</a>
+            </li>
+            <li>
+                <a style="margin-left: 650px" href="/logout"> Logout </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<body>
+
+
+<ul class="tree">
+    <li><a>Projects</a></li>
+
+    <ul>
+
+    </ul>
+    </li>
+
+    <ul>
+
+        <tr th:each="projectNew : ${project}">
+            <td th:text="${project}"></td>
+        <!--
+
+        <li><a><tr>
+            <td>Project ID:</td>
+            <td th:text="${projectSelected.ID}"></td>
+        </tr>
+        </a></li>
+
+        <li><a>
+            <tr>
+                <td>Project name:</td>
+                <td th:text="${projectSelected.projectName}"></td>
+            </tr>
+        </a></li>
+        <li><a>
+            <tr>
+                <td>Category:</td>
+                <td th:text="${projectSelected.category}"></td>
+            </tr>
+        </a></li>
+        <li><a>
+            <tr>
+                <td>Hours total:</td>
+                <td th:text="${projectSelected.hoursTotal}"></td>
+            </tr>
+        </a></li>
+        <li><a>
+            <tr>
+                <td>Start date:</td>
+                <td th:text="${projectSelected.startDate}"></td>
+            </tr>
+        </a></li>
+        <li><a>
+            <tr>
+                <td>End date:</td>
+                <td th:text="${projectSelected.endDate}"></td>
+            </tr>
+        </a></li>
+        <li><a>
+            <tr>
+                <td>Description:</td>
+                <td th:text="${projectSelected.description}"></td>
+            </tr>
+        </a></li>
+        <tr>
+
+        </tr>
+        </a>
+        </li>
+        -->
+
+    </ul>
+
+
+
+    <li><a>Subprojects</a></li>
+    <ul>
+        <li><a> <tr th:each="subprojectNew : ${subprojects}">
+            <td th:text="${subprojectNew.subprojectName}"></td></a></li>
+        <li><a></a></li>
+    </ul>
+
+
+
+
+    <li> <a>Tasks</a>
+        <ul>
+            <li><a>
+            <tr th:each="tasksNew : ${Task}">
+            <td th:text="${TasksNew}"></td>
+            </a></li>
+
+            </li>
+        </ul>
+    </li>
+</ul>
+
+
+</div>
+<div class="flex-show-project-right">
+    <table>
+        <thead>
+        <tr>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="teammateNew : ${teammates}">
+            <td th:text="${teammateNew}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    </table>
+    </tbody>
+</div>
+</tbody>
+</body>
+</html>
