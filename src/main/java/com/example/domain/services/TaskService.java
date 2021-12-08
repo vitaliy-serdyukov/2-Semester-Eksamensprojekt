@@ -24,4 +24,8 @@ public class TaskService {
   public void deleteTask(String taskName) { ////hvorfor kræver kaldet på deleteProject at deleteProject er static??
     taskRepository.deleteTaskFromDB(taskName);
   }
+
+  public void updateTask(Task taskUpdated) {
+    taskRepository.rewriteTask(taskUpdated);
+  }
 }

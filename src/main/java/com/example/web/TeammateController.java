@@ -51,7 +51,20 @@ public class TeammateController {
     redirectAttrs.addAttribute("projectName", projectSelected.getProjectName());
     // Go to page
     return "redirect:/showProject/{projectName}";
-
   }
 
+  @GetMapping("/deleteTeammate/{projectName}")
+  public String deleteProject(@PathVariable(value = "projectName") String projectName,
+                              HttpServletRequest request) {
+    HttpSession session = request.getSession();
+    Project projectSelected = (Project) session.getAttribute("projectSelected");
+
+    int projectID = projectSelected.getProjectID();
+
+
+    String teammateEmail = request.getParameter("teammateEmail");
+
+    teammateService.deleteTeammate(teammateEmail, projectID);
+    return "redirect:/dashboard";
+  }
 }
