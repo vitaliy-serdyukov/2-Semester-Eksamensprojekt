@@ -45,8 +45,10 @@ public class TeammateController {
 
     int projectID = projectSelected.getProjectID();
     String teammateEmail = request.getParameter("teammateEmail");
+    int teammateHours = Integer.parseInt(request.getParameter("teammateHours"));
 
-    teammateService.writeTeammate(projectID, teammateEmail);
+    teammateService.writeTeammate(projectID, teammateEmail, teammateHours);
+
 
     redirectAttrs.addAttribute("projectName", projectSelected.getProjectName());
     // Go to page
