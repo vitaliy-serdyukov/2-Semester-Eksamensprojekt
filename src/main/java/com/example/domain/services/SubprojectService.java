@@ -1,5 +1,6 @@
 package com.example.domain.services;
 
+import com.example.domain.LoginSampleException;
 import com.example.domain.models.Subproject;
 import com.example.repositories.SubprojectRepository;
 
@@ -19,6 +20,10 @@ public class SubprojectService {
 
   public Subproject showSubprojectInfo(String subprojectName) {
     return subprojectRepository.readSubprojectInfo(subprojectName);
+  }
+
+  public void updateSubProject(Subproject subProject)  {
+    subprojectRepository.rewriteSubProject(subProject);
   }
 
   public void deleteSubproject(String subprojectName) { ////hvorfor kræver kaldet på deleteProject at deleteProject er static??

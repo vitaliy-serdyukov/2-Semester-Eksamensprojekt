@@ -1,8 +1,10 @@
 package com.example.domain.models;
 
+import com.example.domain.services.SubprojectService;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -23,11 +25,12 @@ public class Project {
   private String ownerEmail;
   private String description;
   private User user;
-  private List<Subproject> subprojectsOneProject;
+ /* private ArrayList<Subproject> subprojectsOneProject;*/
 
 
 
-  public Project(int projectID, String projectName, String category, int hoursTotal, LocalDate startDate, LocalDate endDate, String ownerEmail, String description) {
+  public Project(int projectID, String projectName, String category, int hoursTotal, LocalDate startDate,
+                 LocalDate endDate, String ownerEmail, String description) {
     this.projectID = projectID;
     this.projectName = projectName;
     this.category = category;
@@ -38,7 +41,8 @@ public class Project {
     this.description = description;
   }
 
-  public Project(String projectName, String category, int hoursTotal, LocalDate startDate, LocalDate endDate, String ownerEmail, String description) {
+  public Project(String projectName, String category, int hoursTotal, LocalDate startDate, LocalDate endDate,
+                 String ownerEmail, String description) {
     this.projectName = projectName;
     this.category = category;
     this.hoursTotal = hoursTotal;
@@ -59,13 +63,13 @@ public class Project {
     this.user = user;
   }
 
-  public List<Subproject> getSubprojectsOneProject() {
+ /* public ArrayList<Subproject> getSubprojectsOneProject() {
     return subprojectsOneProject;
   }
 
-  public void setSubprojectsOneProject(List<Subproject> subprojectsOneProject) {
+  public void setSubprojectsOneProject(ArrayList<Subproject> subprojectsOneProject) {
     this.subprojectsOneProject = subprojectsOneProject;
-  }
+  }*/
 
   public int getProjectID() {
     return projectID;

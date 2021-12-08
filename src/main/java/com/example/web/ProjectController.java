@@ -5,6 +5,7 @@ import com.example.domain.models.Project;
 import com.example.domain.models.Subproject;
 import com.example.domain.services.ProjectService;
 import com.example.domain.services.SubprojectService;
+import com.example.domain.services.TeammateService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 public class ProjectController {
 
   private final ProjectService projectService = new ProjectService();
+  private final TeammateService teammateService = new TeammateService();
 
 
   @GetMapping("/createProject")
@@ -91,7 +93,13 @@ public class ProjectController {
 
     Subproject subprojectNew = new Subproject();
     model.addAttribute("subprojectNew", subprojectNew);
+    String teammateNew = new String();
+    model.addAttribute("teammateNew", teammateNew);
 
+    ArrayList<String> teammates = teammateService.readTeammates(projectSelected.getProjectID());
+    model.addAttribute("teammates", teammates);
+    int amountPersonsInTeam = teammateService.countTeammates(projectSelected.getProjectID());
+    model.addAttribute("amountPersonsInTeam", amountPersonsInTeam);
 
     ArrayList<Subproject> subprojects = new SubprojectService().findAllSubprojectsInProject(projectSelected.getProjectID()); // DATABASE-agtig kodning???
     session.setAttribute("subprojects", subprojects);// vi take this out of session in SubprojectController ShowSubproject method
@@ -107,7 +115,7 @@ public class ProjectController {
     Project projectSelected = projectService.showProjectInfo(projectName);
     session.setAttribute("projectSelected", projectSelected);
     model.addAttribute("projectSelected", projectSelected);
-    return "dashboardedit";
+    return "projectedit";
   }
 
 
@@ -130,6 +138,7 @@ public class ProjectController {
     (request.getParameter("description")));
 
     projectService.updateProject(projectUpdated);
+
 
     // Go to page
     return "redirect:/dashboard";   // TO DO, evt return to dashboard select
