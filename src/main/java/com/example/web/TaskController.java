@@ -1,5 +1,6 @@
 package com.example.web;
 
+import com.example.domain.LoginSampleException;
 import com.example.domain.models.Subproject;
 import com.example.domain.models.Task;
 import com.example.domain.services.TaskService;
@@ -81,6 +82,41 @@ public class TaskController {
 
       return "showtask";
     }
+
+
+
+  @GetMapping("/editTask/{taskName}")
+  public String editTask(HttpServletRequest request, Model model, @PathVariable(value = "taskName") String taskName) { //TO DO path in browser
+    HttpSession session = request.getSession();
+    Task taskSelected = taskService.showTaskInfo(taskName);
+    session.setAttribute("taskSelected", taskSelected);
+    model.addAttribute("taskSelected", taskSelected);
+    return "taskedit";
+  }
+
+  @PostMapping("/updateTask")
+  public String updateSubproject(HttpServletRequest request) throws LoginSampleException {
+    //Retrieve request from session
+
+    HttpSession session = request.getSession();
+
+    // Retrieve values from HTML form via WebRequest
+    Task taskToUpdate = (Task) session.getAttribute("taskSelected");
+
+    Task taskUpdated = new Task(
+        (taskToUpdate.getSubprojectID()),
+        (request.getParameter("taskName")),
+        (Integer.parseInt(request.getParameter("hoursTotal"))),
+        (LocalDate.parse(request.getParameter("startDate"), DateTimeFormatter.ofPattern("yyyy-MM-dd"))),
+        (LocalDate.parse(request.getParameter("endDate"), DateTimeFormatter.ofPattern("yyyy-MM-dd"))),
+        (request.getParameter("description")));
+
+    taskService.updateTask(taskUpdated);
+
+
+    // Go to page
+    return "redirect:/dashboard";   // TO DO, evt return to dashboard select
+  }
 
     @GetMapping("/deleteTask/{taskName}")
     public String deleteTask(HttpServletRequest request, RedirectAttributes redirectAttrs, @PathVariable(value = "taskName") String taskName) {

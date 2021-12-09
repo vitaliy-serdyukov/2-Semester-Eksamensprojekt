@@ -35,11 +35,25 @@ public class TeammateRepository {
         teammatesTemp.add(tmp);
       }
 
-    } catch (SQLException ex) {
+    } catch (SQLException | NumberFormatException ex ) {
       System.out.println(ex.getMessage());
     }
     return teammatesTemp;
   }
+
+
+  public void removeTeammate(String teammateEmail, int projectID) {
+
+    try {
+      Connection con = DBManager.getConnection();
+      String SQL = "DELETE FROM teammates WHERE (member_email='" + teammateEmail + "') AND (project_id='" + projectID + "')";
+      PreparedStatement ps = con.prepareStatement(SQL);
+      ps.executeUpdate();
+    } catch (SQLException ex) {
+      ex.printStackTrace();
+    }
+  }
+
 
 
   public int countTeammates (int projectID){
@@ -61,3 +75,4 @@ public class TeammateRepository {
      return 0;
   }
 }
+

@@ -30,13 +30,11 @@
         <form class="show-model-info" method="get" th:action="@{/createSubproject}">
             <table class="show-model-info">
                 <thead>
-                <tr>
-                    <th>You are in Project:</th>
-                    <th></th>
-                </tr>
+
+                    <th>You are in Project: <p th:text="${projectSelected.getProjectName()}"></p></th>
+
                 </thead>
                 <tbody>
-
 
                     <tr>
                         <td>Project ID:</td>
@@ -79,14 +77,46 @@
                                      onclick="location.href='/createSubproject'" type="submit">Add new Subproject
                         </button></td>
                     </tr>
-                </tbody>
+                              </tbody>
+
             </table>
         </form>
 
+        <button style="padding-right:70px" class="button1"
+                     onclick="location.href='/calculateProject'" type="submit">Calculate Project
+        </button>
     </div>
 
+
     <div class="flex-show-project-right">
-          <table>
+        <table>
+            <thead>
+            <tr>
+
+                <th colspan="3">Available Subprojects in this Project:</th>
+            </tr>
+            <tr>
+                <th class="extra-line-in-top">Name</th>
+                <th class="extra-line-in-top">Show</th>
+                <th class="extra-line-in-top">Remove</th>
+                <th class="extra-line-in-top">Edit</th>
+
+            </tr>
+            </thead>
+            <tbody>
+
+                <td><a
+                        hey>
+                </a></td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <div class="flex-show-project-right">
+        <table>
             <thead>
             <tr>
 
@@ -136,6 +166,14 @@
             <tbody>
             <tr th:each="teammateNew : ${teammates}">
                 <td th:text="${teammateNew}"></td>
+                Hvordan får jeg både teammate navn og project id?
+                <td><a th:href="@{/deleteTeammate/{projectName}(projectName=${projectSelected.projectName})}">
+                    <img class="icon" src="/images/trashcan.png" alt="Trashcan">
+                </a></td>
+
+                <td><a th:href="@{/deleteTeammate/{teammateNew}(teammateNew=${teammateNew})}">
+                    <img class="icon" src="/images/trashcan.png" alt="Trashcan">
+                </a></td>
             </tr>
             <tr>
                 <td></td>

@@ -86,7 +86,6 @@ public class SubprojectRepository {
   }
 
   public void rewriteSubProject(Subproject subProject)  {
-
     try {
       Connection con = DBManager.getConnection();
 

@@ -17,7 +17,15 @@ public class TeammateService {
   }
 
 
+  public void deleteTeammate(String teammateEmail, int projectID) {
+    teammateRepository.removeTeammate(teammateEmail, projectID);
+    }
+  }
+
+
+
   public  int countTeammates (int projectID){
      return teammateRepository.countTeammates(projectID);
   }
 }
+

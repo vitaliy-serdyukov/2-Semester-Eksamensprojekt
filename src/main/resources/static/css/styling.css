@@ -27,7 +27,7 @@ li {
 
 form {
     border-radius: 10px;
-    padding: 5px;
+   /* padding: 5px;*/
     margin-bottom: 30px;
     border: 1px solid black;
     background-color: white;
@@ -185,6 +185,14 @@ tr { background-color: rgb(255, 255, 255);
 
 
 .flex-show-project-left {
+    padding: 10px;
+    flex: 45%;
+    margin:10px;
+    border-radius: 10px;
+    align-content: center;
+}
+
+.flex-show-project-middle {
     padding: 10px;
     flex: 45%;
     margin:10px;
