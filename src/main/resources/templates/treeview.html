@@ -5,6 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/styling.css" type="text/css">
+    <link rel="stylesheet" href="/css/stylingconcept.css" type="text/css">
     <title>Tree view over project</title>
 </head>
 
@@ -26,6 +27,8 @@
 <body>
 
 
+<div class="flex-container">
+
 <ul class="tree">
     <li><a>Projects</a></li>
 
@@ -36,50 +39,48 @@
 
     <ul>
 
-        <tr th:each="projectNew : ${project}">
-            <td th:text="${project}"></td>
-        <!--
+       <!-- <tr><td th:text="${projectTree}"></td> </tr>-->
 
         <li><a><tr>
             <td>Project ID:</td>
-            <td th:text="${projectSelected.ID}"></td>
+            <td th:text="${projectTree.projectID}"></td>
         </tr>
         </a></li>
 
         <li><a>
             <tr>
                 <td>Project name:</td>
-                <td th:text="${projectSelected.projectName}"></td>
+                <td th:text="${projectTree.projectName}"></td>
             </tr>
         </a></li>
         <li><a>
             <tr>
                 <td>Category:</td>
-                <td th:text="${projectSelected.category}"></td>
+                <td th:text="${projectTree.category}"></td>
             </tr>
         </a></li>
         <li><a>
             <tr>
                 <td>Hours total:</td>
-                <td th:text="${projectSelected.hoursTotal}"></td>
+                <td th:text="${projectTree.hoursTotal}"></td>
             </tr>
         </a></li>
         <li><a>
             <tr>
                 <td>Start date:</td>
-                <td th:text="${projectSelected.startDate}"></td>
+                <td th:text="${projectTree.startDate}"></td>
             </tr>
         </a></li>
         <li><a>
             <tr>
                 <td>End date:</td>
-                <td th:text="${projectSelected.endDate}"></td>
+                <td th:text="${projectTree.endDate}"></td>
             </tr>
         </a></li>
         <li><a>
             <tr>
                 <td>Description:</td>
-                <td th:text="${projectSelected.description}"></td>
+                <td th:text="${projectTree.description}"></td>
             </tr>
         </a></li>
         <tr>
@@ -87,7 +88,7 @@
         </tr>
         </a>
         </li>
-        -->
+
 
     </ul>
 
@@ -95,7 +96,7 @@
 
     <li><a>Subprojects</a></li>
     <ul>
-        <li><a> <tr th:each="subprojectNew : ${subprojects}">
+        <li><a> <tr th:each="subprojectNew : ${subprojectsTree}">
             <td th:text="${subprojectNew.subprojectName}"></td></a></li>
         <li><a></a></li>
     </ul>
@@ -106,8 +107,8 @@
     <li> <a>Tasks</a>
         <ul>
             <li><a>
-            <tr th:each="tasksNew : ${Task}">
-            <td th:text="${TasksNew}"></td>
+            <tr th:each="tasksNew : ${tasksTree}">
+            <td th:text="${taskNew.taskName}"></td>
             </a></li>
 
             </li>
@@ -124,7 +125,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="teammateNew : ${teammates}">
+        <tr th:each="teammateNew : ${teammatesEmail}">
             <td th:text="${teammateNew}"></td>
         </tr>
         </tbody>
@@ -132,6 +133,7 @@
 
     </table>
     </tbody>
+</div>
 </div>
 </tbody>
 </body>
