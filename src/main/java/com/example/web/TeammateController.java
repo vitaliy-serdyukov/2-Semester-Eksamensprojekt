@@ -56,7 +56,7 @@ public class TeammateController {
   }
 
   @GetMapping("/deleteTeammate/{projectName}")
-  public String deleteProject(@PathVariable(value = "projectName") String projectName,
+  public String deleteProject(Model model, @PathVariable(value = "projectName") String projectName,
                               HttpServletRequest request) {
     HttpSession session = request.getSession();
     Project projectSelected = (Project) session.getAttribute("projectSelected");
@@ -65,6 +65,7 @@ public class TeammateController {
 
 
     String teammateEmail = request.getParameter("teammateEmail");
+    model.addAttribute("teammateEmail", teammateEmail);
 
     teammateService.deleteTeammate(teammateEmail, projectID);
     return "redirect:/dashboard";

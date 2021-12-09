@@ -87,34 +87,6 @@
         </button>
     </div>
 
-
-    <div class="flex-show-project-right">
-        <table>
-            <thead>
-            <tr>
-
-                <th colspan="3">Available Subprojects in this Project:</th>
-            </tr>
-            <tr>
-                <th class="extra-line-in-top">Name</th>
-                <th class="extra-line-in-top">Show</th>
-                <th class="extra-line-in-top">Remove</th>
-                <th class="extra-line-in-top">Edit</th>
-
-            </tr>
-            </thead>
-            <tbody>
-
-                <td><a
-                        hey>
-                </a></td>
-
-            </tr>
-            </tbody>
-        </table>
-    </div>
-
-
     <div class="flex-show-project-right">
         <table>
             <thead>
@@ -166,14 +138,14 @@
             <tbody>
             <tr th:each="teammateNew : ${teammates}">
                 <td th:text="${teammateNew}"></td>
-                Hvordan får jeg både teammate navn og project id?
-                <td><a th:href="@{/deleteTeammate/{projectName}(projectName=${projectSelected.projectName})}">
+                <!--Hvordan får jeg både teammate navn og project id?-->
+                <td><a th:href="@{/deleteTeammate/{teammateEmail}(teammateEmail=${teammateNew})}">
                     <img class="icon" src="/images/trashcan.png" alt="Trashcan">
                 </a></td>
 
-                <td><a th:href="@{/deleteTeammate/{teammateNew}(teammateNew=${teammateNew})}">
+                <!--<td><a th:href="@{/deleteTeammate/{teammateNew}(teammateNew=${teammateNew})}">
                     <img class="icon" src="/images/trashcan.png" alt="Trashcan">
-                </a></td>
+                </a></td>-->
             </tr>
             <tr>
                 <td></td>
