@@ -192,6 +192,14 @@ tr { background-color: rgb(255, 255, 255);
     align-content: center;
 }
 
+.flex-show-project-middle {
+    padding: 10px;
+    flex: 45%;
+    margin:10px;
+    border-radius: 10px;
+    align-content: center;
+}
+
 .flex-show-project-right {
     padding: 10px;
     flex: 45%;
