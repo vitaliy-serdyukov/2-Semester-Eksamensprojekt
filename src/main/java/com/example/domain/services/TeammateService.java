@@ -20,7 +20,6 @@ public class TeammateService {
   public void deleteTeammate(String teammateEmail, int projectID) {
     teammateRepository.removeTeammate(teammateEmail, projectID);
     }
-  }
 
 
 

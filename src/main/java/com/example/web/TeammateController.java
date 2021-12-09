@@ -65,7 +65,8 @@ public class TeammateController {
 
 
     String teammateEmail = request.getParameter("teammateEmail");
-
+    System.out.println();
+    System.out.println(teammateEmail + " " + projectID);
     teammateService.deleteTeammate(teammateEmail, projectID);
     return "redirect:/dashboard";
   }

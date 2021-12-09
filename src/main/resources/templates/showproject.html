@@ -167,12 +167,7 @@
             <tbody>
             <tr th:each="teammateNew : ${teammates}">
                 <td th:text="${teammateNew}"></td>
-                Hvordan får jeg både teammate navn og project id?
-                <td><a th:href="@{/deleteTeammate/{projectName}(projectName=${projectSelected.projectName})}">
-                    <img class="icon" src="/images/trashcan.png" alt="Trashcan">
-                </a></td>
-
-                <td><a th:href="@{/deleteTeammate/{teammateNew}(teammateNew=${teammateNew})}">
+                <td><a th:href="@{/deleteTeammate/{projectName}(projectName=${projectSelected.projectName})}", >
                     <img class="icon" src="/images/trashcan.png" alt="Trashcan">
                 </a></td>
             </tr>
