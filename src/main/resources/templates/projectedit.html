@@ -29,12 +29,13 @@
 // treeview
 
 <div class="flex-container" style="margin-top: 100px">
-        <form style="border: none" action="#" method="post" th:action="@{/updateProject}" th:object="${projectSelected}">
-        <table>
+
+    <div class="flex-show-project-left">
+        <form style="border: 1px solid black" action="#" method="post" th:action="@{/updateProject}" th:object="${projectSelected}">
+        <table style="border: none">
             <thead>
             <tr>
-                <th>You are editing:</th>
-                <th></th>
+                <th colspan="2">You have entered following data for your project with:</th>
             </tr>
             </thead>
             <tbody>
@@ -59,7 +60,7 @@
                 </td>
             </tr>
             <tr>
-                <td>Hours total:</td>
+                <td>Hours total, expected:</td>
                 <td> <input type="number"  th:field="${projectSelected.hoursTotal}" th:value="${projectSelected.hoursTotal}"/></td>
             </tr>
             <tr>
@@ -78,7 +79,7 @@
                 <td>Description:</td>
                 <td> <input type="text"  th:field="${projectSelected.description}" th:value="${projectSelected.description}"/></td>
             </tr>
-            <tr>
+                        <tr>
             <td><button class="button1" th:href="@{/updateProject}">
                 UPDATE!</button></td>
             <td></td>
@@ -87,5 +88,52 @@
         </table>
         </form>
 </div>
+     <div class="flex-show-project-right">
+         <table>
+             <thead>
+             <tr>
+                 <th colspan="2">You have the following calculations:</th>
+             </tr>
+             </thead>
+             <tbody>
+             <tr>
+                 <td>Amount of weekdays available<br>(based on start and end date): </td>
+                 <td th:text="${dayAmountExpected}"/></td>
+             </tr>
+             <tr>
+                 <td>Amount of persons on project:</td>
+                 <td th:text="${teammatesAmount}"/></td>
+             </tr>
+             <tr>
+                 <td>Productivity, hours/day:</td>
+                 <td th:text="${totalHours}"/></td>
+             </tr>
+             <tr>
+                 <td>Amount of days, needed to reach the goal<br>(based on amount of hours): </td>
+                 <td th:text="${dayAmountNeeded}"/></td>
+             </tr>
+             <tr>
+                 <td>Needed end date<br>(if we want to be in time): </td>
+                 <td th:text="${realEndDate}"/></td>
+             </tr>
+             <tr>
+                 <td>Or needed to deliver hours/day :<br> Amount of teammates have to be raised </td>
+                 <td th:text="${neededSpeed}"/></td>
+             </tr>
+             <tr>
+                 <td>Is the time enough to finish the project<br>under current conditions? </td>
+                 <td th:text="${isEnough}"></td>
+                                <!--<td> <div th:if="${isEnough.TRUE}">Yes</div>
+                     <div th:if="${isEnough.FALSE}">No</div></td>-->
+             </tr>
+             </tbody>
+         </table>
+
+
+         </div>
+</div>
 </body>
 </html>
+
+
+
