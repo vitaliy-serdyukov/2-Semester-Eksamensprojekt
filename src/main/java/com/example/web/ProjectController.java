@@ -3,6 +3,7 @@ package com.example.web;
 import com.example.domain.LoginSampleException;
 import com.example.domain.models.Project;
 import com.example.domain.models.Subproject;
+
 import com.example.domain.services.ProjectService;
 import com.example.domain.services.SubprojectService;
 import com.example.domain.services.TeammateService;
@@ -28,7 +29,7 @@ public class ProjectController {
 
 
   @GetMapping("/createProject")
-  public String createProject(Model model){
+  public String createProject(Model model) {
     Project projectNew = new Project();
     model.addAttribute("projectNew", projectNew);
     return "createproject";
@@ -44,7 +45,7 @@ public class ProjectController {
 
     // Retrieve values from HTML form via WebRequest
     String projectName = request.getParameter("projectName");
-    String projectCategory  = request.getParameter("category");
+    String projectCategory = request.getParameter("category");
 
     String hoursTotalStr = request.getParameter("hoursTotal");
     int hoursTotal = Integer.parseInt(hoursTotalStr);
@@ -66,14 +67,14 @@ public class ProjectController {
    /* if (projectName.equals("")) {
       return "redirect:/dashboard";
     } else {*/
-      // Make "projectNew" object and assign new values
-      Project projectNew = new Project(projectName, projectCategory, hoursTotal, projectStartDate, projectEndDate,
-          ownerEmail, projectDescription);
+    // Make "projectNew" object and assign new values
+    Project projectNew = new Project(projectName, projectCategory, hoursTotal, projectStartDate, projectEndDate,
+        ownerEmail, projectDescription);
 
 
-      // Work + data is delegated to login service
-      projectService.createProject(projectNew);
-      session.setAttribute("projectNew", projectNew);
+    // Work + data is delegated to login service
+    projectService.createProject(projectNew);
+    session.setAttribute("projectNew", projectNew);
 
     ArrayList<Project> projects = new ProjectService().findAllProjectsUser(ownerEmail); // DATABASE-agtig kodning???
     session.setAttribute("projects", projects);
@@ -115,6 +116,27 @@ public class ProjectController {
     Project projectSelected = projectService.showProjectInfo(projectName);
     session.setAttribute("projectSelected", projectSelected);
     model.addAttribute("projectSelected", projectSelected);
+
+    int teammatesAmount = new TeammateService().countTeammates(projectSelected.getProjectID());
+    model.addAttribute("teammatesAmount", teammatesAmount);
+
+    double dayAmountNeeded = projectService.calculateDaysNeeded(projectSelected);
+    model.addAttribute("dayAmountNeeded", dayAmountNeeded);
+
+    double dayAmountExpected = projectService.countDaysExpected(projectSelected);
+    model.addAttribute("dayAmountExpected", dayAmountExpected);
+
+    int totalHours = projectService.calculateTotalHoursPerDay(projectSelected);
+    model.addAttribute("totalHours", totalHours);
+
+    LocalDate realEndDate = projectService.countDateEnd(projectSelected);
+    model.addAttribute("realEndDate", realEndDate);
+
+    boolean isEnough = projectService.isTimeEnough(projectSelected);
+    model.addAttribute("isEnough", isEnough);
+
+    double neededSpeed = projectService.calculateSpeedDaily(projectSelected);
+    model.addAttribute("neededSpeed", neededSpeed);
     return "projectedit";
   }
 
@@ -128,14 +150,14 @@ public class ProjectController {
     Project projectToUpdate = (Project) session.getAttribute("projectSelected");
 
     Project projectUpdated = new Project(
-    (projectToUpdate.getProjectID()),
-    (request.getParameter("projectName")),
-    (request.getParameter("category")),
-    (Integer.parseInt(request.getParameter("hoursTotal"))),
-    (LocalDate.parse(request.getParameter("startDate"), DateTimeFormatter.ofPattern("yyyy-MM-dd"))),
-    (LocalDate.parse(request.getParameter("endDate"), DateTimeFormatter.ofPattern("yyyy-MM-dd"))),
-    ((String) session.getAttribute("email")),
-    (request.getParameter("description")));
+        (projectToUpdate.getProjectID()),
+        (request.getParameter("projectName")),
+        (request.getParameter("category")),
+        (Integer.parseInt(request.getParameter("hoursTotal"))),
+        (LocalDate.parse(request.getParameter("startDate"), DateTimeFormatter.ofPattern("yyyy-MM-dd"))),
+        (LocalDate.parse(request.getParameter("endDate"), DateTimeFormatter.ofPattern("yyyy-MM-dd"))),
+        ((String) session.getAttribute("email")),
+        (request.getParameter("description")));
 
     projectService.updateProject(projectUpdated);
 

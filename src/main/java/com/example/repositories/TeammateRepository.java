@@ -35,7 +35,7 @@ public class TeammateRepository {
         teammatesTemp.add(tmp);
       }
 
-    } catch (SQLException ex) {
+    } catch (SQLException | NumberFormatException ex ) {
       System.out.println(ex.getMessage());
     }
     return teammatesTemp;

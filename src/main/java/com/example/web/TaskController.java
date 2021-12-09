@@ -102,7 +102,6 @@ public class TaskController {
 
     // Retrieve values from HTML form via WebRequest
     Task taskToUpdate = (Task) session.getAttribute("taskSelected");
-
     Task taskUpdated = new Task(
         (taskToUpdate.getSubprojectID()),
         (request.getParameter("taskName")),
@@ -111,7 +110,7 @@ public class TaskController {
         (LocalDate.parse(request.getParameter("endDate"), DateTimeFormatter.ofPattern("yyyy-MM-dd"))),
         (request.getParameter("description")));
 
-    taskService.updateTask(taskUpdated);
+    taskService.updateTask(taskUpdated, taskToUpdate.getTaskName());
 
 
     // Go to page

@@ -88,18 +88,18 @@ public class TaskRepository {
     }
   }
 
-  public void rewriteTask(Task taskUpdated) {
+  public void rewriteTask(Task taskUpdated, String oldTaskName) {
     try {
       Connection con = DBManager.getConnection();
 
       PreparedStatement ps = con.prepareStatement("UPDATE tasks SET task_name = ?, " +
-          " task_hours_total = ?, task_date_start = ?, task_date_end = ?, task_description = ? WHERE task_name = ? AND subproject_id = ?");
+          " task_hours_total = ?, task_start_date = ?, task_end_date= ?, task_description = ? WHERE task_name = ? AND subproject_id = ?");
       ps.setString(1, taskUpdated.getTaskName());
       ps.setInt(2, taskUpdated.getHoursTotal());
       ps.setObject(3, taskUpdated.getStartDate());
       ps.setObject(4, taskUpdated.getEndDate());
       ps.setString(5, taskUpdated.getDescription());
-      ps.setString(6, taskUpdated.getTaskName());
+      ps.setString(6, oldTaskName);
       ps.setInt(7,taskUpdated.getSubprojectID());
       ps.executeUpdate();
     } catch (SQLException ex) {

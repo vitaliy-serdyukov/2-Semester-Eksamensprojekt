@@ -4,6 +4,7 @@ import com.example.domain.LoginSampleException;
 import com.example.domain.models.Project;
 
 
+import javax.naming.CommunicationException;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ public class ProjectRepository {
 
 
   //For inserting a project into the DB.
-  public void writeProject(Project project) throws LoginSampleException {
+  public Project writeProject(Project project) throws LoginSampleException {
     try {
       Connection con = DBManager.getConnection();
       String SQL = "INSERT INTO projects (project_name, category, project_hours_total, project_start_date," +
@@ -30,6 +31,7 @@ public class ProjectRepository {
     } catch (SQLException ex) {
       ex.printStackTrace();
     }
+    return project;
   }
 
   //For reading a project from DB
@@ -131,4 +133,25 @@ public class ProjectRepository {
     }
   }
 
+
+  public int getHoursTeam(int projectID){
+    int hoursTotal;
+    try {
+
+      Connection con = DBManager.getConnection();
+      String SQL = "SELECT SUM(teammate_hours) FROM teammates WHERE (project_id='" + projectID + "')";
+      PreparedStatement ps = con.prepareStatement(SQL);
+      ResultSet rs = ps.executeQuery();
+      if (rs.next()) {
+        hoursTotal = rs.getInt(1);
+        System.out.println("total hours" + hoursTotal);
+        return hoursTotal;
+      }
+    } catch (SQLException ex) {
+      ex.printStackTrace();
+    }
+    return 0;
+  }
+
 }
+
