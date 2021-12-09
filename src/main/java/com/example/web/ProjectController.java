@@ -4,8 +4,10 @@ import com.example.domain.LoginSampleException;
 import com.example.domain.models.Project;
 import com.example.domain.models.Subproject;
 
+import com.example.domain.models.Task;
 import com.example.domain.services.ProjectService;
 import com.example.domain.services.SubprojectService;
+import com.example.domain.services.TaskService;
 import com.example.domain.services.TeammateService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -170,5 +172,30 @@ public class ProjectController {
   public String deleteProject(@PathVariable(value = "projectName") String projectName) {
     projectService.deleteProject(projectName);
     return "redirect:/dashboard";
+  }
+
+  @GetMapping("/treeview")
+  public String treeView (HttpServletRequest request, Model model) {
+    HttpSession session = request.getSession();
+
+    Subproject subprojectNew = new Subproject();
+    model.addAttribute("subprojectNew", subprojectNew);
+    Task taskNew = new Task();
+    model.addAttribute("taskNew", taskNew);
+
+
+    Project projectTree = (Project) session.getAttribute("projectSelected");
+    model.addAttribute("projectTree", projectTree);
+
+    ArrayList subprojectsTree = (ArrayList) session.getAttribute("subprojects");
+    model.addAttribute("subprojectsTree", subprojectsTree);
+
+    ArrayList<Task> tasksTree = new TaskService().findAllTasksInSubproject(subprojectNew.getSubprojectID());
+    model.addAttribute("tasksTree", tasksTree);
+
+    ArrayList<String> teammatesEmail = new TeammateService().readTeammates(projectTree.getProjectID());
+    model.addAttribute("teammatesEmail", teammatesEmail);
+
+    return "treeview";
   }
 }
