@@ -28,11 +28,11 @@
 <div class="element-middle-create-project">
     <form class="create-project" action="#" method="post" th:action="@{/addTeammate}" th:object="${projectSelected}">
 
-        <p>Add teammate for project here:</p>
+
 
         <div class="main">
             <div class="field">
-                <p>Project ID:<span th:text="*{projectID}"></span></p>
+                <p>Add teammate for project:<br><b><span th:text="*{projectName}"></span></b></p>
             </div>
             <div class="field">
                 <label for="teammateEmail">Email:</label>

@@ -1,5 +1,6 @@
 package com.example.domain.services;
 
+import com.example.domain.models.Project;
 import com.example.repositories.TeammateRepository;
 
 import java.util.ArrayList;
@@ -21,14 +22,21 @@ public class TeammateService {
     teammateRepository.removeTeammate(teammateEmail, projectID);
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> 8c24c095e0cf18d0025729cffecb16e14e9befea
 
 
 
+=======
+>>>>>>> VitaliysBranch
   public  int countTeammates (int projectID){
      return teammateRepository.countTeammates(projectID);
+  }
+
+  public int calculateTotalHoursPerDay(int projectID) {
+    return teammateRepository.getHoursTeam(projectID);
   }
 }
 
