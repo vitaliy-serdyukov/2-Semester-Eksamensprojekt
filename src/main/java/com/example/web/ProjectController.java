@@ -31,6 +31,9 @@ public class ProjectController {
   public String createProject(Model model) {
     Project projectNew = new Project();
     model.addAttribute("projectNew", projectNew);
+
+    LocalDate dateToday = new DateService().getToday(); // doesn't work yet
+    model.addAttribute("dateToday", dateToday);
     return "createproject";
   }
 
