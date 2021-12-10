@@ -190,14 +190,18 @@ public class ProjectController {
     model.addAttribute("taskNew", taskNew);
 
 
+
     Project projectTree = (Project) session.getAttribute("projectSelected");
     model.addAttribute("projectTree", projectTree);
+    System.out.println(projectTree);
 
-    ArrayList subprojectsTree = (ArrayList) session.getAttribute("subprojects");
+    ArrayList<Subproject> subprojectsTree = (ArrayList<Subproject>) session.getAttribute("subprojects");
     model.addAttribute("subprojectsTree", subprojectsTree);
+    System.out.println(subprojectsTree);
 
     ArrayList<Task> tasksTree = new TaskService().findAllTasksInSubproject(subprojectNew.getSubprojectID());
     model.addAttribute("tasksTree", tasksTree);
+    System.out.println(tasksTree);
 
     ArrayList<String> teammatesEmail = new TeammateService().readTeammates(projectTree.getProjectID());
     model.addAttribute("teammatesEmail", teammatesEmail);

@@ -30,7 +30,7 @@
 <div class="flex-container">
 
 <ul class="tree">
-    <li><a>Projects</a></li>
+    <li><a>Project</a></li>
 
     <ul>
 
@@ -82,39 +82,47 @@
                 <td>Description:</td>
                 <td th:text="${projectTree.description}"></td>
             </tr>
-        </a></li>
+        </a>
+        </li>
         <tr>
 
         </tr>
         </a>
         </li>
-
-
     </ul>
 
 
 
     <li><a>Subprojects</a></li>
     <ul>
-        <li><a> <tr th:each="subprojectNew : ${subprojectsTree}">
-            <td th:text="${subprojectNew.subprojectName}"></td></a></li>
-        <li><a></a></li>
+        <span th:each="subprojectNew : ${subprojectsTree}">
+            <li><a th:text="${subprojectNew.subprojectName}"></a></li>
+        </span>
+      <!--  <li><a></a></li>-->
     </ul>
 
 
 
+    <li><a>Tasks</a></li>
+    <ul>
+        <span th:each="taskNew : ${tasksTree}">
+            <li><a th:text="${taskNew.taskName}"></a></li>
+        </span>
+        <!--  <li><a></a></li>-->
+    </ul>
 
-    <li> <a>Tasks</a>
+
+   <!-- <li> <a>Tasks</a>
         <ul>
             <li><a>
-            <tr th:each="tasksNew : ${tasksTree}">
-            <td th:text="${taskNew.taskName}"></td>
+            <span th:each="tasksNew : ${tasksTree}"
+             th:text="${taskNew.taskName}"></span>
             </a></li>
 
             </li>
         </ul>
     </li>
-</ul>
+</ul>-->
 
 
 </div>
