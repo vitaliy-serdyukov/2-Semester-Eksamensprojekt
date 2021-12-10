@@ -1,9 +1,6 @@
 package com.example.repositories;
 
-import com.example.domain.models.Project;
-
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class TeammateRepository {
@@ -55,7 +52,6 @@ public class TeammateRepository {
   }
 
 
-
   public int countTeammates (int projectID){
    int amount;
     try {
@@ -73,6 +69,24 @@ public class TeammateRepository {
       ex.printStackTrace();
     }
      return 0;
+  }
+
+  public int getHoursTeam(int projectID){
+    int hoursTotal;
+    try {
+      Connection con = DBManager.getConnection();
+      String SQL = "SELECT SUM(teammate_hours) FROM teammates WHERE (project_id='" + projectID + "')";
+      PreparedStatement ps = con.prepareStatement(SQL);
+      ResultSet rs = ps.executeQuery();
+      if (rs.next()) {
+        hoursTotal = rs.getInt(1);
+        System.out.println("total hours" + hoursTotal);
+        return hoursTotal;
+      }
+    } catch (SQLException ex) {
+      ex.printStackTrace();
+    }
+    return 0;
   }
 }
 
