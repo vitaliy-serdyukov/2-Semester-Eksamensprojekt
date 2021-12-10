@@ -1,6 +1,6 @@
 package com.example.web;
 
-import com.example.domain.LoginSampleException;
+import com.example.domain.CustomException;
 import com.example.domain.models.Subproject;
 import com.example.domain.models.Task;
 import com.example.domain.services.TaskService;
@@ -95,7 +95,7 @@ public class TaskController {
   }
 
   @PostMapping("/updateTask")
-  public String updateSubproject(HttpServletRequest request) throws LoginSampleException {
+  public String updateSubproject(HttpServletRequest request) throws CustomException {
     //Retrieve request from session
 
     HttpSession session = request.getSession();

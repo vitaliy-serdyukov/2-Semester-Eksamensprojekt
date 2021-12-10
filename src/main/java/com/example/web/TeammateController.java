@@ -1,12 +1,12 @@
 package com.example.web;
 
+import com.example.domain.CustomException;
 import com.example.domain.models.Project;
-import com.example.domain.models.Subproject;
 import com.example.domain.services.ProjectService;
-import com.example.domain.services.SubprojectService;
 import com.example.domain.services.TeammateService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,18 +35,17 @@ public class TeammateController {
   }
 
   @PostMapping("/addTeammate")
-  public String addTeammate(HttpServletRequest request, RedirectAttributes redirectAttrs)
-                           /* @PathVariable(value = "projectName") String projectName)*/ {
-
-
-
+  public String addTeammate(HttpServletRequest request, RedirectAttributes redirectAttrs) throws CustomException
+    /* @PathVariable(value = "projectName") String projectName)*/ {
     HttpSession session = request.getSession();
     Project projectSelected = (Project) session.getAttribute("projectSelected");
 
     int projectID = projectSelected.getProjectID();
     String teammateEmail = request.getParameter("teammateEmail");
     int teammateHours = Integer.parseInt(request.getParameter("teammateHours"));
-
+    if (teammateHours <= 0) {
+      throw new CustomException("Please, enter a number, which is bigger than 0");
+    }
     teammateService.writeTeammate(projectID, teammateEmail, teammateHours);
 
 
@@ -63,11 +62,17 @@ public class TeammateController {
 
     int projectID = projectSelected.getProjectID();
 
-
     String teammateEmail = request.getParameter("teammateEmail");
     model.addAttribute("teammateEmail", teammateEmail);
 
     teammateService.deleteTeammate(teammateEmail, projectID);
     return "redirect:/dashboard";
+  }
+
+  @ExceptionHandler(CustomException.class)
+  public String handleError(Model model, Exception exception) {
+    model.addAttribute("message", exception.getMessage());
+    return "exceptionpageTeammate";
+
   }
 }
