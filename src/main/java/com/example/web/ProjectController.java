@@ -181,31 +181,31 @@ public class ProjectController {
   }
 
   @GetMapping("/treeview")
-  public String treeView (HttpServletRequest request, Model model) {
+  public String treeView(HttpServletRequest request, Model model) {
     HttpSession session = request.getSession();
-
-    Subproject subprojectNew = new Subproject();
-    model.addAttribute("subprojectNew", subprojectNew);
-    Task taskNew = new Task();
-    model.addAttribute("taskNew", taskNew);
-
 
 
     Project projectTree = (Project) session.getAttribute("projectSelected");
     model.addAttribute("projectTree", projectTree);
-    System.out.println(projectTree);
+
 
     ArrayList<Subproject> subprojectsTree = (ArrayList<Subproject>) session.getAttribute("subprojects");
-    model.addAttribute("subprojectsTree", subprojectsTree);
-    System.out.println(subprojectsTree);
+      model.addAttribute("subprojectsTree", subprojectsTree);
+    for (int i = 0; i < subprojectsTree.size(); i++) {
+      Subproject subprojectTree = subprojectsTree.get(i);
+      model.addAttribute("subprojectTree", subprojectTree);
 
-    ArrayList<Task> tasksTree = new TaskService().findAllTasksInSubproject(subprojectNew.getSubprojectID());
-    model.addAttribute("tasksTree", tasksTree);
-    System.out.println(tasksTree);
+      for (int j = 0; j < subprojectsTree.size(); j++) {
+        ArrayList<Task> tasksTree = new TaskService().findAllTasksInSubproject(subprojectTree.getSubprojectID());
+        model.addAttribute("tasksTree", tasksTree);
+        Task taskTree = new Task();
+        model.addAttribute("taskTree", taskTree);
+      }
+    }
 
-    ArrayList<String> teammatesEmail = new TeammateService().readTeammates(projectTree.getProjectID());
-    model.addAttribute("teammatesEmail", teammatesEmail);
+      ArrayList<String> teammatesEmail = new TeammateService().readTeammates(projectTree.getProjectID());
+      model.addAttribute("teammatesEmail", teammatesEmail);
 
-    return "treeview";
-  }
+      return "treeview";
+    }
 }
