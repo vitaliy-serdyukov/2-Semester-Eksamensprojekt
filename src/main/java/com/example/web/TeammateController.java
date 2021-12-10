@@ -35,8 +35,10 @@ public class TeammateController {
   }
 
   @PostMapping("/addTeammate")
+
   public String addTeammate(HttpServletRequest request, RedirectAttributes redirectAttrs) throws CustomException
     /* @PathVariable(value = "projectName") String projectName)*/ {
+
     HttpSession session = request.getSession();
     Project projectSelected = (Project) session.getAttribute("projectSelected");
 
@@ -54,18 +56,18 @@ public class TeammateController {
     return "redirect:/showProject/{projectName}";
   }
 
-  @GetMapping("/deleteTeammate/{projectName}")
+  @PostMapping("/deleteTeammate{projectName}")
   public String deleteProject(Model model, @PathVariable(value = "projectName") String projectName,
                               HttpServletRequest request) {
+
     HttpSession session = request.getSession();
     Project projectSelected = (Project) session.getAttribute("projectSelected");
 
+    String teammateEmail = request.getParameter("teammateEmail");
     int projectID = projectSelected.getProjectID();
 
-    String teammateEmail = request.getParameter("teammateEmail");
-    model.addAttribute("teammateEmail", teammateEmail);
-
     teammateService.deleteTeammate(teammateEmail, projectID);
+
     return "redirect:/dashboard";
   }
 

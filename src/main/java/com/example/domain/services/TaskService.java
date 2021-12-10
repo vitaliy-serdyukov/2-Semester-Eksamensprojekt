@@ -25,7 +25,7 @@ public class TaskService {
     taskRepository.deleteTaskFromDB(taskName);
   }
 
-  public void updateTask(Task taskUpdated) {
-    taskRepository.rewriteTask(taskUpdated);
+  public void updateTask(Task taskUpdated, String oldTaskName) {
+    taskRepository.rewriteTask(taskUpdated, oldTaskName);
   }
 }
