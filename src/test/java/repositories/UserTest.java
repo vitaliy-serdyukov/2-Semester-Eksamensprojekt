@@ -30,14 +30,35 @@ public class UserTest {
 
         //Arrange
         UserRepository userRepo = new UserRepository();
-        User user3 = new User("ems@123", "123");
+        User userOne = new User("ems@123", "123");
 
         //Act
-        userRepo.returnUserByEmail(user3.getEmail());
+        userRepo.returnUserByEmail(userOne.getEmail());
 
         //Assert
-        assertThrows(LoginSampleException.class, ()-> userRepo.returnUserByEmail(user3.getEmail()));
+        assertThrows(LoginSampleException.class, ()-> userRepo.returnUserByEmail(userOne.getEmail()));
+
+    }
+
+    @Test
+    @DisplayName("Get all users")
+    public void get_AllUser(){
+
+        //Arrange
+        UserRepository userRepo = new UserRepository();
+        User userA = new User("hej@mail", "1234567", "e", "r", "hello", "1234567");
+        User userB = new User("a@123", "12", "karen", "hansen", "byy", "5757575");
+
+
+        //Act
+
+
+        //Assert
+
+
+
 
         }
+
 
 }
