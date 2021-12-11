@@ -51,12 +51,13 @@
             </div>
             <div class="field">
                 <label for="start_date">Start date:</label>
-                <input type="date" id="start_date" name="start_date" th:field="*{startDate}" th:required="required"
-                       th:value="${dateToday}"/>
+                <input type="date" id="start_date" name="start_date" th:field="${projectNew.startDate}"
+                       th:required="required" th:min="${minStartDate}"/>
             </div>
             <div class="field">
                 <label for="end_date">End date:</label>
-                <input type="date" id="end_date" name="end_date" th:field="*{endDate}" th:required="required"/></td>
+                <input type="date" id="end_date" name="end_date" th:field="*{endDate}"
+                       th:required="required"/></td>
             </div>
             <div class="field">
                 <label for="description">Description:</label>
