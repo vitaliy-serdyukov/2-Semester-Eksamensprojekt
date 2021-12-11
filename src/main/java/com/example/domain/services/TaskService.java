@@ -9,7 +9,7 @@ public class TaskService {
 
   private final TaskRepository taskRepository = new TaskRepository();
 
-  public void createTask(Task task)  {
+  public void createTask(Task task) {
     taskRepository.writeTask(task);
   }
 

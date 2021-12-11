@@ -1,6 +1,6 @@
 package com.example.web;
 
-import com.example.domain.LoginSampleException;
+import com.example.domain.CustomException;
 import com.example.domain.models.Project;
 import com.example.domain.models.User;
 import com.example.domain.services.LoginService;
@@ -35,7 +35,7 @@ import java.util.ArrayList;
 
     // gathering data from login form
     @PostMapping("/login")
-    public String loginUser(HttpServletRequest request) throws LoginSampleException {
+    public String loginUser(HttpServletRequest request) throws CustomException {
       //Retrieve request from session
       HttpSession session = request.getSession();
       //Retrieve values from HTML form via HTTPServletRequest
@@ -51,7 +51,7 @@ import java.util.ArrayList;
         // Go to next page after login
         return "redirect:/dashboard";
       } else {
-        throw new LoginSampleException ("User is not exists, please try again");
+        throw new CustomException("User is not exists, please try again");
       }
          }
 
@@ -87,7 +87,7 @@ import java.util.ArrayList;
 
 
     @PostMapping("/register")
-    public String createUser(WebRequest request, Model model) throws LoginSampleException {
+    public String createUser(WebRequest request, Model model) throws CustomException {
 
       //Retrieve values from HTML form via WebRequest
       String email = request.getParameter("email");
@@ -100,12 +100,12 @@ import java.util.ArrayList;
 
       if (!(password1.equals(password2))) {
         // If passwords don't match, an exception is thrown
-        throw new LoginSampleException("The two passwords did not match");
+        throw new CustomException("The two passwords did not match");
       } else {
         // If passwords match, work + data is delegated to login service
         User user = new User(email, password1, firstName, lastName, companyName, phoneNumber);
         if (new LoginService().checkIfUserExistsRegister(user)) {
-          throw new LoginSampleException("There was already a user with this email..\n Please, choose a different one");
+          throw new CustomException("There was already a user with this email..\n Please, choose a different one");
         } else {
           loginService.createUser(user);
           request.setAttribute("user", user, WebRequest.SCOPE_SESSION);
@@ -115,8 +115,8 @@ import java.util.ArrayList;
       return "index";
     }
 
-    //Delete button
-    @ExceptionHandler(LoginSampleException.class)
+
+    @ExceptionHandler(CustomException.class)
     public String handleError(Model model, Exception exception) {
       model.addAttribute("message", exception.getMessage());
       return "exceptionPage";

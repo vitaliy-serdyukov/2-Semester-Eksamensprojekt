@@ -1,14 +1,11 @@
 package com.example.web;
 
-import com.example.domain.LoginSampleException;
+import com.example.domain.CustomException;
 import com.example.domain.models.Project;
 import com.example.domain.models.Subproject;
 
 import com.example.domain.models.Task;
-import com.example.domain.services.ProjectService;
-import com.example.domain.services.SubprojectService;
-import com.example.domain.services.TaskService;
-import com.example.domain.services.TeammateService;
+import com.example.domain.services.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,7 +37,7 @@ public class ProjectController {
 
   // method for "Add project" fields and button on "dashboard"
   @PostMapping("/addProject")
-  public String saveProject(HttpServletRequest request) throws LoginSampleException {
+  public String saveProject(HttpServletRequest request) throws CustomException {
 
     //Retrieve request from session
     HttpSession session = request.getSession();
@@ -115,36 +112,45 @@ public class ProjectController {
   @GetMapping("/editProject/{projectName}")
   public String editProject(HttpServletRequest request, Model model, @PathVariable(value = "projectName") String projectName) { //TO DO path in browser
     HttpSession session = request.getSession();
+
+    CalculatorService calculatorService = new CalculatorService(); // make privat final for whole Class?
+
+
     Project projectSelected = projectService.showProjectInfo(projectName);
     session.setAttribute("projectSelected", projectSelected);
     model.addAttribute("projectSelected", projectSelected);
 
-    int teammatesAmount = new TeammateService().countTeammates(projectSelected.getProjectID());
+    int teammatesAmount = teammateService.countTeammates(projectSelected.getProjectID());
     model.addAttribute("teammatesAmount", teammatesAmount);
 
-    double dayAmountNeeded = projectService.calculateDaysNeeded(projectSelected);
-    model.addAttribute("dayAmountNeeded", dayAmountNeeded);
-
-    double dayAmountExpected = projectService.countDaysExpected(projectSelected);
-    model.addAttribute("dayAmountExpected", dayAmountExpected);
-
-    int totalHours = projectService.calculateTotalHoursPerDay(projectSelected);
+    int totalHours = teammateService.calculateTotalHoursPerDay(projectSelected.getProjectID());
     model.addAttribute("totalHours", totalHours);
 
-    LocalDate realEndDate = projectService.countDateEnd(projectSelected);
+    double dayAmountNeeded = calculatorService.calculateDaysNeeded(projectSelected.getHoursTotal(),
+        projectSelected.getProjectID());
+    model.addAttribute("dayAmountNeeded", dayAmountNeeded);
+
+    double dayAmountExpected = calculatorService.countDaysExpected(projectSelected.getStartDate(),
+        projectSelected.getEndDate());
+    model.addAttribute("dayAmountExpected", dayAmountExpected);
+
+    LocalDate realEndDate = calculatorService.countDateEnd(projectSelected.getStartDate(),
+        projectSelected.getHoursTotal(), projectSelected.getProjectID());
     model.addAttribute("realEndDate", realEndDate);
 
-    boolean isEnough = projectService.isTimeEnough(projectSelected);
+    boolean isEnough = calculatorService.isTimeEnough(projectSelected.getStartDate(), projectSelected.getEndDate(),
+        projectSelected.getHoursTotal(), projectSelected.getProjectID());
     model.addAttribute("isEnough", isEnough);
 
-    double neededSpeed = projectService.calculateSpeedDaily(projectSelected);
+    double neededSpeed = calculatorService.calculateSpeedDaily(projectSelected.getStartDate(), projectSelected.getEndDate(),
+        projectSelected.getHoursTotal());
     model.addAttribute("neededSpeed", neededSpeed);
     return "projectedit";
   }
 
 
   @PostMapping("/updateProject")
-  public String updateProject(HttpServletRequest request) throws LoginSampleException {
+  public String updateProject(HttpServletRequest request) throws CustomException {
     //Retrieve request from session
     HttpSession session = request.getSession();
 

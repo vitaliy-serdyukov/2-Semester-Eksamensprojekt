@@ -1,9 +1,6 @@
 package com.example.repositories;
 
 
-import com.example.domain.LoginSampleException;
-import com.example.domain.models.Project;
-
 import com.example.domain.models.Subproject;
 
 import java.sql.Connection;

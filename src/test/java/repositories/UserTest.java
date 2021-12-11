@@ -1,9 +1,13 @@
 package repositories;
-import com.example.domain.LoginSampleException;
+import com.example.domain.CustomException;
 import com.example.domain.models.User;
+import com.example.domain.services.LoginService;
 import com.example.repositories.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import javax.security.auth.login.LoginException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class UserTest {
@@ -21,7 +25,7 @@ public class UserTest {
         userRepo.dbWrite(user1);
 
         //Assert
-        assertThrows(LoginSampleException.class, () -> userRepo.dbWrite(user1));
+        assertThrows(LoginException.class, () -> userRepo.dbWrite(user1));
     }
 
     @Test
@@ -36,7 +40,7 @@ public class UserTest {
         userRepo.returnUserByEmail(userOne.getEmail());
 
         //Assert
-        assertThrows(LoginSampleException.class, ()-> userRepo.returnUserByEmail(userOne.getEmail()));
+        assertThrows(LoginException.class, ()-> userRepo.returnUserByEmail(userOne.getEmail()));
 
     }
 
@@ -55,7 +59,7 @@ public class UserTest {
 
         //Assert
 
-
+       // assertThrows(CustomException.class, ()-> userRepo.returnUserByEmail(user3.getEmail()));
 
 
         }

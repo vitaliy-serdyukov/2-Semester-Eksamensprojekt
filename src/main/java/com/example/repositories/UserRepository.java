@@ -71,5 +71,4 @@ public class UserRepository {
         }
         return resSet;
     }
-
 }

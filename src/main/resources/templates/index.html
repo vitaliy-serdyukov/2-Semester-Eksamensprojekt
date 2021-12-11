@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -13,24 +12,18 @@
 <div class="wrapper fadeInDown">
     <div id="formContent">
 
-
         <h2 class="active"> Sign In </h2>
 
         <form name="login" action="/login" method="POST">
             <!--textbox for email-->
-            <input type="text" id="email" name="email" placeholder="someone@mail.com" required/>
+            <input type="email" id="email" name="email" placeholder="someone@mail.com" required/>
             <!--textbox for password-->
             <input type="password" id="password" name="password" placeholder="*********" required/>
             <!--button-->
-            <!--<button class="fadeIn fourth" type="submit">Login</button>
-            <button class="fadeIn fourth" onclick="location.href='/signup'" type="button">Sign up</button>-->
-
             <input type="submit" class="fadeIn fourth" value="Log In" style="margin-bottom: 20px; margin-top: 20px" >
             <input type="button" class="fadeIn fourth" onclick="location.href='/signup'" value="Sign up">
         </form>
-
     </div>
 </div>
-
 </body>
 </html>
