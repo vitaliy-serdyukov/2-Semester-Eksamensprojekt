@@ -13,7 +13,8 @@ body {
 }
 
 a {
-  color: #92badd;
+  color:black;
+/*  color: #92badd;*/
   display:inline-block;
   text-decoration: none;
   font-weight: 400;
@@ -333,7 +334,7 @@ input[type=text]::placeholder {
 
 
 
- new tree
+/* new tree*/
 
 .content {
   width:500px;
@@ -399,6 +400,7 @@ ul.tree>li:after {
   border: 1px #000000 solid;
   border-radius: 5px;
   padding:2px 5px;
+  background-color: white;
 }
 
 .tree li a:hover, .tree li a:hover+ul li a,

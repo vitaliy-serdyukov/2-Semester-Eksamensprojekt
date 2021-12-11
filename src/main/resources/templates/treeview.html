@@ -6,6 +6,8 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/styling.css" type="text/css">
     <link rel="stylesheet" href="/css/stylingconcept.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/styling.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/stylingconcept.css" type="text/css">
     <title>Tree view over project</title>
 </head>
 
@@ -28,11 +30,15 @@
 
 
 <div class="flex-container">
+    <div class="flex-show-project-left">
+
 
 <ul class="tree">
-    <li><a>Projects</a></li>
+  <!--  <ul>-->
+    <li><a>Project</a></li>
 
     <ul>
+
 
     </ul>
     </li>
@@ -76,42 +82,48 @@
                 <td>Description:</td>
                 <td th:text="${projectTree.description}"></td>
             </tr>
-        </a></li>
-        <tr>
-
-        </tr>
         </a>
         </li>
 
+        </li>
+ <!--   </ul>-->
 
-    </ul>
-
-
-
-    <li><a>Subprojects</a></li>
-    <ul>
-        <li><a> <tr th:each="subprojectNew : ${subprojectsTree}">
-            <td th:text="${subprojectNew.subprojectName}"></td></a></li>
-        <li><a></a></li>
-    </ul>
-
-
-
-
-    <li> <a>Tasks</a>
-        <ul>
-            <li><a>
-            <tr th:each="tasksNew : ${tasksTree}">
-            <td th:text="${taskNew.taskName}"></td>
-            </a></li>
-
-            </li>
-        </ul>
-    </li>
 </ul>
+    <ul>
+            <ul>
+    <li><a>Subprojects</a></li>
+<ul>
+                <span th:each="subprojectTree : ${subprojectsTree}">
+                <li><a th:text="${subprojectTree.subprojectName}"></a></li>
 
+                  <ul>
+
+                <span th:each="taskTree : ${tasksTree}">
+                <li><a th:text="${taskTree.taskName}"></a></li>
+              </ul>
+
+
+
+<!--<div th:each="classroom : ${classroomList}">
+    <div>"${classroom.name}"</div>
+    <ul>
+      <div th:each="student : ${classroom.studentList}">
+         <li>"${student.name}"</li>
+      </div>
+    </ul>
+</div>-->
+
+            <!--<div th:each="subprojectTree : ${subprojectsTree}">
+                <div th:text="${subprojectTree.subprojectName}">
+
+                </div>
+                    <ul>
+                        <div th:each="taskTree : ${tasksTree}">
+                <li><a th:text="${taskTree.taskName}"></a></li>
+              </ul>   -->
 
 </div>
+
 <div class="flex-show-project-right">
     <table>
         <thead>

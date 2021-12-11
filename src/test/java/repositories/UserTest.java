@@ -1,13 +1,9 @@
 package repositories;
 import com.example.domain.CustomException;
 import com.example.domain.models.User;
-import com.example.domain.services.LoginService;
 import com.example.repositories.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import javax.security.auth.login.LoginException;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class UserTest {
@@ -25,7 +21,7 @@ public class UserTest {
         userRepo.dbWrite(user1);
 
         //Assert
-        assertThrows(LoginException.class, () -> userRepo.dbWrite(user1));
+        assertThrows(CustomException.class, () -> userRepo.dbWrite(user1));
     }
 
     @Test
@@ -34,35 +30,14 @@ public class UserTest {
 
         //Arrange
         UserRepository userRepo = new UserRepository();
-        User userOne = new User("ems@123", "123");
+        User user3 = new User("ems@123", "123");
 
         //Act
-        userRepo.returnUserByEmail(userOne.getEmail());
+        userRepo.returnUserByEmail(user3.getEmail());
 
         //Assert
-        assertThrows(LoginException.class, ()-> userRepo.returnUserByEmail(userOne.getEmail()));
-
-    }
-
-    @Test
-    @DisplayName("Get all users")
-    public void get_AllUser(){
-
-        //Arrange
-        UserRepository userRepo = new UserRepository();
-        User userA = new User("hej@mail", "1234567", "e", "r", "hello", "1234567");
-        User userB = new User("a@123", "12", "karen", "hansen", "byy", "5757575");
-
-
-        //Act
-
-
-        //Assert
-
-       // assertThrows(CustomException.class, ()-> userRepo.returnUserByEmail(user3.getEmail()));
-
+        assertThrows(CustomException.class, ()-> userRepo.returnUserByEmail(user3.getEmail()));
 
         }
-
 
 }

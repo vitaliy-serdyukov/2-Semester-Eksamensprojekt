@@ -45,12 +45,14 @@
             </tr>
             <tr>
                 <td>Project name:</td>
-                <td> <input type="text" th:field="${projectSelected.projectName}" th:value="${projectSelected.projectName}"/></td>
+                <td> <input type="text" th:field="${projectSelected.projectName}"
+                            th:value="${projectSelected.projectName}"/></td>
             </tr>
             <tr>
                 <td>Category:</td>
                 <td>
-                    <select name="category" id="category">  <!--that JDBC does not support Enums, despite MySQL does...-->
+                    <select name="category" id="category">  <!--that JDBC does not support Enums,
+                                                             despite MySQL does...-->
                         <option value="IT">IT</option>
                         <option value="BYGGERI">Byggeri</option>
                         <option value="TRANSPORT">Transport</option>
@@ -61,15 +63,18 @@
             </tr>
             <tr>
                 <td>Hours total, expected:</td>
-                <td> <input type="number"  th:field="${projectSelected.hoursTotal}" th:value="${projectSelected.hoursTotal}"/></td>
+                <td> <input type="number"  th:field="${projectSelected.hoursTotal}"
+                            th:value="${projectSelected.hoursTotal}"/></td>
             </tr>
             <tr>
                 <td>Start date:</td>
-                <td> <input type="date"  th:field="${projectSelected.startDate}" th:required="required" th:value="${projectSelected.startDate}"/></td>
+                <td> <input type="date"  th:field="${projectSelected.startDate}" th:required="required"
+                            th:value="${projectSelected.startDate}"/></td>
             </tr>
             <tr>
                 <td>End date:</td>
-                <td> <input type="date"  th:field="${projectSelected.endDate}" th:required="required" th:value="${projectSelected.endDate}"/></td>
+                <td> <input type="date"  th:field="${projectSelected.endDate}" th:required="required"
+                            th:value="${projectSelected.endDate}"/></td>
             </tr>
             <tr>
                 <td>Owner email:</td>
@@ -77,9 +82,10 @@
             </tr>
             <tr>
                 <td>Description:</td>
-                <td> <input type="text"  th:field="${projectSelected.description}" th:value="${projectSelected.description}"/></td>
+                <td> <input type="text"  th:field="${projectSelected.description}"
+                            th:value="${projectSelected.description}"/></td>
             </tr>
-                        <tr>
+            <tr>
             <td><button class="button1" th:href="@{/updateProject}">
                 UPDATE!</button></td>
             <td></td>
