@@ -25,7 +25,7 @@ public class Project {
   private String ownerEmail;
   private String description;
   private User user;
- /* private ArrayList<Subproject> subprojectsOneProject;*/
+  private ArrayList<Subproject> subprojectsOneProject = new SubprojectService().findAllSubprojectsInProject(projectID);
 
 
 
@@ -63,13 +63,13 @@ public class Project {
     this.user = user;
   }
 
- /* public ArrayList<Subproject> getSubprojectsOneProject() {
+  public ArrayList<Subproject> getSubprojectsOneProject() {
     return subprojectsOneProject;
   }
 
   public void setSubprojectsOneProject(ArrayList<Subproject> subprojectsOneProject) {
     this.subprojectsOneProject = subprojectsOneProject;
-  }*/
+  }
 
   public int getProjectID() {
     return projectID;

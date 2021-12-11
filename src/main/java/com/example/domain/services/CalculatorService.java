@@ -16,7 +16,7 @@ public class CalculatorService {
   public double calculateDaysNeeded(int hoursTotal, int projectID) { // days needed
     double totalHoursTeam = (double) teammateRepository.getHoursTeam(projectID);
     double dayAmountTemp =  hoursTotal / totalHoursTeam;
-  /*  BigDecimal bd = new BigDecimal(dayAmountTemp).setScale(2, RoundingMode.HALF_UP);
+   /* BigDecimal bd = new BigDecimal(dayAmountTemp).setScale(2, RoundingMode.HALF_UP);
     return bd.doubleValue();*/
      return Math.round(dayAmountTemp * 100.0) / 100.0;
   }
@@ -53,7 +53,7 @@ public class CalculatorService {
       }
       cal1.add(Calendar.DATE,1);
     }
-    return (double) numberDaysExpected;
+    return numberDaysExpected;
 
   }
 
