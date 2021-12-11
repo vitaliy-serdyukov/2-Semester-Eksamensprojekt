@@ -8,6 +8,7 @@ import com.example.domain.models.Task;
 import com.example.domain.services.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,6 +32,10 @@ public class ProjectController {
   public String createProject(Model model) {
     Project projectNew = new Project();
     model.addAttribute("projectNew", projectNew);
+
+    LocalDate minStartDate = new DateService().getToday();
+    model.addAttribute("minStartDate", minStartDate);
+
     return "createproject";
   }
 
@@ -59,13 +64,20 @@ public class ProjectController {
     //convert String to LocalDate
     LocalDate projectEndDate = LocalDate.parse(projectEndDateStr, formatter);
 
+     boolean isValidEndDate = new DateService().isValidEndDate(projectStartDate, projectEndDate);
+
+     if (!isValidEndDate){
+        throw new CustomException("Entered end date is wrong, please, choose end date as minimum" +
+            "as the next day after start date");
+     }
+
     // Retrieve "email" String object from HTTP session
     String ownerEmail = (String) session.getAttribute("email");
     String projectDescription = request.getParameter("description");
 
-   /* if (projectName.equals("")) {
-      return "redirect:/dashboard";
-    } else {*/
+    if (projectName == null || projectName.trim().equals( "" )) {
+      throw new CustomException("The project name cannot be empty, please, try again");
+    }
     // Make "projectNew" object and assign new values
     Project projectNew = new Project(projectName, projectCategory, hoursTotal, projectStartDate, projectEndDate,
         ownerEmail, projectDescription);
@@ -208,4 +220,11 @@ public class ProjectController {
 
       return "treeview";
     }
+
+  @ExceptionHandler(CustomException.class)
+  public String handleError(Model model, Exception exception) {
+    model.addAttribute("message", exception.getMessage());
+    return "exceptionpageProject";
+
+  }
 }

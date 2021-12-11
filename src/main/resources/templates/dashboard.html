@@ -5,6 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/styling.css" type="text/css">
+  <!--  <link rel="stylesheet" href="/css/stylingconcept.css" type="text/css">-->
     <title>Dashboard</title>
 
 
@@ -34,10 +35,10 @@
        <!-- <p style="text-align: left">Show available Projects:</p>-->
 
 
-        <table style="width:auto">
+        <table>
             <thead>
             <tr>
-                <th class="dashboard-add-button" colspan="4"> <button class="dashboard-add-button" onclick="location.href='/createProject'" type="submit">Add new Project
+                <th class="dashboard-add-button" colspan="4"> <button onclick="location.href='/createProject'" type="submit">Add new Project
                 </button></th>
             </tr>
 
@@ -45,7 +46,7 @@
                 <th class="extra-line-in-top"> Project<br>name</th>
                 <th class="extra-line-in-top"> Show<br>project</th>
                 <th class="extra-line-in-top"> Remove<br>project</th>
-                <th class="extra-line-in-top"> Calculate and<br> edit<br> project</th>
+         <!--       <th class="extra-line-in-top"> Calculate and<br> edit<br> project</th>-->
             <!--    <th class="extra-line-in-top"> Add<br>teammate</th>-->
             </tr>
             </thead>
@@ -58,11 +59,11 @@
                 <td><a th:href="@{/deleteProject/{projectName}(projectName=${projectNew.projectName})}">
                     <img class="icon" src="/images/trashcan.png" alt="Trashcan">
                 </a></td>
-                <td>
+                <!--<td>
                     <a th:href="@{/editProject/{projectName}(projectName=${projectNew.projectName})}">
                         <img class="icon" src="/images/gears.png" alt="Gears">
                     </a>
-                </td>
+                </td>-->
                <!-- <td>
                     <a th:href="@{/createTeammate/{projectName}(projectName=${projectNew.projectName})}">
                         <img class="icon" src="/images/people.jpg" alt="Gears">

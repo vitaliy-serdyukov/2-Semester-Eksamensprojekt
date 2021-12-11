@@ -45,9 +45,7 @@ public class TeammateController {
     int projectID = projectSelected.getProjectID();
     String teammateEmail = request.getParameter("teammateEmail");
     int teammateHours = Integer.parseInt(request.getParameter("teammateHours"));
-    if (teammateHours <= 0) {
-      throw new CustomException("Please, enter a number, which is bigger than 0");
-    }
+
     teammateService.writeTeammate(projectID, teammateEmail, teammateHours);
 
 
@@ -69,12 +67,5 @@ public class TeammateController {
     teammateService.deleteTeammate(teammateEmail, projectID);
 
     return "redirect:/dashboard";
-  }
-
-  @ExceptionHandler(CustomException.class)
-  public String handleError(Model model, Exception exception) {
-    model.addAttribute("message", exception.getMessage());
-    return "exceptionpageTeammate";
-
   }
 }
