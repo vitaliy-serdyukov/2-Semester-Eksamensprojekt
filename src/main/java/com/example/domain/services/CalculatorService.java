@@ -2,8 +2,6 @@ package com.example.domain.services;
 
 import com.example.repositories.TeammateRepository;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Calendar;
