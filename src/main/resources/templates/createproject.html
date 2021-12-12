@@ -5,10 +5,11 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/styling.css" type="text/css">
+    <link rel="stylesheet" href="/css/animation.css" type="text/css">
     <title>Create project</title>
-
 </head>
 <header>
+    <div class="wrapper fadeInDown">
     <nav>
         <ul>
             <li>
@@ -22,9 +23,11 @@
             </li>
         </ul>
     </nav>
+    </div>
 </header>
 <body>
 
+<div class="wrapper fadeInDown">
 <div class="element-middle-create-project">
     <form class="create-project" action="#" method="post" th:action="@{/addProject}" th:object="${projectNew}">
 
@@ -33,7 +36,7 @@
         <div class="main">
              <div class="field">
                  <label for="project_name">Project name:</label>
-                 <input type="text" id="project_name" name="project_name" th:field="*{projectName}" required/></td>
+                 <input type="text" max="30" maxlength="100" id="project_name" name="project_name" th:field="*{projectName}" required/></td>
              </div>
              <div class="field">
                 <label for="category">Category:</label> <!--have tried the solution with Enum as well, the problem is-->
@@ -61,13 +64,18 @@
             </div>
             <div class="field">
                 <label for="description">Description:</label>
-                <input type="" id="description" name="description" th:field="*{description}"/></td>
-            </div>
+            <textarea maxlength="100" name="description" id="description" th:field="*{description}">  </textarea>
+        </div>
+          <!--  <div class="field">
+                <label for="description">Description:</label>
+                <input type="text" maxlength="100" id="description" name="description" th:field="*{description}"/></td>
+            </div>-->
             <div class="button-wrapper-right">
                 <button class="add-project" type="submit">Add Project</button>
             </div>
         </div>
     </form>
   </div>
+</div>
 </body>
 </html>

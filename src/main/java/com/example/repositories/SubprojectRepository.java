@@ -106,7 +106,7 @@ public class SubprojectRepository {
   public void deleteSubprojectFromDB(String subprojectName) {
     try {
       Connection con = DBManager.getConnection();
-      String SQL = "DELETE FROM ? WHERE subproject_name = ?";
+      String SQL = "DELETE FROM subprojects WHERE subproject_name = ?";
       PreparedStatement ps = con.prepareStatement(SQL);
       ps.setString(1, subprojectName);
       ps.executeUpdate();

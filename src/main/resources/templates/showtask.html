@@ -5,10 +5,12 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/styling.css" type="text/css">
+    <link rel="stylesheet" href="/css/animation.css" type="text/css">
     <title>Show task</title>
 </head>
 
 <header>
+    <div class="wrapper fadeInDown">
     <nav>
         <ul>
             <li>
@@ -18,15 +20,20 @@
                 <a href="#">Profile</a>
             </li>
             <li>
+                <a href="/returnToSubproject">Back to subproject</a>
+            </li>
+            <li>
                 <a style="margin-left: 650px" href="/logout"> Logout </a>
             </li>
         </ul>
     </nav>
+    </div>
 </header>
 <body>
 
+<div class="wrapper fadeInDown">
 <div class="flex-container">
-    <div class="flex-show-project-left">
+    <div class="flex-show-item50-left">
         <!--<form style="border: none" method="get" th:action="@{/createTask}">-->
             <table>
                 <thead>
@@ -61,12 +68,9 @@
                     <td th:text="${taskSelected.description}"></td>
                 </tr>
                 <tr>
-                    <td><button class="button1" th:href="@{/editTask/{taskName}(taskName=${taskSelected.taskName})}">
+                    <td class="centered-button" colspan="2"><button class="button1"
+                                                 th:href="@{/editTask/{taskName}(taskName=${taskSelected.taskName})}">
                         Edit task</button>
-                    </td>
-                    <td>
-                        <button style="padding-right: 70px" class="button1"
-                                onclick="location.href='/returnToSubproject'"  type="submit">Back to subproject</button>
                     </td>
                 </tr>
                 </tbody>
@@ -74,5 +78,6 @@
         </form>
     </div>
     </div>
+</div>
 </body>
 </html>

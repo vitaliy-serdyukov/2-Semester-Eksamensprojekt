@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/styling.css" type="text/css">
-   <!-- <link rel="stylesheet" href="/css/stylingconcept.css" type="text/css">-->
+    <link rel="stylesheet" href="/css/animation.css" type="text/css">
     <title>Project edit</title>
 </head>
 
@@ -33,9 +33,9 @@
 
 <div class="wrapper fadeInDown">
 <div class="flex-container">
-    <div class="flex-show-project-left">
-        <form class="edit-calculate" action="#" method="post" th:action="@{/updateProject}" th:object="${projectSelected}">
-        <table class="edit-calculate">
+    <div class="flex-show-item50-left">
+        <form action="#" method="post" th:action="@{/updateProject}" th:object="${projectSelected}">
+        <table class="no-shadow">
             <thead>
             <tr>
                 <th colspan="2">You have entered following data for your project with:</th>
@@ -89,14 +89,14 @@
                             th:value="${projectSelected.description}"/></td>
             </tr>
             <tr>
-            <td colspan="2"><button th:href="@{/updateProject}">
+            <td class="centered-button" colspan="2"><button th:href="@{/updateProject}">
                 Update project</button></td>
             </tr>
             </tbody>
         </table>
         </form>
 </div>
-     <div class="flex-show-project-right">
+     <div class="flex-show-item50-right">
          <table>
              <thead>
              <tr>
