@@ -12,7 +12,7 @@ public class ProjectRepository {
 
 
   //For inserting a project into the DB.
-  public Project writeProject(Project project) throws CustomException {
+  public void writeProject(Project project) throws CustomException {
     try {
       Connection con = DBManager.getConnection();
       String SQL = "INSERT INTO projects (project_name, category, project_hours_total, project_start_date," +
@@ -30,21 +30,7 @@ public class ProjectRepository {
     } catch (SQLException ex) {
       ex.printStackTrace();
     }
-    return project;
-  }
-
-  //For reading a project from DB
-  public ResultSet readProjectsUser() {
-    ResultSet resSet = null;
-    String select = "/*SELECT email, password, first_name, last_name, age, address, phone_number FROM users*/";
-    try {
-      PreparedStatement ps = DBManager.getConnection().prepareStatement(select);
-      resSet = ps.executeQuery();
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-    return resSet;
-  }
+   }
 
 
   public ArrayList<Project> readProjectsUser(String email) {
@@ -52,8 +38,9 @@ public class ProjectRepository {
     Project tmp = null;
     try {
       Connection con = DBManager.getConnection();
-      String SQL = "SELECT * FROM projects WHERE (owner_email='" + email + "')";
+      String SQL = "SELECT * FROM projects WHERE owner_email = ?";
       PreparedStatement ps = con.prepareStatement(SQL);
+      ps.setString(1, email);
       ResultSet rs = ps.executeQuery();
       while (rs.next()) {
         tmp = new Project(rs.getInt(1),
@@ -78,8 +65,9 @@ public class ProjectRepository {
     Project tmp = null;
     try {
       Connection con = DBManager.getConnection();
-      String SQL = "SELECT * FROM projects WHERE (project_name='" + projectName + "')";
+      String SQL = "SELECT * FROM projects WHERE project_name= ?";
       PreparedStatement ps = con.prepareStatement(SQL);
+      ps.setString(1, projectName);
       ResultSet rs = ps.executeQuery();
       while (rs.next()) {
         tmp = new Project(
@@ -91,9 +79,7 @@ public class ProjectRepository {
             rs.getObject(6, LocalDate.class),
             rs.getString(7),
             rs.getString(8));
-
       }
-
     } catch (SQLException ex) {
       System.out.println(ex.getMessage());
     }
@@ -101,7 +87,7 @@ public class ProjectRepository {
   }
 
 
-  public void rewriteProject(Project project) throws CustomException {
+  public void rewriteProject(Project project) {
 
     try {
       Connection con = DBManager.getConnection();
@@ -124,13 +110,12 @@ public class ProjectRepository {
   public void deleteProjectFromDB(String projectName) {
     try {
       Connection con = DBManager.getConnection();
-      String SQL = "DELETE FROM projects WHERE (project_name='" + projectName + "')";
+      String SQL = "DELETE FROM projects WHERE project_name = ?";
       PreparedStatement ps = con.prepareStatement(SQL);
+      ps.setString(1, projectName);
       ps.executeUpdate();
     } catch (SQLException ex) {
       ex.printStackTrace();
     }
   }
-
 }
-

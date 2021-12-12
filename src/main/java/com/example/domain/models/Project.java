@@ -1,6 +1,5 @@
 package com.example.domain.models;
 
-import com.example.domain.services.SubprojectService;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -25,7 +24,7 @@ public class Project {
   private String ownerEmail;
   private String description;
   private User user;
- /* private ArrayList<Subproject> subprojectsOneProject;*/
+  private List<Subproject> subprojects;
 
 
 
@@ -39,6 +38,7 @@ public class Project {
     this.endDate = endDate;
     this.ownerEmail = ownerEmail;
     this.description = description;
+    subprojects = new ArrayList<>();
   }
 
   public Project(String projectName, String category, int hoursTotal, LocalDate startDate, LocalDate endDate,
@@ -50,10 +50,17 @@ public class Project {
     this.endDate = endDate;
     this.ownerEmail = ownerEmail;
     this.description = description;
+    subprojects = new ArrayList<>();
   }
 
   public Project() {
   }
+
+  public void addSubprojects(Subproject subproject) {
+    this.subprojects.add(subproject);
+  }
+
+
 
   public User getUser() {
     return user;
@@ -63,13 +70,13 @@ public class Project {
     this.user = user;
   }
 
- /* public ArrayList<Subproject> getSubprojectsOneProject() {
-    return subprojectsOneProject;
+  public List<Subproject> getSubprojects() {
+    return subprojects;
   }
 
-  public void setSubprojectsOneProject(ArrayList<Subproject> subprojectsOneProject) {
-    this.subprojectsOneProject = subprojectsOneProject;
-  }*/
+  public void setSubprojects(List<Subproject> subprojects) {
+    this.subprojects = subprojects;
+  }
 
   public int getProjectID() {
     return projectID;
@@ -148,7 +155,4 @@ public class Project {
         ", description='" + description + '\'' +
         '}';
   }
-
-
-  }
-
+}

@@ -16,9 +16,7 @@ public class CalculatorService {
   public double calculateDaysNeeded(int hoursTotal, int projectID) { // days needed
     double totalHoursTeam = (double) teammateRepository.getHoursTeam(projectID);
     double dayAmountTemp =  hoursTotal / totalHoursTeam;
-  /*  BigDecimal bd = new BigDecimal(dayAmountTemp).setScale(2, RoundingMode.HALF_UP);
-    return bd.doubleValue();*/
-     return Math.round(dayAmountTemp * 100.0) / 100.0;
+    return Math.round(dayAmountTemp * 100.0) / 100.0;
   }
 
   public LocalDate countDateEnd(LocalDate startDate, int hoursTotal, int projectID) {
@@ -53,7 +51,7 @@ public class CalculatorService {
       }
       cal1.add(Calendar.DATE,1);
     }
-    return (double) numberDaysExpected;
+    return numberDaysExpected;
 
   }
 
@@ -69,8 +67,6 @@ public class CalculatorService {
   public double calculateSpeedDaily(LocalDate startDate, LocalDate endDate, int hoursTotal){
     double daysExpected = countDaysExpected(startDate, endDate) ;// days between 2 dates
     double speed = hoursTotal / daysExpected; // hoursTotal is an amount of "expected" hours
-   /* BigDecimal bd = new BigDecimal(speed).setScale(2, RoundingMode.HALF_UP);
-    return bd.doubleValue();*/
     return Math.round(speed * 100) / 100.0;
   }
 }

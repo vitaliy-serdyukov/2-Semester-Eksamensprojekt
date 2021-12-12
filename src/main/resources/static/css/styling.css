@@ -40,6 +40,11 @@ form {
     box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
 }
 
+form.edit-calculate{
+    width: auto;
+
+}
+
 
 form.create-project {
     border-radius: 10px;
@@ -112,12 +117,15 @@ label {
 table {
     border: none;
     border-radius: 10px;
-/*    border-spacing: 0;*/
     width: auto;
     margin-left: auto;
     margin-right: auto;
     background-color: white;
     box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+}
+
+table.edit-calculate{
+    box-shadow: none;
 }
 
 
@@ -148,8 +156,8 @@ tr { background-color: rgb(255, 255, 255);
     display: flex;
     /*flex-wrap: wrap;
     text-align: center;*/
-    margin-top: 100px;
-    align-items: center;
+    margin-top: 85px;
+  /*  align-items: center;*/
     justify-content: center;
 
 }
@@ -167,7 +175,7 @@ tr { background-color: rgb(255, 255, 255);
 
 .flex-item2-left {
     padding: 10px;
-    flex: 20%;
+    flex: 25%;
     margin:10px;
     border-radius: 10px;
     align-content: center;
@@ -175,7 +183,7 @@ tr { background-color: rgb(255, 255, 255);
 
 .flex-item2-middle {
     padding: 10px;
-    flex: 33%;
+    flex: 35%;
     margin:10px;
     border-radius: 10px;
     align-content: center;
@@ -183,7 +191,7 @@ tr { background-color: rgb(255, 255, 255);
 
 .flex-item2-right {
     padding: 10px;
-    flex: 33%;
+    flex: 35%;
     margin:10px;
     border-radius: 10px;
     align-content: center;
@@ -192,15 +200,7 @@ tr { background-color: rgb(255, 255, 255);
 
 .flex-show-project-left {
     padding: 10px;
-    flex: 45%;
-    margin:10px;
-    border-radius: 10px;
-    align-content: center;
-}
-
-.flex-show-project-middle {
-    padding: 10px;
-    flex: 45%;
+    flex: 50%;
     margin:10px;
     border-radius: 10px;
     align-content: center;
@@ -208,7 +208,7 @@ tr { background-color: rgb(255, 255, 255);
 
 .flex-show-project-right {
     padding: 10px;
-    flex: 45%;
+    flex: 50%;
     margin:10px;
     border-radius: 10px;
     align-content: center;
@@ -217,7 +217,6 @@ tr { background-color: rgb(255, 255, 255);
 .element-middle {
     display: flex;
     justify-content: center;
-
 }
 
 .element-middle-create-project {
@@ -318,3 +317,17 @@ button {
 button.add-project{
     margin-left:55px;
 }
+
+/*
+input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover  {
+    background-color: #39ace7;
+}
+
+input[type=button]:active, input[type=submit]:active, input[type=reset]:active  {
+    -moz-transform: scale(0.95);
+    -webkit-transform: scale(0.95);
+    -o-transform: scale(0.95);
+    -ms-transform: scale(0.95);
+    transform: scale(0.95);
+}
+*/

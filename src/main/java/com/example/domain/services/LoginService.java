@@ -11,7 +11,7 @@ public class LoginService {
   private final UserRepository userRepository = new UserRepository();
 
   public boolean checkIfUserExists(User userEntered) { // checkIfUserExistsLogin
-    ResultSet rs = userRepository.dbRead();
+    ResultSet rs = userRepository.returnResultSetUsers();
     try {
       while (rs.next()) {
         String userTempEmail = rs.getString(1);
@@ -46,7 +46,7 @@ public class LoginService {
     return userRepository.returnUserByEmail(email);
   }
 
-  public void createUser(User user) throws CustomException {
-    userRepository.dbWrite(user);
+  public void writeUser(User user) throws CustomException {
+    userRepository.writeUser(user);
   }
 }

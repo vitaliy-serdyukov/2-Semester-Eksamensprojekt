@@ -5,10 +5,12 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/styling.css" type="text/css">
+   <!-- <link rel="stylesheet" href="/css/stylingconcept.css" type="text/css">-->
     <title>Project edit</title>
 </head>
 
 <header>
+    <div class="wrapper fadeInDown">
     <nav>
         <ul>
             <li>
@@ -22,17 +24,18 @@
             </li>
         </ul>
     </nav>
+    </div>
 </header>
 
 <body>
 
-// treeview
+<!--// treeview-->
 
-<div class="flex-container" style="margin-top: 100px">
-
+<div class="wrapper fadeInDown">
+<div class="flex-container">
     <div class="flex-show-project-left">
-        <form style="border: 1px solid black" action="#" method="post" th:action="@{/updateProject}" th:object="${projectSelected}">
-        <table style="border: none">
+        <form class="edit-calculate" action="#" method="post" th:action="@{/updateProject}" th:object="${projectSelected}">
+        <table class="edit-calculate">
             <thead>
             <tr>
                 <th colspan="2">You have entered following data for your project with:</th>
@@ -86,9 +89,8 @@
                             th:value="${projectSelected.description}"/></td>
             </tr>
             <tr>
-            <td><button class="button1" th:href="@{/updateProject}">
-                UPDATE!</button></td>
-            <td></td>
+            <td colspan="2"><button th:href="@{/updateProject}">
+                Update project</button></td>
             </tr>
             </tbody>
         </table>
@@ -134,9 +136,8 @@
              </tr>
              </tbody>
          </table>
-
-
          </div>
+</div>
 </div>
 </body>
 </html>

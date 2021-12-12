@@ -18,10 +18,10 @@ public class UserTest {
         User user1 = new User("ems@1234", "1234", "emma", "r", "projekt", "12345");
 
         // Act
-        userRepo.dbWrite(user1);
+        userRepo.writeUser(user1);
 
         //Assert
-        assertThrows(CustomException.class, () -> userRepo.dbWrite(user1));
+        assertThrows(CustomException.class, () -> userRepo.writeUser(user1));
     }
 
     @Test
