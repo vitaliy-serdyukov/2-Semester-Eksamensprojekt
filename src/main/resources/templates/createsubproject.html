@@ -5,10 +5,12 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/styling.css" type="text/css">
+    <link rel="stylesheet" href="/css/animation.css" type="text/css">
      <title>Create subproject</title>
 
 </head>
 <header>
+    <div class="wrapper fadeInDown">
     <nav>
         <ul>
             <li>
@@ -22,10 +24,12 @@
             </li>
         </ul>
     </nav>
+    </div>
 </header>
 <body>
 
-<div class="element-middle-create-project">
+<div class="wrapper fadeInDown">
+<div class="flex-container">
 
     <form class="create-project" action="#" method="post" th:action="@{/addSubproject}" th:object="${subprojectNew}">
 
@@ -34,31 +38,34 @@
         <div class="main">
             <div class="field">
                 <label for="subproject_name">Subproject name:</label>
-                <input type="text" id="subproject_name" name="subproject_name" th:field="*{subprojectName}" required/></td>
-            </div>
+                <input type="text" max="30" maxlength="100" id="subproject_name" name="subproject_name"
+                       th:field="*{subprojectName}" required/></td>
             </div>
             <div class="field">
-                <label for="hours_total">Hours total:</label>
-                <input type="number" id="hours_total" name="hours_total" th:field="*{hoursTotal}"/></td>
+                <label for="hours_total">Hours total, expected:</label>
+                <input type="number" min="1" id="hours_total" name="hours_total" th:field="*{hoursTotal}"/></td>
             </div>
             <div class="field">
                 <label for="start_date">Start date:</label>
-                <input type="date" id="start_date" name="start_date" th:field="*{startDate}"/></td>
+                <input type="date" id="start_date" name="start_date" th:field="*{startDate}"
+                th:required="required" th:min="${minStartDateSubproject}"/>
             </div>
             <div class="field">
                 <label for="end_date">End date:</label>
-                <input type="date" id="end_date" name="end_date" th:field="*{endDate}"/></td>
+                <input type="date" id="end_date" name="end_date" th:field="*{endDate}"
+                th:required="required" th:max="${maxEndDateSubproject}"/>
             </div>
             <div class="field">
                 <label for="description">Description:</label>
-                <input type="text" id="description" name="description" th:field="*{description}"/></td>
+                <textarea maxlength="100" name="description" id="description" th:field="*{description}"></textarea>
             </div>
-            <div class="button-wrapper-right">
-                <button type="submit">Add Subproject</button>
-             <!--   <button style="padding-right:70px" class="button1" onclick="location.href='/addSubroject'" type="submit">Add Subproject-->
+            <div class="centered-button-div">
+                <button type="submit">Add subproject</button>
                 </button>
             </div>
+        </div>
     </form>
+</div>
 </div>
 </body>
 </html>

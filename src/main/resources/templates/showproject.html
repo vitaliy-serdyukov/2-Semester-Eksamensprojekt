@@ -37,8 +37,6 @@
         <table class="no-shadow">
                 <thead>
                 <th colspan="2" class="centered-button"><button type="submit">Calculate and edit</button></td>
-                   <!-- <a th:href="@{/editProject/{projectName}(projectName=${projectSelected.projectName})}">
-                        <img class="icon-gears" src="/images/gears.png" alt="Gears">Calculate and edit</a>-->
                 </th>
                 </thead>
                 <tbody>
@@ -93,9 +91,6 @@
             </thead>
             <tbody>
             <tr>
-           <!-- <td colspan="2"><a th:href="@{/createTeammate/{projectName}(projectName=${projectSelected.projectName})}">
-                <img class="icon" src="/images/people.jpg" alt="Gears">Add new member</a>
-            </td>-->
                 <td class="centered-button" colspan="2"><button type="submit" >Add new member</button></td>
             </tr>
             <tr>
@@ -107,10 +102,6 @@
                 <td><a th:href="@{/deleteTeammate/{teammateEmail}(teammateEmail=${teammateNew})}">
                     <img class="icon" src="/images/trashcan.png" alt="Trashcan">
                 </a></td>
-
-                <!--<td><a th:href="@{/deleteTeammate/{teammateNew}(teammateNew=${teammateNew})}">
-                    <img class="icon" src="/images/trashcan.png" alt="Trashcan">
-                </a></td>-->
             </tr>
             </tbody>
         </table>

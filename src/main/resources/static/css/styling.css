@@ -95,6 +95,11 @@ td.centered-button{
 
 }
 
+.centered-button-div{
+    text-align: center;
+
+}
+
 th.extra-line-in-top {
     font-style: italic;
 }
@@ -170,11 +175,11 @@ tr { background-color: rgb(255, 255, 255);
     justify-content: center;
 }
 
-.element-middle-create-project {
+/*.element-middle-create-project {
     display: flex;
     justify-content: center;
     margin-top: 100px;
-}
+}*/
 
 .field {clear:both; text-align:right; line-height:25px;}
 label {float:left; padding-right:10px;}
@@ -276,6 +281,6 @@ button:active,submit:active,reset:active {
     transform: scale(0.95);
 }
 
-button.add-project{
-    margin-left:55px;
+button.add-teammate{
+    margin-top: 30px;
 }

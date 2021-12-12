@@ -4,7 +4,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class Project {
@@ -24,7 +23,7 @@ public class Project {
   private String ownerEmail;
   private String description;
   private User user;
-  private List<Subproject> subprojects;
+  private ArrayList<Subproject> subprojects;
 
 
 
@@ -56,8 +55,12 @@ public class Project {
   public Project() {
   }
 
-  public void addSubprojects(Subproject subproject) {
+ /* public void addSubprojects(Subproject subproject) {
     this.subprojects.add(subproject);
+  }*/
+
+  public void addSubprojects(ArrayList<Subproject> subprojects) {
+    this.subprojects = subprojects;
   }
 
 
@@ -70,11 +73,11 @@ public class Project {
     this.user = user;
   }
 
-  public List<Subproject> getSubprojects() {
+  public ArrayList<Subproject> getSubprojects() {
     return subprojects;
   }
 
-  public void setSubprojects(List<Subproject> subprojects) {
+  public void setSubprojects(ArrayList<Subproject> subprojects) {
     this.subprojects = subprojects;
   }
 

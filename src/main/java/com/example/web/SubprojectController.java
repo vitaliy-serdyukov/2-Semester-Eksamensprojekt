@@ -5,6 +5,7 @@ import com.example.domain.CustomException;
 import com.example.domain.models.Project;
 import com.example.domain.models.Subproject;
 import com.example.domain.models.Task;
+import com.example.domain.services.DateService;
 import com.example.domain.services.SubprojectService;
 import com.example.domain.services.TaskService;
 import org.springframework.stereotype.Controller;
@@ -28,9 +29,21 @@ public class SubprojectController {
 
 
   @GetMapping("/createSubproject")
-  public String createSubroject(Model model){
+
+  public String createSubroject(HttpServletRequest request, Model model){
+    HttpSession session = request.getSession();
+    Project projectSelected = (Project) session.getAttribute("projectSelected");
+
+
+    LocalDate minStartDateSubproject = projectSelected.getStartDate();
+    model.addAttribute("minStartDateSubproject", minStartDateSubproject);
+
+    LocalDate maxEndDateSubproject = projectSelected.getEndDate();
+    model.addAttribute("maxEndDateSubproject", maxEndDateSubproject);
+
     Subproject subprojectNew = new Subproject();
     model.addAttribute("subprojectNew", subprojectNew);
+
     return "createsubproject";
   }
 
@@ -49,7 +62,7 @@ public class SubprojectController {
 
     HttpSession session = request.getSession();
 
-    // Retrieve values from HTML form via WebRequest
+    // Retrieve values from HTML form via HTTPServlet request
     Subproject subProjectToUpdate = (Subproject) session.getAttribute("subProjectSelected");
 
     Subproject subProjectUpdated = new Subproject(

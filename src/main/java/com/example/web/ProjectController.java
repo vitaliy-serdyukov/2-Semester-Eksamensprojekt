@@ -4,7 +4,6 @@ import com.example.domain.CustomException;
 import com.example.domain.models.Project;
 import com.example.domain.models.Subproject;
 
-import com.example.domain.models.Task;
 import com.example.domain.services.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,8 +32,8 @@ public class ProjectController {
     Project projectNew = new Project();
     model.addAttribute("projectNew", projectNew);
 
-    LocalDate minStartDate = new DateService().getToday();
-    model.addAttribute("minStartDate", minStartDate);
+    LocalDate minStartDateProject = new DateService().getToday();
+    model.addAttribute("minStartDateProject", minStartDateProject);
 
     return "createproject";
   }
@@ -100,6 +99,13 @@ public class ProjectController {
     HttpSession session = request.getSession();
 
     Project projectSelected = projectService.showProjectInfo(projectName);
+
+    ArrayList<Subproject> subprojectsTemp = new SubprojectService().
+        findAllSubprojectsInProject(projectSelected.getProjectID());
+
+    projectSelected.addSubprojects(subprojectsTemp);
+
+
     session.setAttribute("projectSelected", projectSelected);
     model.addAttribute("projectSelected", projectSelected);
 
@@ -110,11 +116,13 @@ public class ProjectController {
 
     ArrayList<String> teammates = teammateService.readTeammates(projectSelected.getProjectID());
     model.addAttribute("teammates", teammates);
+
+
     int amountPersonsInTeam = teammateService.countTeammates(projectSelected.getProjectID());
     model.addAttribute("amountPersonsInTeam", amountPersonsInTeam);
 
-    ArrayList<Subproject> subprojects = new SubprojectService().findAllSubprojectsInProject(projectSelected.getProjectID()); // DATABASE-agtig kodning???
-    session.setAttribute("subprojects", subprojects);// vi take this out of session in SubprojectController ShowSubproject method
+    ArrayList<Subproject> subprojects = projectSelected.getSubprojects(); // DATABASE-agtig kodning???
+   /* session.setAttribute("subprojects", subprojects);// vi take this out of session in SubprojectController ShowSubproject method*/
 
     model.addAttribute("subprojects", subprojects);
 
@@ -196,27 +204,27 @@ public class ProjectController {
   public String treeView(HttpServletRequest request, Model model) {
     HttpSession session = request.getSession();
 
-
     Project projectTree = (Project) session.getAttribute("projectSelected");
     model.addAttribute("projectTree", projectTree);
 
 
-    ArrayList<Subproject> subprojectsTree = (ArrayList<Subproject>) session.getAttribute("subprojects");
-      model.addAttribute("subprojectsTree", subprojectsTree);
-    for (int i = 0; i < subprojectsTree.size(); i++) {
-      Subproject subprojectTree = subprojectsTree.get(i);
+    ArrayList<Subproject> subprojectsTree = projectTree.getSubprojects();
+    model.addAttribute("subprojectsTree", subprojectsTree);
+
+   /* for (int i = 0; i < subprojectsTree.size(); i++) {*/
+      Subproject subprojectTree = new Subproject()/*subprojectsTree.get(i)*/;
       model.addAttribute("subprojectTree", subprojectTree);
 
-      for (int j = 0; j < subprojectsTree.size(); j++) {
+    /*  for (int j = 0; j < subprojectsTree.size(); j++) {
         ArrayList<Task> tasksTree = new TaskService().findAllTasksInSubproject(subprojectTree.getSubprojectID());
         model.addAttribute("tasksTree", tasksTree);
         Task taskTree = new Task();
         model.addAttribute("taskTree", taskTree);
       }
-    }
+    }*/
 
-      ArrayList<String> teammatesEmail = new TeammateService().readTeammates(projectTree.getProjectID());
-      model.addAttribute("teammatesEmail", teammatesEmail);
+    /*  ArrayList<String> teammatesEmail = new TeammateService().readTeammates(projectTree.getProjectID());
+      model.addAttribute("teammatesEmail", teammatesEmail);*/
 
       return "treeview";
     }

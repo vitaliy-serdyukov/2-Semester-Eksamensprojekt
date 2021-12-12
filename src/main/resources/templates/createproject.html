@@ -28,7 +28,7 @@
 <body>
 
 <div class="wrapper fadeInDown">
-<div class="element-middle-create-project">
+<div class="flex-container">
     <form class="create-project" action="#" method="post" th:action="@{/addProject}" th:object="${projectNew}">
 
         <p>Create new project here:</p>
@@ -36,7 +36,8 @@
         <div class="main">
              <div class="field">
                  <label for="project_name">Project name:</label>
-                 <input type="text" max="30" maxlength="100" id="project_name" name="project_name" th:field="*{projectName}" required/></td>
+                 <input type="text" max="30" maxlength="100" id="project_name" name="project_name"
+                        th:field="*{projectName}" required/></td>
              </div>
              <div class="field">
                 <label for="category">Category:</label> <!--have tried the solution with Enum as well, the problem is-->
@@ -54,8 +55,8 @@
             </div>
             <div class="field">
                 <label for="start_date">Start date:</label>
-                <input type="date" id="start_date" name="start_date" th:field="${projectNew.startDate}"
-                       th:required="required" th:min="${minStartDate}"/>
+                <input type="date" id="start_date" name="start_date" th:field="*{startDate}"
+                       th:required="required" th:min="${minStartDateProject}"/>
             </div>
             <div class="field">
                 <label for="end_date">End date:</label>
@@ -64,14 +65,14 @@
             </div>
             <div class="field">
                 <label for="description">Description:</label>
-            <textarea maxlength="100" name="description" id="description" th:field="*{description}">  </textarea>
+            <textarea maxlength="100" name="description" id="description" th:field="*{description}"></textarea>
         </div>
           <!--  <div class="field">
                 <label for="description">Description:</label>
                 <input type="text" maxlength="100" id="description" name="description" th:field="*{description}"/></td>
             </div>-->
-            <div class="button-wrapper-right">
-                <button class="add-project" type="submit">Add Project</button>
+            <div class="centered-button-div">
+                <button type="submit">Add project</button>
             </div>
         </div>
     </form>
