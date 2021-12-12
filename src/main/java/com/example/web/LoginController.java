@@ -69,7 +69,7 @@ import java.util.ArrayList;
    /* Call arraylist and sort the projects by users email*/
       ArrayList<Project> projectsUserLogged = new ProjectService().findAllProjectsUser(email); // DATABASE-agtig kodning???
 
-      session.setAttribute("projectsUserLogged", projectsUserLogged);
+     /* session.setAttribute("projectsUserLogged", projectsUserLogged);*/
 
       //  Assign model attribute to arraylist med  projects
       model.addAttribute("projectsUserLogged", projectsUserLogged);
@@ -107,7 +107,7 @@ import java.util.ArrayList;
         if (new LoginService().checkIfUserExistsRegister(user)) {
           throw new CustomException("There was already a user with this email..\n Please, choose a different one");
         } else {
-          loginService.createUser(user);
+          loginService.writeUser(user);
           request.setAttribute("user", user, WebRequest.SCOPE_SESSION);
           model.addAttribute("user", user);
         }

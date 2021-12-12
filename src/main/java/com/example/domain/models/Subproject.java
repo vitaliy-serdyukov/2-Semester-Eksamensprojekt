@@ -19,24 +19,30 @@ public class Subproject {
   private LocalDate endDate;
 
   private String description;
-/*  private Project project;*/
+  private Project project;
 /*  private List<Task> tasksOneSubproject;*/
 
   public Subproject() {
   }
 
-  public Subproject(int projectID, String subprojectName, int hoursTotal, LocalDate startDate, LocalDate endDate, String description) {
+  public Subproject(int projectID, String subprojectName, int hoursTotal, LocalDate startDate, LocalDate endDate,
+                    String description, Project project) {
     this.projectID = projectID;
     this.subprojectName = subprojectName;
     this.hoursTotal = hoursTotal;
     this.startDate = startDate;
     this.endDate = endDate;
     this.description = description;
+    this.project = project;
   }
 
+  public Subproject(int projectID, String subprojectName, int hoursTotal, LocalDate startDate, LocalDate endDate,
+                    String description){
+    this(projectID, subprojectName, hoursTotal, startDate, endDate,description, null);
+  }
 
-
-  public Subproject(int subprojectID, int projectID, String subprojectName, int hoursTotal, LocalDate startDate, LocalDate endDate, String description) {
+  public Subproject(int subprojectID, int projectID, String subprojectName, int hoursTotal, LocalDate startDate,
+                    LocalDate endDate, String description, Project project) {
     this.subprojectID = subprojectID;
     this.projectID = projectID;
     this.subprojectName = subprojectName;
@@ -44,11 +50,19 @@ public class Subproject {
     this.startDate = startDate;
     this.endDate = endDate;
     this.description = description;
+    this.project = project;
   }
 
+  public Subproject(int subprojectID, int projectID, String subprojectName, int hoursTotal, LocalDate startDate, LocalDate endDate,
+                    String description){
+    this(subprojectID, projectID, subprojectName, hoursTotal, startDate, endDate,description, null);
+  }
 
+  public void addProject(Project project) {
+    this.project = project;
+  }
 
- /* public Project getProject() {
+  public Project getProject() {
     return project;
   }
 
@@ -56,14 +70,14 @@ public class Subproject {
     this.project = project;
   }
 
-  public List<Task> getTasksOneSubproject() {
+ /* public List<Task> getTasksOneSubproject() {
     return tasksOneSubproject;
   }
 
   public void setTasksOneSubproject(List<Task> tasksOneSubproject) {
     this.tasksOneSubproject = tasksOneSubproject;
-  }*/
-
+  }
+*/
 
 
   public int getSubprojectID() {

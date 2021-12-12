@@ -24,14 +24,14 @@ public class TeammateRepository {
     String tmp = null;
     try {
       Connection con = DBManager.getConnection();
-      String SQL = "SELECT * FROM teammates WHERE (project_id='" + projectID + "')";
+      String SQL = "SELECT * FROM teammates WHERE project_id = ?";
       PreparedStatement ps = con.prepareStatement(SQL);
+      ps.setInt(1,projectID);
       ResultSet rs = ps.executeQuery();
       while (rs.next()) {
         tmp = (rs.getString(2));
         teammatesTemp.add(tmp);
       }
-
     } catch (SQLException | NumberFormatException ex ) {
       System.out.println(ex.getMessage());
     }
@@ -40,11 +40,12 @@ public class TeammateRepository {
 
 
   public void removeTeammate(String teammateEmail, int projectID) {
-
     try {
       Connection con = DBManager.getConnection();
-      String SQL = "DELETE FROM teammates WHERE (member_email='" + teammateEmail + "') AND (project_id='" + projectID + "')";
+      String SQL = "DELETE FROM teammates WHERE member_email = ? AND project_id = ?";
       PreparedStatement ps = con.prepareStatement(SQL);
+      ps.setString(1, teammateEmail);
+      ps.setInt(2,projectID);
       ps.executeUpdate();
     } catch (SQLException ex) {
       ex.printStackTrace();
@@ -55,28 +56,29 @@ public class TeammateRepository {
   public int countTeammates (int projectID){
    int amount;
     try {
-
       Connection con = DBManager.getConnection();
-      String SQL = "SELECT COUNT(*) AS 'Number of teammates' FROM teammates WHERE (project_id='" + projectID + "')";
+      String SQL = "SELECT COUNT(*) AS 'Number of teammates' FROM teammates WHERE project_id = ?";
       PreparedStatement ps = con.prepareStatement(SQL);
+      ps.setInt(1,projectID);
       ResultSet rs = ps.executeQuery();
       if (rs.next()) {
         amount = rs.getInt(1);
         return amount;
       }
-
     } catch (SQLException ex) {
       ex.printStackTrace();
     }
      return 0;
   }
 
+
   public int getHoursTeam(int projectID){
     int hoursTotal;
     try {
       Connection con = DBManager.getConnection();
-      String SQL = "SELECT SUM(teammate_hours) FROM teammates WHERE (project_id='" + projectID + "')";
+      String SQL = "SELECT SUM(teammate_hours) FROM teammates WHERE project_id = ?";
       PreparedStatement ps = con.prepareStatement(SQL);
+      ps.setInt(1,projectID);
       ResultSet rs = ps.executeQuery();
       if (rs.next()) {
         hoursTotal = rs.getInt(1);
@@ -89,4 +91,3 @@ public class TeammateRepository {
     return 0;
   }
 }
-
