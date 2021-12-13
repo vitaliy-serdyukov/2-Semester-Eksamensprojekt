@@ -130,18 +130,23 @@ public class ProjectController {
   }
 
   @GetMapping("/editProject/{projectName}")
-  public String editProject(HttpServletRequest request, Model model, @PathVariable(value = "projectName") String projectName) { //TO DO path in browser
-    HttpSession session = request.getSession();
+  public String editProject(HttpServletRequest request, Model model, @PathVariable(value = "projectName")
+      String projectName) throws CustomException { //TO DO path in browser
 
+    HttpSession session = request.getSession();
     CalculatorService calculatorService = new CalculatorService(); // make privat final for whole Class?
 
     // taking back out of session our selected project, now with subprojects
     Project projectSelected = (Project) session.getAttribute("projectSelected");
-
     model.addAttribute("projectSelected", projectSelected);
 
     int teammatesAmount = teammateService.countTeammates(projectSelected.getProjectID());
     model.addAttribute("teammatesAmount", teammatesAmount);
+
+    if (teammatesAmount < 1){
+      throw new CustomException("The project must have at least one team member");
+    }
+
 
     int totalHoursTeam = teammateService.calculateTotalHoursPerDay(projectSelected.getProjectID());
     model.addAttribute("totalHoursTeam", totalHoursTeam);

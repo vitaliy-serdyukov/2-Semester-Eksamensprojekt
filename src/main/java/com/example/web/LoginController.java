@@ -119,7 +119,7 @@ import java.util.ArrayList;
     @ExceptionHandler(CustomException.class)
     public String handleError(Model model, Exception exception) {
       model.addAttribute("message", exception.getMessage());
-      return "exceptionPage";
+      return "exceptionpageLogin";
 
     }
   }

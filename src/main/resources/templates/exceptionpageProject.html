@@ -4,14 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/styling.css" type="text/css">
+    <link rel="stylesheet" href="/css/animation.css" type="text/css">
     <title>Exception page project</title>
 </head>
 <body>
-<h1>An Error Occured!</h1>
-<p><b><span th:text="${message}"></span></b></p>
-
-<div class="element-middle">
-    <button onclick="location.href='/dashboard'" type="button">Back to dashboard</button>
-</div>
+<div class="wrapper fadeInDown">
+        <div class="flex-container">
+            <form class="create-project">
+                <h1>An Error Occured!</h1>
+                <p><b><span th:text="${message}"></span></b></p>
+                <div class="centered-button-div">
+                    <button onclick="location.href='/dashboard'" type="button">Back to dashboard</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
