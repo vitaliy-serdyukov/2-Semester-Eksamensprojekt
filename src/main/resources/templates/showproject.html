@@ -13,7 +13,7 @@
     <nav>
         <ul>
             <li>
-                <a href="/frontpaged">Frontpage</a>
+                <a href="/frontpage">Frontpage</a>
             </li>
             <li>
                 <a href="#">Profile</a>
@@ -85,7 +85,7 @@
         <table class="no-shadow">
             <thead>
             <tr>
-                <td colspan="2"> The amount of people on this project: <b><span th:text="${amountPersonsInTeam}">
+                <td> The amount of people on this project: <b><span th:text="${amountPersonsInTeam}">
                 </span></b></td>
             </tr>
             </thead>
@@ -94,14 +94,10 @@
                 <td class="centered-button" colspan="2"><button type="submit" >Add new member</button></td>
             </tr>
             <tr>
-               <th colspan="2">Available team members<br> in current project:</th>
+               <th>Available team members<br> in current project:</th>
             </tr>
             <tr th:each="teammateNew : ${teammates}">
                 <td th:text="${teammateNew}"></td>
-                <!--Hvordan får jeg både teammate navn og project id?-->
-                <td><a th:href="@{/deleteTeammate/{teammateEmail}(teammateEmail=${teammateNew})}">
-                    <img class="icon" src="/images/trashcan.png" alt="Trashcan">
-                </a></td>
             </tr>
             </tbody>
         </table>

@@ -20,6 +20,9 @@
                 <a href="#">Profile</a>
             </li>
             <li>
+                <a href="/returnToProject">Back to project</a>
+            </li>
+            <li>
                 <a style="margin-left: 700px" href="/logout"> Logout </a>
             </li>
         </ul>
@@ -31,6 +34,7 @@
 
 <div class="wrapper fadeInDown">
 <div class="flex-container">
+
     <div class="flex-show-item50-left">
         <form action="#" method="post" th:action="@{/updateProject}" th:object="${projectSelected}">
         <table class="no-shadow">

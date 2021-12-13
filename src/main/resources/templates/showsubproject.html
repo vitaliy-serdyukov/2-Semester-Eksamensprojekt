@@ -35,9 +35,13 @@
 <div class="wrapper fadeInDown">
     <div class="flex-container">
       <div class="flex-show-item50-left">
-    <form method="get" th:action="@{/createTask}">
+        <form th:action="@{/editSubproject/{subprojectName}(subprojectName=${subprojectSelected.subprojectName})}" method="get">
       <table class="no-shadow">
         <thead>
+        <tr>
+        <th colspan="2" class="centered-button"><button type="submit">Calculate and edit</button>
+        </th>
+        </tr>
         <tr>
           <th>You are in Subproject:</th>
           <th></th>
