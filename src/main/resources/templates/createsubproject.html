@@ -33,17 +33,20 @@
 
     <form class="create-project" action="#" method="post" th:action="@{/addSubproject}" th:object="${subprojectNew}">
 
-        <p>Create new Subproject here:</p>
+        <p>Create new subproject here:</p>
 
         <div class="main">
             <div class="field">
                 <label for="subproject_name">Subproject name:</label>
                 <input type="text" max="30" maxlength="100" id="subproject_name" name="subproject_name"
-                       th:field="*{subprojectName}" required/></td>
+                       th:field="*{subprojectName}" required/>
+            </div>
+            <div class="field">
+                <div th:text="${timeLeftProject}"></div><!--// OUTPUT???-->
             </div>
             <div class="field">
                 <label for="hours_total">Hours total, expected:</label>
-                <input type="number" min="1" id="hours_total" name="hours_total" th:field="*{hoursTotal}"/></td>
+                <input type="number" min="1" id="hours_total" name="hours_total" th:field="*{hoursTotal}"/>
             </div>
             <div class="field">
                 <label for="start_date">Start date:</label>

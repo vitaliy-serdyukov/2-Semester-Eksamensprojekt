@@ -1,9 +1,13 @@
 package com.example.domain.services;
 
+import com.example.domain.models.Project;
+import com.example.domain.models.Subproject;
+import com.example.domain.models.Task;
 import com.example.repositories.TeammateRepository;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -67,4 +71,37 @@ public class CalculatorService {
     double speed = hoursTotal / daysExpected; // hoursTotal is an amount of "expected" hours
     return Math.round(speed * 100) / 100.0;
   }
+  
+  
+  public int calculateTimeTakenProject(Project project){
+    System.out.println(project);
+    int timeTotalProject = 0;
+     for (int i = 0; i < project.getSubprojects().size(); i++) {
+      timeTotalProject += project.getSubprojects().get(i).getHoursTotal();
+    }
+    System.out.println(timeTotalProject);
+    project.getSubprojects().clear();
+    return timeTotalProject;
+
+  }
+
+  public int calculateTimeLeftProject(Project project){
+    int timeLeftProject = project.getHoursTotal() - calculateTimeTakenProject(project);
+
+    System.out.println(timeLeftProject);
+    return timeLeftProject;
+
+  }
+
+
+ /* public int calculateTimeSubproject(Subproject subproject){
+    int timeTotalSubproject = 0;
+    for (int i = 0; i < subproject.getTasks().size(); i++) {
+      timeTotalSubproject += subproject.getTasks().get(i).getHoursTotal();
+    }
+    return timeTotalSubproject;
+  }*/
+
+
+
 }

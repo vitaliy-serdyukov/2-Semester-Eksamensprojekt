@@ -5,11 +5,12 @@ import com.example.domain.CustomException;
 import com.example.domain.models.Project;
 import com.example.domain.models.Subproject;
 import com.example.domain.models.Task;
-import com.example.domain.services.DateService;
+import com.example.domain.services.CalculatorService;
 import com.example.domain.services.SubprojectService;
 import com.example.domain.services.TaskService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,11 +30,13 @@ public class SubprojectController {
 
 
   @GetMapping("/createSubproject")
-
   public String createSubroject(HttpServletRequest request, Model model){
+
+    Subproject subprojectNew = new Subproject();
+    model.addAttribute("subprojectNew", subprojectNew);
+
     HttpSession session = request.getSession();
     Project projectSelected = (Project) session.getAttribute("projectSelected");
-
 
     LocalDate minStartDateSubproject = projectSelected.getStartDate();
     model.addAttribute("minStartDateSubproject", minStartDateSubproject);
@@ -41,8 +44,10 @@ public class SubprojectController {
     LocalDate maxEndDateSubproject = projectSelected.getEndDate();
     model.addAttribute("maxEndDateSubproject", maxEndDateSubproject);
 
-    Subproject subprojectNew = new Subproject();
-    model.addAttribute("subprojectNew", subprojectNew);
+    int timeLeftProject = new CalculatorService().calculateTimeLeftProject(projectSelected);
+    System.out.println( "test" + projectSelected.getSubprojects());
+    model.addAttribute("timeLeftProject", timeLeftProject);
+
 
     return "createsubproject";
   }
@@ -83,7 +88,7 @@ public class SubprojectController {
 
   // method for "Add Subproject" fields and button on "createsubproject"
   @PostMapping("/addSubproject")
-  public String saveSubproject(HttpServletRequest request, RedirectAttributes redirectAttrs)  {
+  public String saveSubproject(HttpServletRequest request, RedirectAttributes redirectAttrs) throws CustomException  {
 
     //Retrieve request from session
     HttpSession session = request.getSession();
@@ -94,6 +99,12 @@ public class SubprojectController {
     String subprojectName = request.getParameter("subprojectName");
     String hoursTotalStr = request.getParameter("hoursTotal");
     int hoursTotal = Integer.parseInt(hoursTotalStr);
+
+    int timeLeftProject = new CalculatorService().calculateTimeLeftProject(projectSelected);
+    if (timeLeftProject < hoursTotal) {
+      throw new CustomException("It was unable to create a subproject, because the entered amount of hours exceeds" +
+          "available amount of hours in project left ");
+    }
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
@@ -127,17 +138,22 @@ public class SubprojectController {
   public String showSubproject(HttpServletRequest request, Model model,
                             @PathVariable(value = "subprojectName") String subprojectName) {
     HttpSession session = request.getSession();
+
     Subproject subprojectSelected = subprojectService.showSubprojectInfo(subprojectName);
+
+    ArrayList<Task> tasksTemp = new TaskService().
+        findAllTasksInSubproject(subprojectSelected.getSubprojectID());
+
+    subprojectSelected.addTasks(tasksTemp);
+
     session.setAttribute("subprojectSelected", subprojectSelected);
     model.addAttribute("subprojectSelected", subprojectSelected);
 
     Task taskNew = new Task();
     model.addAttribute("taskNew", taskNew);
 
-    ArrayList<Task> tasks = new TaskService().findAllTasksInSubproject(subprojectSelected.getSubprojectID());
-    // DATABASE-agtig kodning???
+    ArrayList<Task> tasks = subprojectSelected.getTasks();
 
-    session.setAttribute("tasks", tasks);
     model.addAttribute("tasks", tasks);
     return "showsubproject";
   }
@@ -160,5 +176,12 @@ public class SubprojectController {
     Project projectSelected = (Project) session.getAttribute("projectSelected");
     redirectAttrs.addAttribute("projectName", projectSelected.getProjectName());
     return "redirect:/showProject/{projectName}";
+  }
+
+  @ExceptionHandler(CustomException.class)
+  public String handleError(Model model, Exception exception) {
+    model.addAttribute("message", exception.getMessage());
+    return "exceptionpageSubproject";
+
   }
 }

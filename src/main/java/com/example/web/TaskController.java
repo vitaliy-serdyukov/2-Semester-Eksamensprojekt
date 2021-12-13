@@ -1,6 +1,7 @@
 package com.example.web;
 
 import com.example.domain.CustomException;
+import com.example.domain.models.Project;
 import com.example.domain.models.Subproject;
 import com.example.domain.models.Task;
 import com.example.domain.services.TaskService;
@@ -23,10 +24,21 @@ public class TaskController {
 
 
     @GetMapping("/createTask")
-    public String createTask(Model model){
-     Task taskNew = new Task();
-     model.addAttribute("taskNew", taskNew);// fjernes senere???
-     return "createtask";
+    public String createTask(HttpServletRequest request, Model model){
+
+    Task taskNew = new Task();
+    model.addAttribute("taskNew", taskNew);
+
+    HttpSession session = request.getSession();
+    Subproject subprojectSelected = (Subproject) session.getAttribute("subprojectSelected");
+
+    LocalDate minStartDateTask = subprojectSelected.getStartDate();
+    model.addAttribute("minStartDateTask", minStartDateTask);
+
+    LocalDate maxEndDateTask = subprojectSelected.getEndDate();
+    model.addAttribute("maxEndDateTask", maxEndDateTask);
+
+    return "createtask";
     }
 
 

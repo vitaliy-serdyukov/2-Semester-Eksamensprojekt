@@ -40,6 +40,7 @@ form {
 
 form.create-project {
     width: max-content;
+    margin-top: 20px;
 }
 
 form.edit-calculate{
@@ -175,11 +176,6 @@ tr { background-color: rgb(255, 255, 255);
     justify-content: center;
 }
 
-/*.element-middle-create-project {
-    display: flex;
-    justify-content: center;
-    margin-top: 100px;
-}*/
 
 .field {clear:both; text-align:right; line-height:25px;}
 label {float:left; padding-right:10px;}

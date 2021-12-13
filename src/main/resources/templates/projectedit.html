@@ -112,7 +112,15 @@
              </tr>
              <tr>
                  <td>Productivity, hours/day:</td>
-                 <td th:text="${totalHours}"/></td>
+                 <td th:text="${totalHoursTeam}"/></td>
+             </tr>
+             <tr>
+                 <td>Amount of hours available in project:</td>
+                 <td th:text="${projectSelected.hoursTotal}"/></td>
+             </tr>
+             <tr>
+                 <td>Amount of hours left in project:<br>(not allocated in subprojects)</td>
+                 <td th:text="${timeLeftProject}"/></td>
              </tr>
              <tr>
                  <td>Amount of days, needed to reach the goal<br>(based on amount of hours): </td>

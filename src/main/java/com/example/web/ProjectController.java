@@ -4,6 +4,7 @@ import com.example.domain.CustomException;
 import com.example.domain.models.Project;
 import com.example.domain.models.Subproject;
 
+import com.example.domain.models.Task;
 import com.example.domain.services.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -122,7 +123,6 @@ public class ProjectController {
     model.addAttribute("amountPersonsInTeam", amountPersonsInTeam);
 
     ArrayList<Subproject> subprojects = projectSelected.getSubprojects(); // DATABASE-agtig kodning???
-   /* session.setAttribute("subprojects", subprojects);// vi take this out of session in SubprojectController ShowSubproject method*/
 
     model.addAttribute("subprojects", subprojects);
 
@@ -135,16 +135,19 @@ public class ProjectController {
 
     CalculatorService calculatorService = new CalculatorService(); // make privat final for whole Class?
 
+    // taking back out of session our selected project, now with subprojects
+    Project projectSelected = (Project) session.getAttribute("projectSelected");
 
-    Project projectSelected = projectService.showProjectInfo(projectName);
-    session.setAttribute("projectSelected", projectSelected);
     model.addAttribute("projectSelected", projectSelected);
 
     int teammatesAmount = teammateService.countTeammates(projectSelected.getProjectID());
     model.addAttribute("teammatesAmount", teammatesAmount);
 
-    int totalHours = teammateService.calculateTotalHoursPerDay(projectSelected.getProjectID());
-    model.addAttribute("totalHours", totalHours);
+    int totalHoursTeam = teammateService.calculateTotalHoursPerDay(projectSelected.getProjectID());
+    model.addAttribute("totalHoursTeam", totalHoursTeam);
+
+    int timeLeftProject = calculatorService.calculateTimeLeftProject(projectSelected);
+    model.addAttribute("timeLeftProject", timeLeftProject);
 
     double dayAmountNeeded = calculatorService.calculateDaysNeeded(projectSelected.getHoursTotal(),
         projectSelected.getProjectID());
@@ -165,6 +168,7 @@ public class ProjectController {
     double neededSpeed = calculatorService.calculateSpeedDaily(projectSelected.getStartDate(), projectSelected.getEndDate(),
         projectSelected.getHoursTotal());
     model.addAttribute("neededSpeed", neededSpeed);
+
     return "projectedit";
   }
 
@@ -211,17 +215,14 @@ public class ProjectController {
     ArrayList<Subproject> subprojectsTree = projectTree.getSubprojects();
     model.addAttribute("subprojectsTree", subprojectsTree);
 
-   /* for (int i = 0; i < subprojectsTree.size(); i++) {*/
-      Subproject subprojectTree = new Subproject()/*subprojectsTree.get(i)*/;
-      model.addAttribute("subprojectTree", subprojectTree);
+    Subproject subprojectTree = new Subproject();
+    model.addAttribute("subprojectTree", subprojectTree);
 
-    /*  for (int j = 0; j < subprojectsTree.size(); j++) {
-        ArrayList<Task> tasksTree = new TaskService().findAllTasksInSubproject(subprojectTree.getSubprojectID());
-        model.addAttribute("tasksTree", tasksTree);
-        Task taskTree = new Task();
-        model.addAttribute("taskTree", taskTree);
-      }
-    }*/
+    ArrayList<Task> tasksTree = subprojectTree.getTasks();
+    model.addAttribute("tasksTree", tasksTree);
+
+    Task taskTree = new Task();
+    model.addAttribute("taskTree", taskTree);
 
     /*  ArrayList<String> teammatesEmail = new TeammateService().readTeammates(projectTree.getProjectID());
       model.addAttribute("teammatesEmail", teammatesEmail);*/

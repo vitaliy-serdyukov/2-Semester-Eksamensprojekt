@@ -3,6 +3,7 @@ package com.example.domain.models;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Subproject {
@@ -20,7 +21,7 @@ public class Subproject {
 
   private String description;
   private Project project;
-/*  private List<Task> tasksOneSubproject;*/
+  private ArrayList<Task> tasks;
 
   public Subproject() {
   }
@@ -34,6 +35,7 @@ public class Subproject {
     this.endDate = endDate;
     this.description = description;
     this.project = project;
+    tasks = new ArrayList<>();
   }
 
   public Subproject(int projectID, String subprojectName, int hoursTotal, LocalDate startDate, LocalDate endDate,
@@ -51,6 +53,7 @@ public class Subproject {
     this.endDate = endDate;
     this.description = description;
     this.project = project;
+    tasks = new ArrayList<>();
   }
 
   public Subproject(int subprojectID, int projectID, String subprojectName, int hoursTotal, LocalDate startDate, LocalDate endDate,
@@ -70,15 +73,17 @@ public class Subproject {
     this.project = project;
   }
 
- /* public List<Task> getTasksOneSubproject() {
-    return tasksOneSubproject;
+  public void addTasks(ArrayList<Task> tasks) {
+    this.tasks = tasks;
   }
 
-  public void setTasksOneSubproject(List<Task> tasksOneSubproject) {
-    this.tasksOneSubproject = tasksOneSubproject;
+  public ArrayList<Task> getTasks() {
+    return tasks;
   }
-*/
 
+  public void setTasks(ArrayList<Task> tasks) {
+    this.tasks = tasks;
+  }
 
   public int getSubprojectID() {
     return subprojectID;

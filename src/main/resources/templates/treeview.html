@@ -93,16 +93,15 @@
     <ul>
             <ul>
     <li><a>Subprojects</a></li>
-<ul>
-                <span th:each="subprojectTree : ${subprojectsTree}">
-                <li><a th:text="${subprojectTree.subprojectName}"></a></li>
-
-                  <ul>
-
-                <!--<span th:each="taskTree : ${tasksTree}">
-                <li><a th:text="${taskTree.taskName}"></a></li>-->
-              </ul>
-
+            <ul>
+                <div th:each="subprojectTree : ${subprojectsTree}">
+                    <div><li><a th:text="${subprojectTree.subprojectName}"></a></li></div>
+                    <ul>
+                    <div th:each="taskTree : ${tasksTree}">
+                    <li><a th:text="${taskTree.taskName}"></a></li>
+                    </div>
+                 </ul>
+                </div>
 
 
 <!--<div th:each="classroom : ${classroomList}">
@@ -114,14 +113,15 @@
     </ul>
 </div>-->
 
-            <!--<div th:each="subprojectTree : ${subprojectsTree}">
-                <div th:text="${subprojectTree.subprojectName}">
 
-                </div>
-                    <ul>
-                        <div th:each="taskTree : ${tasksTree}">
-                <li><a th:text="${taskTree.taskName}"></a></li>
-              </ul>   -->
+                    <!--<div th:each="subprojectTree : ${subprojectsTree}">
+                        <div th:text="${subprojectTree.subprojectName}">
+
+                        </div>
+                            <ul>
+                                <div th:each="taskTree : ${tasksTree}">
+                        <li><a th:text="${taskTree.taskName}"></a></li>
+                      </ul>   -->
 
 </div>
 
