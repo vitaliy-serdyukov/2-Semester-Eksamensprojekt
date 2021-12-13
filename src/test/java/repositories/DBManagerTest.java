@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class DBManagerTest {
 
-    //automatiseret test
+    //genovervej
 
     @Test
     public void test_GetConnectionToDatabase(){

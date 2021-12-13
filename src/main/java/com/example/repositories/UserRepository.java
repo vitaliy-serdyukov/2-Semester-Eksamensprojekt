@@ -8,7 +8,7 @@ import java.sql.*;
 //This method writes to the DB scheme users. It will enter the values connected to the provided user object.
 public class UserRepository {
 
-    public void dbWrite(User user)/* throws LoginSampleException*/ {
+    public void writeUser(User user){
         try {
             Connection con = DBManager.getConnection();
             String SQL = "INSERT INTO users (user_email, password, first_name, last_name, company_name, phone_number)" +
@@ -31,8 +31,9 @@ public class UserRepository {
         User tmp = new User();
         try {
             Connection con = DBManager.getConnection();
-            String SQL = "SELECT * FROM users WHERE (user_email='" + email + "')";
+            String SQL = "SELECT * FROM users WHERE user_email = ?";
             PreparedStatement ps = con.prepareStatement(SQL);
+            ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 tmp.setEmail(rs.getString(1));
@@ -48,7 +49,7 @@ public class UserRepository {
         return tmp;
     }
 
-    public ResultSet dbRead() {
+    public ResultSet returnResultSetUsers() {
         ResultSet resSet = null;
         String select = "SELECT user_email, password, first_name, last_name, company_name, phone_number FROM users";
         try {

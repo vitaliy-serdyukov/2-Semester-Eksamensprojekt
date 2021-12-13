@@ -1,8 +1,8 @@
 body {
     background-color: #56baed;
     font-family: "Poppins", sans-serif;
-/*    height: 100vh;*/
-    font-size: 20px;/*  font-size: 20px;*/
+    /*    height: 100vh;*/
+    font-size: 20px;
 }
 
 h1,h2 {
@@ -11,9 +11,14 @@ h1,h2 {
     text-align: center;
 }
 
-
 p {
     text-align: center;
+}
+
+p.plus {
+    color: black;
+    text-align: left;
+    width: max-content;
 }
 
 li a {
@@ -27,96 +32,55 @@ li {
 
 form {
     border-radius: 10px;
-   /* padding: 5px;*/
-    margin-bottom: 30px;
-    border: 1px solid black;
+    padding: 5px;
+    border: none;
     background-color: white;
+    box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
 }
 
-
 form.create-project {
-    border-radius: 10px;
-    padding: 5px;
-    margin-bottom: 30px;
     width: max-content;
-    background-color: white;
-    border: 1px solid black;
+    margin-top: 20px;
+}
+
+form.edit-calculate{
+    width: auto;
+}
+
+form.edit-calculate{
+    padding:0;
 }
 
 form.show-model-info {
-    border-radius: 10px;
-    margin-bottom: 30px;
-    width: max-content;
-    background-color: white;
-    border: 1px solid black;
-}
-
-table.show-model-info {
-
-    border-spacing: 0;
-    width: auto;
-    margin-left: auto;
-    margin-right: auto;
-
-
-}
-
-.form-mail {
-    border: 1px black;
-    border-radius: 6px;
-    padding: 5px;
-    margin-bottom: 30px;
-    width: 200px;
+   /* width: max-content;*/
 }
 
 input {
     margin-top: 5px;
     margin-bottom: 5px;
-
 }
-
-.button1 {
-    width: 80px;
-    color: #fff;
-    text-decoration: none;
-    user-select: none;
-    background: rgb(56, 129, 212);
-    padding: .7em 1.5em;
-    outline: none;
-    margin-right: 10px;
-    margin-bottom: 10px;
-    margin-top: 10px;
-    border-radius: 8px;
-}
-
-.button1:hover {
-    background: rgb(12, 27, 84);
-}
-
-.button1:active {
-    background: rgb(3, 18, 65);
-}
-
 
 label {
     display: block;
 }
 
 table {
-    border: 1px solid black;
+    border: none;
     border-radius: 10px;
-/*    border-spacing: 0;*/
     width: auto;
     margin-left: auto;
     margin-right: auto;
     background-color: white;
-
+    box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
 }
 
 
+table.no-shadow{
+    box-shadow: none;
+}
+
 
 table.user-info {
-    border: 1px solid black;
     border-spacing: 0;
     width: 200px;
 }
@@ -126,12 +90,22 @@ th, td {
     padding: 8px;
 }
 
+
+td.centered-button{
+    text-align: center;
+
+}
+
+.centered-button-div{
+    text-align: center;
+
+}
+
 th.extra-line-in-top {
     font-style: italic;
 }
 
 tr { background-color: rgb(255, 255, 255);
-
 }
 
 * {
@@ -140,13 +114,10 @@ tr { background-color: rgb(255, 255, 255);
 
 .flex-container {
     display: flex;
-    /*flex-wrap: wrap;
-    text-align: center;*/
-    margin-top: 100px;
-    align-items: center;
+    margin-top: 75px;
     justify-content: center;
-
 }
+
 #start_date {
     padding-left: 27px;
 }
@@ -161,7 +132,7 @@ tr { background-color: rgb(255, 255, 255);
 
 .flex-item2-left {
     padding: 10px;
-    flex: 20%;
+    flex: 25%;
     margin:10px;
     border-radius: 10px;
     align-content: center;
@@ -169,7 +140,7 @@ tr { background-color: rgb(255, 255, 255);
 
 .flex-item2-middle {
     padding: 10px;
-    flex: 33%;
+    flex: 35%;
     margin:10px;
     border-radius: 10px;
     align-content: center;
@@ -177,32 +148,24 @@ tr { background-color: rgb(255, 255, 255);
 
 .flex-item2-right {
     padding: 10px;
-    flex: 33%;
+    flex: 35%;
     margin:10px;
     border-radius: 10px;
     align-content: center;
 }
 
 
-.flex-show-project-left {
+.flex-show-item50-left {
     padding: 10px;
-    flex: 45%;
+    flex: 50%;
     margin:10px;
     border-radius: 10px;
     align-content: center;
 }
 
-.flex-show-project-middle {
+.flex-show-item50-right {
     padding: 10px;
-    flex: 45%;
-    margin:10px;
-    border-radius: 10px;
-    align-content: center;
-}
-
-.flex-show-project-right {
-    padding: 10px;
-    flex: 45%;
+    flex: 50%;
     margin:10px;
     border-radius: 10px;
     align-content: center;
@@ -211,14 +174,8 @@ tr { background-color: rgb(255, 255, 255);
 .element-middle {
     display: flex;
     justify-content: center;
-
 }
 
-.element-middle-create-project {
-    display: flex;
-    justify-content: center;
-    margin-top: 100px;
-}
 
 .field {clear:both; text-align:right; line-height:25px;}
 label {float:left; padding-right:10px;}
@@ -256,6 +213,10 @@ img.icon{
 
 }
 
+img.icon-gears{
+    width: 35px;
+}
+
 th.dashboard-add-button{
     text-align:center;
 }
@@ -280,4 +241,42 @@ button.dashboard-add-button:hover {
 
 button.dashboard-add-button:active {
     background: rgb(3, 18, 65);
+}
+
+button,submit,reset {
+    background-color: #56baed;
+    border: none;
+    color: white;
+    padding: 15px 80px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    text-transform: uppercase;
+    font-size: 13px;
+    -webkit-box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
+    box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
+    -webkit-border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 5px 5px;
+    margin: 20px 20px 10px 20px;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+button:hover,submit:hover,reset:hover {
+    background-color: #39ace7;
+}
+
+button:active,submit:active,reset:active {
+    -moz-transform: scale(0.95);
+    -webkit-transform: scale(0.95);
+    -o-transform: scale(0.95);
+    -ms-transform: scale(0.95);
+    transform: scale(0.95);
+}
+
+button.add-teammate{
+    margin-top: 30px;
 }

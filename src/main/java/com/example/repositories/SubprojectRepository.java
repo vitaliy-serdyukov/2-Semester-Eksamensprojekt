@@ -37,8 +37,9 @@ public class SubprojectRepository {
     Subproject tmp = null;
     try {
       Connection con = DBManager.getConnection();
-      String SQL = "SELECT * FROM subprojects WHERE (project_id='" + projectID + "')";
+      String SQL = "SELECT * FROM subprojects WHERE project_id = ?";
       PreparedStatement ps = con.prepareStatement(SQL);
+      ps.setInt(1,projectID);
       ResultSet rs = ps.executeQuery();
       while (rs.next()) {
         tmp = new Subproject(
@@ -51,19 +52,20 @@ public class SubprojectRepository {
             rs.getString(7));
         subprojectsTemp.add(tmp);
       }
-
     } catch (SQLException ex) {
       System.out.println(ex.getMessage());
     }
     return subprojectsTemp;
   }
 
+
   public Subproject readSubprojectInfo(String subprojectName) {
     Subproject tmp = null;
     try {
       Connection con = DBManager.getConnection();
-      String SQL = "SELECT * FROM subprojects WHERE (subproject_name='" + subprojectName + "')";
+      String SQL = "SELECT * FROM subprojects WHERE subproject_name = ?";
       PreparedStatement ps = con.prepareStatement(SQL);
+      ps.setString(1, subprojectName);
       ResultSet rs = ps.executeQuery();
       while (rs.next()) {
         tmp = new Subproject(
@@ -75,19 +77,20 @@ public class SubprojectRepository {
             rs.getObject(6, LocalDate.class),
             rs.getString(7));
       }
-
     } catch (SQLException ex) {
       System.out.println(ex.getMessage());
     }
     return tmp;
   }
 
+
   public void rewriteSubProject(Subproject subProject)  {
     try {
       Connection con = DBManager.getConnection();
 
       PreparedStatement ps = con.prepareStatement("UPDATE subprojects SET subproject_name = ?, " +
-          " subproject_hours_total = ?, subproject_start_date = ?, subproject_end_date = ?, subproject_description = ? WHERE subproject_id = ?");
+          " subproject_hours_total = ?, subproject_start_date = ?, subproject_end_date = ?, subproject_description = ?" +
+          " WHERE subproject_id = ?");
       ps.setString(1, subProject.getSubprojectName());
       ps.setInt(2, subProject.getHoursTotal());
       ps.setObject(3, subProject.getStartDate());
@@ -103,8 +106,9 @@ public class SubprojectRepository {
   public void deleteSubprojectFromDB(String subprojectName) {
     try {
       Connection con = DBManager.getConnection();
-      String SQL = "DELETE FROM subprojects WHERE (subproject_name='" + subprojectName + "')";
+      String SQL = "DELETE FROM subprojects WHERE subproject_name = ?";
       PreparedStatement ps = con.prepareStatement(SQL);
+      ps.setString(1, subprojectName);
       ps.executeUpdate();
     } catch (SQLException ex) {
       ex.printStackTrace();

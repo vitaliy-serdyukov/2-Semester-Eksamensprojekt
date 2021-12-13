@@ -8,6 +8,7 @@ import com.example.domain.models.Task;
 import com.example.domain.services.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,6 +32,10 @@ public class ProjectController {
   public String createProject(Model model) {
     Project projectNew = new Project();
     model.addAttribute("projectNew", projectNew);
+
+    LocalDate minStartDateProject = new DateService().getToday();
+    model.addAttribute("minStartDateProject", minStartDateProject);
+
     return "createproject";
   }
 
@@ -59,13 +64,20 @@ public class ProjectController {
     //convert String to LocalDate
     LocalDate projectEndDate = LocalDate.parse(projectEndDateStr, formatter);
 
+     boolean isValidEndDate = new DateService().isValidEndDate(projectStartDate, projectEndDate);
+
+     if (!isValidEndDate){
+        throw new CustomException("Entered end date is wrong, please, choose end date as minimum" +
+            "as the next day after start date");
+     }
+
     // Retrieve "email" String object from HTTP session
     String ownerEmail = (String) session.getAttribute("email");
     String projectDescription = request.getParameter("description");
 
-   /* if (projectName.equals("")) {
-      return "redirect:/dashboard";
-    } else {*/
+    if (projectName == null || projectName.trim().equals( "" )) {
+      throw new CustomException("The project name cannot be empty, please, try again");
+    }
     // Make "projectNew" object and assign new values
     Project projectNew = new Project(projectName, projectCategory, hoursTotal, projectStartDate, projectEndDate,
         ownerEmail, projectDescription);
@@ -88,6 +100,13 @@ public class ProjectController {
     HttpSession session = request.getSession();
 
     Project projectSelected = projectService.showProjectInfo(projectName);
+
+    ArrayList<Subproject> subprojectsTemp = new SubprojectService().
+        findAllSubprojectsInProject(projectSelected.getProjectID());
+
+    projectSelected.addSubprojects(subprojectsTemp);
+
+
     session.setAttribute("projectSelected", projectSelected);
     model.addAttribute("projectSelected", projectSelected);
 
@@ -98,11 +117,12 @@ public class ProjectController {
 
     ArrayList<String> teammates = teammateService.readTeammates(projectSelected.getProjectID());
     model.addAttribute("teammates", teammates);
+
+
     int amountPersonsInTeam = teammateService.countTeammates(projectSelected.getProjectID());
     model.addAttribute("amountPersonsInTeam", amountPersonsInTeam);
 
-    ArrayList<Subproject> subprojects = new SubprojectService().findAllSubprojectsInProject(projectSelected.getProjectID()); // DATABASE-agtig kodning???
-    session.setAttribute("subprojects", subprojects);// vi take this out of session in SubprojectController ShowSubproject method
+    ArrayList<Subproject> subprojects = projectSelected.getSubprojects(); // DATABASE-agtig kodning???
 
     model.addAttribute("subprojects", subprojects);
 
@@ -110,21 +130,29 @@ public class ProjectController {
   }
 
   @GetMapping("/editProject/{projectName}")
-  public String editProject(HttpServletRequest request, Model model, @PathVariable(value = "projectName") String projectName) { //TO DO path in browser
-    HttpSession session = request.getSession();
+  public String editProject(HttpServletRequest request, Model model, @PathVariable(value = "projectName")
+      String projectName) throws CustomException { //TO DO path in browser
 
+    HttpSession session = request.getSession();
     CalculatorService calculatorService = new CalculatorService(); // make privat final for whole Class?
 
-
-    Project projectSelected = projectService.showProjectInfo(projectName);
-    session.setAttribute("projectSelected", projectSelected);
+    // taking back out of session our selected project, now with subprojects
+    Project projectSelected = (Project) session.getAttribute("projectSelected");
     model.addAttribute("projectSelected", projectSelected);
 
     int teammatesAmount = teammateService.countTeammates(projectSelected.getProjectID());
     model.addAttribute("teammatesAmount", teammatesAmount);
 
-    int totalHours = teammateService.calculateTotalHoursPerDay(projectSelected.getProjectID());
-    model.addAttribute("totalHours", totalHours);
+    if (teammatesAmount < 1){
+      throw new CustomException("The project must have at least one team member");
+    }
+
+
+    int totalHoursTeam = teammateService.calculateTotalHoursPerDay(projectSelected.getProjectID());
+    model.addAttribute("totalHoursTeam", totalHoursTeam);
+
+    int timeLeftProject = calculatorService.calculateTimeLeftProject(projectSelected);
+    model.addAttribute("timeLeftProject", timeLeftProject);
 
     double dayAmountNeeded = calculatorService.calculateDaysNeeded(projectSelected.getHoursTotal(),
         projectSelected.getProjectID());
@@ -145,6 +173,7 @@ public class ProjectController {
     double neededSpeed = calculatorService.calculateSpeedDaily(projectSelected.getStartDate(), projectSelected.getEndDate(),
         projectSelected.getHoursTotal());
     model.addAttribute("neededSpeed", neededSpeed);
+
     return "projectedit";
   }
 
@@ -181,27 +210,35 @@ public class ProjectController {
   }
 
   @GetMapping("/treeview")
-  public String treeView (HttpServletRequest request, Model model) {
+  public String treeView(HttpServletRequest request, Model model) {
     HttpSession session = request.getSession();
-
-    Subproject subprojectNew = new Subproject();
-    model.addAttribute("subprojectNew", subprojectNew);
-    Task taskNew = new Task();
-    model.addAttribute("taskNew", taskNew);
-
 
     Project projectTree = (Project) session.getAttribute("projectSelected");
     model.addAttribute("projectTree", projectTree);
 
-    ArrayList subprojectsTree = (ArrayList) session.getAttribute("subprojects");
+
+    ArrayList<Subproject> subprojectsTree = projectTree.getSubprojects();
     model.addAttribute("subprojectsTree", subprojectsTree);
 
-    ArrayList<Task> tasksTree = new TaskService().findAllTasksInSubproject(subprojectNew.getSubprojectID());
+    Subproject subprojectTree = new Subproject();
+    model.addAttribute("subprojectTree", subprojectTree);
+
+    ArrayList<Task> tasksTree = subprojectTree.getTasks();
     model.addAttribute("tasksTree", tasksTree);
 
-    ArrayList<String> teammatesEmail = new TeammateService().readTeammates(projectTree.getProjectID());
-    model.addAttribute("teammatesEmail", teammatesEmail);
+    Task taskTree = new Task();
+    model.addAttribute("taskTree", taskTree);
 
-    return "treeview";
+    /*  ArrayList<String> teammatesEmail = new TeammateService().readTeammates(projectTree.getProjectID());
+      model.addAttribute("teammatesEmail", teammatesEmail);*/
+
+      return "treeview";
+    }
+
+  @ExceptionHandler(CustomException.class)
+  public String handleError(Model model, Exception exception) {
+    model.addAttribute("message", exception.getMessage());
+    return "exceptionpageProject";
+
   }
 }

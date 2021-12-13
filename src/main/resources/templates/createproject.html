@@ -5,10 +5,11 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/styling.css" type="text/css">
+    <link rel="stylesheet" href="/css/animation.css" type="text/css">
     <title>Create project</title>
-
 </head>
 <header>
+    <div class="wrapper fadeInDown">
     <nav>
         <ul>
             <li>
@@ -22,18 +23,21 @@
             </li>
         </ul>
     </nav>
+    </div>
 </header>
 <body>
 
-<div class="element-middle-create-project">
-    <form class="create-project" action="#" method="post" th:action="@{/addProject}" th:object="${projectNew}">
+<div class="wrapper fadeInDown">
+<div class="flex-container">
+     <form class="create-project" action="#" method="post" th:action="@{/addProject}" th:object="${projectNew}">
 
         <p>Create new project here:</p>
 
         <div class="main">
              <div class="field">
                  <label for="project_name">Project name:</label>
-                 <input type="text" id="project_name" name="project_name" th:field="*{projectName}" required/></td>
+                 <input type="text" max="30" maxlength="100" id="project_name" name="project_name"
+                        th:field="*{projectName}" required/></td>
              </div>
              <div class="field">
                 <label for="category">Category:</label> <!--have tried the solution with Enum as well, the problem is-->
@@ -47,25 +51,32 @@
              </div>
             <div class="field">
                 <label for="hours_total">Hours total, expected:</label>
-                <input type="number" id="hours_total" name="hours_total" th:field="*{hoursTotal}"/></td>
+                <input type="number" min="1" id="hours_total" name="hours_total" th:field="*{hoursTotal}"/></td>
             </div>
             <div class="field">
                 <label for="start_date">Start date:</label>
-                <input type="date" id="start_date" name="start_date" th:field="*{startDate}"/></td>
+                <input type="date" id="start_date" name="start_date" th:field="*{startDate}"
+                       th:required="required" th:min="${minStartDateProject}"/>
             </div>
             <div class="field">
                 <label for="end_date">End date:</label>
-                <input type="date" id="end_date" name="end_date" th:field="*{endDate}"/></td>
+                <input type="date" id="end_date" name="end_date" th:field="*{endDate}"
+                       th:required="required"/></td>
             </div>
             <div class="field">
                 <label for="description">Description:</label>
-                <input type="text" id="description" name="description" th:field="*{description}"/></td>
-            </div>
-            <div class="button-wrapper-right">
-                <button class="button1"  type="submit">Add Project</button>
+            <textarea maxlength="100" name="description" id="description" th:field="*{description}"></textarea>
+        </div>
+          <!--  <div class="field">
+                <label for="description">Description:</label>
+                <input type="text" maxlength="100" id="description" name="description" th:field="*{description}"/></td>
+            </div>-->
+            <div class="centered-button-div">
+                <button type="submit">Add project</button>
             </div>
         </div>
     </form>
   </div>
+</div>
 </body>
 </html>

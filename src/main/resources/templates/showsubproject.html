@@ -5,31 +5,38 @@
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" href="/css/styling.css" type="text/css">
+  <link rel="stylesheet" href="/css/animation.css" type="text/css">
   <title>Show subproject</title>
 </head>
 
 <header>
+  <div class="wrapper fadeInDown">
   <nav>
     <ul>
       <li>
         <a href="/dashboard">Dashboard</a>
       </li>
       <li>
-        <a href="/returnToProject">Back to project</a>
-      <li>
         <a href="#">Profile</a>
+      </li>
+      <li>
+        <a href="/returnToProject">Back to project</a>
       </li>
       <li>
         <a style="margin-left: 490px" href="/logout"> Logout </a>
       </li>
     </ul>
   </nav>
+  </div>
 </header>
+
+
 <body>
-
-
-    <form class="show-model-info" method="get" th:action="@{/createTask}">
-      <table>
+<div class="wrapper fadeInDown">
+    <div class="flex-container">
+      <div class="flex-show-item50-left">
+    <form method="get" th:action="@{/createTask}">
+      <table class="no-shadow">
         <thead>
         <tr>
           <th>You are in Subproject:</th>
@@ -65,31 +72,19 @@
           <td>Description:</td>
           <td th:text="${subprojectSelected.description}"></td>
         </tr>
-        <tr>
-          <td><button class="button1" type="button" th:href="@{/editSubproject/{subprojectName}(subprojectName=${subprojectSelected.subprojectName})}">
-            Edit subproject</button>
-          </td>
-          <td>
-              <button style="padding-right: 70px" class="button1" onclick="location.href='/createTask'" type="submit">Add new Task</button>
-          </td>
-        </tr>
-        <tr>
-          <td></td>
-          <td><button style="padding-right: 70px" class="button1"
-                      onclick="location.href='/returnToProject'"  type="button">Back to project</button></td>
-        </tr>
         </tbody>
       </table>
     </form>
   </div>
 
-
-
-    <div class="flex-show-project-right">
+    <div class="flex-show-item50-right">
       <table>
         <thead>
+        <tr><th class="dashboard-add-button" colspan="4">
+          <button onclick="location.href='/createTask'" type="submit">Add new task</button></th>
+        </tr>
         <tr>
-          <th colspan="3">Available Tasks in this Subproject:</th>
+          <th colspan="4">Available tasks in this subproject:</th>
         </tr>
         <tr>
           <th class="extra-line-in-top">Name</th>
@@ -113,9 +108,8 @@
         </tr>
         </tbody>
       </table>
-
       </div>
     </div>
-    </body>
-    </html>
-
+</div>
+</body>
+</html>
