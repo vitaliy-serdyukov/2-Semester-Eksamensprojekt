@@ -40,7 +40,7 @@ public class ProjectController {
   }
 
 
-  // method for "Add project" fields and button on "dashboard"
+  // method for "Add project" fields and button on "frontpage"
   @PostMapping("/addProject")
   public String saveProject(HttpServletRequest request) throws CustomException {
 
@@ -91,7 +91,7 @@ public class ProjectController {
     session.setAttribute("projects", projects);
 
     // Go to page
-    return "redirect:/dashboard";
+    return "redirect:/frontpage";
   }
 
   @GetMapping("/showProject/{projectName}")
@@ -200,13 +200,13 @@ public class ProjectController {
 
 
     // Go to page
-    return "redirect:/dashboard";   // TO DO, evt return to dashboard select
+    return "redirect:/frontpage";   // TO DO, evt return to frontpage select
   }
 
   @GetMapping("/deleteProject/{projectName}")
   public String deleteProject(@PathVariable(value = "projectName") String projectName) {
     projectService.deleteProject(projectName);
-    return "redirect:/dashboard";
+    return "redirect:/frontpage";
   }
 
   @GetMapping("/treeview")

@@ -55,7 +55,7 @@ public class TeammateController {
 
   @PostMapping("/deleteTeammate{projectName}")
   public String deleteProject(Model model, @PathVariable(value = "projectName") String projectName,
-                              HttpServletRequest request) {
+                              HttpServletRequest request, RedirectAttributes redirectAttrs) {
 
     HttpSession session = request.getSession();
     Project projectSelected = (Project) session.getAttribute("projectSelected");
@@ -65,6 +65,10 @@ public class TeammateController {
 
     teammateService.deleteTeammate(teammateEmail, projectID);
 
-    return "redirect:/dashboard";
+    redirectAttrs.addAttribute("projectName", projectSelected.getProjectName());
+    return "redirect:/showProject/{projectName}";
+
+   /* return "redirect:/frontpage";*/
   }
+
 }

@@ -82,7 +82,7 @@ public class SubprojectController {
     subprojectService.updateSubProject(subProjectUpdated);
 
     // Go to page
-    return "redirect:/dashboard";   // TO DO, evt return to dashboard select
+    return "redirect:/frontpage";   // TO DO, evt return to frontpage select
   }
 
 
@@ -119,7 +119,7 @@ public class SubprojectController {
     String subprojectDescription = request.getParameter("description");
 /*
  if (subprojectName.equals("")) {
-      return "redirect:/dashboard";
+      return "redirect:/frontpage";
     } else {
 */
     // Make "subprojectNew" object and assign new values

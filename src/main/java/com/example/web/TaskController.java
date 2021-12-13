@@ -68,7 +68,7 @@ public class TaskController {
       String taskDescription = request.getParameter("description");
 /*
  if (taskName.equals("")) {
-      return "redirect:/dashboard";
+      return "redirect:/frontpage";
     } else {
 */
       // Make "taskNew" object and assign new values
@@ -126,7 +126,7 @@ public class TaskController {
 
 
     // Go to page
-    return "redirect:/dashboard";   // TO DO, evt return to dashboard select
+    return "redirect:/frontpage";   // TO DO, evt return to frontpage select
   }
 
     @GetMapping("/deleteTask/{taskName}")

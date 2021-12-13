@@ -49,14 +49,14 @@ import java.util.ArrayList;
         session.setAttribute("email", email);
 
         // Go to next page after login
-        return "redirect:/dashboard";
+        return "redirect:/frontpage";
       } else {
         throw new CustomException("User is not exists, please try again");
       }
          }
 
     // users main page after login
-    @GetMapping("/dashboard")
+    @GetMapping("/frontpage")
     public String userPage(Model model, HttpServletRequest request) {
       HttpSession session = request.getSession();
       String email = (String) session.getAttribute("email");
@@ -74,7 +74,7 @@ import java.util.ArrayList;
       //  Assign model attribute to arraylist med  projects
       model.addAttribute("projectsUserLogged", projectsUserLogged);
 
-      return "dashboard";
+      return "frontpage";
     }
 
 

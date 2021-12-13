@@ -13,7 +13,7 @@
     <nav>
         <ul>
             <li>
-                <a href="/dashboard">Dashboard</a>
+                <a href="/frontpaged">Frontpage</a>
             </li>
             <li>
                 <a href="#">Profile</a>
@@ -105,7 +105,14 @@
             </tr>
             </tbody>
         </table>
-            </form>
+        </form>
+        <div class="centered-button-div">
+        <form action="#" method="post" th:action="@{/deleteTeammate}" th:object="${projectSelected}">
+            <label for="teammateEmail">Email:</label>
+            <input type="email" id="teammateEmail" name="teammateEmail" required/>
+            <button  type="submit">Remove member</button>
+        </form>
+    </div>
     </div>
 
     <div class="flex-item2-right">
@@ -141,7 +148,6 @@
                 <td><a th:href="@{/editSubproject/{subprojectName}(subprojectName=${subprojectNew.subprojectName})}">
                     <img class="icon" src="/images/gears.png" alt="Gears">
                 </a></td>
-
             </tr>
             </tbody>
     </table>
