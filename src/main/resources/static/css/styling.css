@@ -38,7 +38,7 @@ form {
     box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
 }
 
-form.create-project {
+form.create-project, form.show-model-info {
     width: max-content;
     margin-top: 20px;
 }
@@ -49,10 +49,6 @@ form.edit-calculate{
 
 form.edit-calculate{
     padding:0;
-}
-
-form.show-model-info {
-   /* width: max-content;*/
 }
 
 input {
@@ -81,8 +77,8 @@ table.no-shadow{
 
 
 table.user-info {
-    border-spacing: 0;
-    width: 200px;
+ padding: 10px;
+
 }
 
 th, td {
@@ -212,6 +208,10 @@ header li a {
     text-decoration: none;
 }
 
+header li a.logout {
+   justify-content: flex-end;
+}
+
 
 img.icon{
     width: 25px;
@@ -288,4 +288,8 @@ button.add-teammate{
 
 label.remove-member {
     margin-left: 95px;
+}
+
+.logout {
+    align-self: flex-end;
 }
