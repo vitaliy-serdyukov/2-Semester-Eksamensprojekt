@@ -1,6 +1,6 @@
 package com.example.web;
 
-import com.example.domain.CustomException;
+import com.example.domain.exceptions.LoginRegisterException;
 import com.example.domain.models.Project;
 import com.example.domain.models.User;
 import com.example.domain.services.LoginService;
@@ -25,17 +25,17 @@ import java.util.ArrayList;
 
     // main page "index"
     @GetMapping("/")
-    public String index() { return "index";
+    public String index() { return "login/index";
     }
 
 
     // "signup" page
     @GetMapping("/signup")
-    public String signup() {return "signup";}
+    public String signup() {return "login/signup";}
 
     // gathering data from login form
     @PostMapping("/login")
-    public String loginUser(HttpServletRequest request) throws CustomException {
+    public String loginUser(HttpServletRequest request) throws LoginRegisterException {
       //Retrieve request from session
       HttpSession session = request.getSession();
       //Retrieve values from HTML form via HTTPServletRequest
@@ -49,14 +49,14 @@ import java.util.ArrayList;
         session.setAttribute("email", email);
 
         // Go to next page after login
-        return "redirect:/dashboard";
+        return "redirect:/frontpage";
       } else {
-        throw new CustomException("User is not exists, please try again");
+        throw new LoginRegisterException("User is not exists, please try again");
       }
          }
 
     // users main page after login
-    @GetMapping("/dashboard")
+    @GetMapping("/frontpage")
     public String userPage(Model model, HttpServletRequest request) {
       HttpSession session = request.getSession();
       String email = (String) session.getAttribute("email");
@@ -74,7 +74,7 @@ import java.util.ArrayList;
       //  Assign model attribute to arraylist med  projects
       model.addAttribute("projectsUserLogged", projectsUserLogged);
 
-      return "dashboard";
+      return "login/frontpage";
     }
 
 
@@ -87,7 +87,7 @@ import java.util.ArrayList;
 
 
     @PostMapping("/register")
-    public String createUser(WebRequest request, Model model) throws CustomException {
+    public String createUser(WebRequest request, Model model) throws LoginRegisterException {
 
       //Retrieve values from HTML form via WebRequest
       String email = request.getParameter("email");
@@ -100,26 +100,25 @@ import java.util.ArrayList;
 
       if (!(password1.equals(password2))) {
         // If passwords don't match, an exception is thrown
-        throw new CustomException("The two passwords did not match");
+        throw new LoginRegisterException ("The two passwords did not match");
       } else {
         // If passwords match, work + data is delegated to login service
         User user = new User(email, password1, firstName, lastName, companyName, phoneNumber);
         if (new LoginService().checkIfUserExistsRegister(user)) {
-          throw new CustomException("There was already a user with this email..\n Please, choose a different one");
+          throw new LoginRegisterException ("There was already a user with this email..\n Please, choose a different one");
         } else {
           loginService.writeUser(user);
           request.setAttribute("user", user, WebRequest.SCOPE_SESSION);
           model.addAttribute("user", user);
         }
       }
-      return "index";
+      return "login/index";
     }
 
-
-    @ExceptionHandler(CustomException.class)
+    @ExceptionHandler(LoginRegisterException.class)
     public String handleError(Model model, Exception exception) {
       model.addAttribute("message", exception.getMessage());
-      return "exceptionpageLogin";
+      return "login/exceptionpageLoginRegister";
 
     }
   }

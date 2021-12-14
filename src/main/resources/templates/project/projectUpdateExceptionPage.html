@@ -1,11 +1,12 @@
 <!DOCTYPE html>
+<html lang="en">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/styling.css" type="text/css">
     <link rel="stylesheet" href="/css/animation.css" type="text/css">
-    <title>Exception page project</title>
+    <title>Project update exception page</title>
 </head>
 <body>
 <div class="wrapper fadeInDown">
@@ -14,7 +15,7 @@
                 <h1>An Error Occured!</h1>
                 <p><b><span th:text="${message}"></span></b></p>
                 <div class="centered-button-div">
-                    <button onclick="location.href='/dashboard'" type="button">Back to dashboard</button>
+                    <button onclick="location.href='/returnToProject'" type="button">Return to project</button>
                 </div>
             </form>
         </div>

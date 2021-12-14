@@ -1,11 +1,14 @@
 package com.example.web;
 
 
-import com.example.domain.CustomException;
+import com.example.domain.exceptions.ProjectInputException;
+import com.example.domain.exceptions.SubprojectInputException;
+import com.example.domain.exceptions.SubprojectUpdateException;
 import com.example.domain.models.Project;
 import com.example.domain.models.Subproject;
 import com.example.domain.models.Task;
 import com.example.domain.services.CalculatorService;
+import com.example.domain.services.DateService;
 import com.example.domain.services.SubprojectService;
 import com.example.domain.services.TaskService;
 import org.springframework.stereotype.Controller;
@@ -45,50 +48,15 @@ public class SubprojectController {
     model.addAttribute("maxEndDateSubproject", maxEndDateSubproject);
 
     int timeLeftProject = new CalculatorService().calculateTimeLeftProject(projectSelected);
-    System.out.println( "test" + projectSelected.getSubprojects());
     model.addAttribute("timeLeftProject", timeLeftProject);
 
-
-    return "createsubproject";
-  }
-
-  @GetMapping("/editSubproject/{subprojectName}")
-  public String editSubProject(HttpServletRequest request, Model model, @PathVariable(value = "subprojectName") String subProjectName) { //TO DO path in browser
-    HttpSession session = request.getSession();
-    Subproject subProjectSelected = subprojectService.showSubprojectInfo(subProjectName);
-    session.setAttribute("subProjectSelected", subProjectSelected);
-    model.addAttribute("subProjectSelected", subProjectSelected);
-    return "subprojectedit";
-  }
-
-  @PostMapping("/updateSubproject")
-  public String updateSubproject(HttpServletRequest request) throws CustomException {
-    //Retrieve request from session
-
-    HttpSession session = request.getSession();
-
-    // Retrieve values from HTML form via HTTPServlet request
-    Subproject subProjectToUpdate = (Subproject) session.getAttribute("subProjectSelected");
-
-    Subproject subProjectUpdated = new Subproject(
-        (subProjectToUpdate.getProjectID()),
-        (subProjectToUpdate.getSubprojectID()),
-        (request.getParameter("projectName")),
-        (Integer.parseInt(request.getParameter("hoursTotal"))),
-        (LocalDate.parse(request.getParameter("startDate"), DateTimeFormatter.ofPattern("yyyy-MM-dd"))),
-        (LocalDate.parse(request.getParameter("endDate"), DateTimeFormatter.ofPattern("yyyy-MM-dd"))),
-        (request.getParameter("description")));
-
-    subprojectService.updateSubProject(subProjectUpdated);
-
-    // Go to page
-    return "redirect:/dashboard";   // TO DO, evt return to dashboard select
+    return "subproject/createsubproject";
   }
 
 
   // method for "Add Subproject" fields and button on "createsubproject"
   @PostMapping("/addSubproject")
-  public String saveSubproject(HttpServletRequest request, RedirectAttributes redirectAttrs) throws CustomException  {
+  public String saveSubproject(HttpServletRequest request, RedirectAttributes redirectAttrs) throws ProjectInputException, SubprojectInputException {
 
     //Retrieve request from session
     HttpSession session = request.getSession();
@@ -97,12 +65,19 @@ public class SubprojectController {
     int projectID = projectSelected.getProjectID();
 
     String subprojectName = request.getParameter("subprojectName");
+
+    // validate subproject name for backspace or empty String input
+    if (subprojectName == null || subprojectName.trim().equals( "" )) {
+      throw new SubprojectInputException("The subproject name cannot be empty, please, try again");
+    }
+
     String hoursTotalStr = request.getParameter("hoursTotal");
     int hoursTotal = Integer.parseInt(hoursTotalStr);
 
+
     int timeLeftProject = new CalculatorService().calculateTimeLeftProject(projectSelected);
     if (timeLeftProject < hoursTotal) {
-      throw new CustomException("It was unable to create a subproject, because the entered amount of hours exceeds" +
+      throw new SubprojectInputException("It was unable to create a subproject, because the entered amount of hours exceeds" +
           "available amount of hours in project left ");
     }
 
@@ -116,12 +91,15 @@ public class SubprojectController {
     //convert String to LocalDate
     LocalDate subprojectEndDate = LocalDate.parse(subprojectEndDateStr, formatter);
 
+    // validate end date
+    boolean isValidEndDate = new DateService().isValidEndDate(subprojectStartDate, subprojectEndDate);
+    if (!isValidEndDate){
+      throw new SubprojectInputException("Entered end date is wrong, please, choose end date as minimum" +
+          "as the next day after start date");
+    }
+
     String subprojectDescription = request.getParameter("description");
-/*
- if (subprojectName.equals("")) {
-      return "redirect:/dashboard";
-    } else {
-*/
+
     // Make "subprojectNew" object and assign new values
     Subproject subprojectNew = new Subproject(projectID, subprojectName, hoursTotal, subprojectStartDate,
         subprojectEndDate, subprojectDescription);
@@ -134,9 +112,10 @@ public class SubprojectController {
   }
 
 
+
   @GetMapping("/showSubproject/{subprojectName}")
   public String showSubproject(HttpServletRequest request, Model model,
-                            @PathVariable(value = "subprojectName") String subprojectName) {
+                               @PathVariable(value = "subprojectName") String subprojectName) {
     HttpSession session = request.getSession();
 
     Subproject subprojectSelected = subprojectService.showSubprojectInfo(subprojectName);
@@ -155,8 +134,47 @@ public class SubprojectController {
     ArrayList<Task> tasks = subprojectSelected.getTasks();
 
     model.addAttribute("tasks", tasks);
-    return "showsubproject";
+    return "subproject/showsubproject";
   }
+
+
+
+  @GetMapping("/editSubproject/{subprojectName}")
+  public String editSubProject(HttpServletRequest request, Model model, @PathVariable(value = "subprojectName") String subProjectName) { //TO DO path in browser
+    HttpSession session = request.getSession();
+    Subproject subprojectSelected = subprojectService.showSubprojectInfo(subProjectName);
+    session.setAttribute("subprojectSelected", subprojectSelected);
+    model.addAttribute("subprojectSelected", subprojectSelected);
+    return "subproject/editsubproject";
+  }
+
+
+
+  @PostMapping("/updateSubproject")
+  public String updateSubproject(HttpServletRequest request, RedirectAttributes redirectAttrs) {
+    //Retrieve request from session
+
+    HttpSession session = request.getSession();
+
+    // Retrieve values from HTML form via HTTPServlet request
+    Subproject subprojectToUpdate = (Subproject) session.getAttribute("subprojectSelected");
+
+    Subproject subprojectUpdated = new Subproject(
+        (subprojectToUpdate.getProjectID()),
+        (subprojectToUpdate.getSubprojectID()),
+        (request.getParameter("subprojectName")),
+        (Integer.parseInt(request.getParameter("hoursTotal"))),
+        (LocalDate.parse(request.getParameter("startDate"), DateTimeFormatter.ofPattern("yyyy-MM-dd"))),
+        (LocalDate.parse(request.getParameter("endDate"), DateTimeFormatter.ofPattern("yyyy-MM-dd"))),
+        (request.getParameter("description")));
+
+    subprojectService.updateSubProject(subprojectUpdated);
+
+    redirectAttrs.addAttribute("subprojectName", subprojectUpdated.getSubprojectName());
+    return "redirect:/showSubproject/{subprojectName}";
+  }
+
+
 
   @GetMapping("/deleteSubproject/{subprojectName}")
   public String deleteSubroject(HttpServletRequest request, RedirectAttributes redirectAttrs,
@@ -170,6 +188,7 @@ public class SubprojectController {
     return "redirect:/showProject/{projectName}";
   }
 
+
   @GetMapping("/returnToProject")
   public String returnToProject(HttpServletRequest request, RedirectAttributes redirectAttrs) {
     HttpSession session = request.getSession();
@@ -178,10 +197,15 @@ public class SubprojectController {
     return "redirect:/showProject/{projectName}";
   }
 
-  @ExceptionHandler(CustomException.class)
-  public String handleError(Model model, Exception exception) {
+  @ExceptionHandler(SubprojectInputException.class)
+  public String handleInputError(Model model, Exception exception) {
     model.addAttribute("message", exception.getMessage());
-    return "exceptionpageSubproject";
+    return "subproject/subprojectInputExceptionPage";
+  }
 
+  @ExceptionHandler(SubprojectUpdateException.class)
+  public String handleUpdateError(Model model, Exception exception) {
+    model.addAttribute("message", exception.getMessage());
+    return "subproject/subprojectUpdateExceptionPage";
   }
 }

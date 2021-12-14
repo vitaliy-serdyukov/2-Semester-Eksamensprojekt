@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html lang="en">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -14,7 +14,7 @@
     <nav>
         <ul>
             <li>
-                <a href="/dashboard">Dashboard</a>
+                <a href="/frontpage">Frontpage</a>
             </li>
             <li>
                 <a href="#">Profile</a>
@@ -41,7 +41,7 @@
             </div>
             <div class="field">
                 <label for="teammateHours">Amount of hours per day:</label>
-                <input type="number" min="1" required id="teammateHours" name="teammateHours"/>
+                <input type="number" min="1" max="24" required id="teammateHours" name="teammateHours"/>
             </div>
             <div class="centered-button-div">
                 <button class="add-teammate" type="submit">Add Teammate</button>
