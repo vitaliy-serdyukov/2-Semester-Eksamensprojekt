@@ -1,6 +1,6 @@
 package com.example.domain.services;
 
-import com.example.domain.CustomException;
+import com.example.domain.exceptions.ProjectInputException;
 import com.example.domain.models.Project;
 import com.example.repositories.ProjectRepository;
 
@@ -10,7 +10,7 @@ public class ProjectService {
 
   private final ProjectRepository projectRepository = new ProjectRepository();
 
-  public void createProject(Project project) throws CustomException {
+  public void createProject(Project project) throws ProjectInputException {
     projectRepository.writeProject(project);
   }
 
@@ -22,7 +22,7 @@ public class ProjectService {
     return projectRepository.readProjectInfo(projectName);
   }
 
-  public void updateProject(Project project) throws CustomException {
+  public void updateProject(Project project) throws ProjectInputException {
     projectRepository.rewriteProject(project);
   }
 

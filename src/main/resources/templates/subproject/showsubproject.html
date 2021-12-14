@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html lang="en">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -35,19 +35,16 @@
 <div class="wrapper fadeInDown">
     <div class="flex-container">
       <div class="flex-show-item50-left">
-        <form th:action="@{/editSubproject/{subprojectName}(subprojectName=${subprojectSelected.subprojectName})}" method="get">
+        <form th:action="@{/editSubproject/{subprojectName}(subprojectName=${subprojectSelected.subprojectName})}"
+              method="get">
       <table class="no-shadow">
         <thead>
-        <tr>
-        <th colspan="2" class="centered-button"><button type="submit">Calculate and edit</button>
-        </th>
-        </tr>
-        <tr>
-          <th>You are in Subproject:</th>
-          <th></th>
-        </tr>
+        <th colspan="2" class="centered-button"><button type="submit">Calculate and edit<br>subproject</button></th>
         </thead>
         <tbody>
+        <tr>
+          <td colspan="2">You are in subproject:<b><span th:text="${subprojectSelected.getSubprojectName()}">
+                </span></b></td>
         <tr>
           <td>Subproject ID:</td>
           <td th:text="${subprojectSelected.subprojectID}"></td>
@@ -84,17 +81,19 @@
     <div class="flex-show-item50-right">
       <table>
         <thead>
-        <tr><th class="dashboard-add-button" colspan="4">
-          <button onclick="location.href='/createTask'" type="submit">Add new task</button></th>
+        <tr>
+        <th class="dashboard-add-button" colspan="3">
+          <button onclick="location.href='/createTask'" type="submit">Add new task</button>
+        </th>
         </tr>
         <tr>
-          <th colspan="4">Available tasks in this subproject:</th>
+          <th colspan="3">Available tasks in this subproject:</th>
         </tr>
         <tr>
           <th class="extra-line-in-top">Name</th>
           <th class="extra-line-in-top">Show</th>
           <th class="extra-line-in-top">Remove</th>
-          <th class="extra-line-in-top">Edit</th>
+      <!--    <th class="extra-line-in-top">Edit</th>-->
         </tr>
         </thead>
         <tbody>
@@ -106,9 +105,9 @@
           <td><a th:href="@{/deleteTask/{taskName}(taskName=${taskNew.taskName})}">
             <img class="icon" src="/images/trashcan.png" alt="Trashcan">
           </a></td>
-          <td><a th:href="@{/editTask/{taskName}(taskName=${taskNew.taskName})}">
+         <!-- <td><a th:href="@{/editTask/{taskName}(taskName=${taskNew.taskName})}">
             <img class="icon" src="/images/gears.png" alt="Gears">
-          </a></td>
+          </a></td>-->
         </tr>
         </tbody>
       </table>

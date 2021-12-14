@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html lang="en">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -36,12 +36,14 @@
         <form th:action="@{/editProject/{projectName}(projectName=${projectSelected.projectName})}" method="get">
         <table class="no-shadow">
                 <thead>
-                <th colspan="2" class="centered-button"><button type="submit">Calculate and edit</button></td>
+                <th colspan="2" class="centered-button"><button type="submit">Calculate and edit<br>project</button>
                 </th>
                 </thead>
                 <tbody>
-                <td colspan="2">You are in Project: <b><span th:text="${projectSelected.getProjectName()}">
+                <tr>
+                <td colspan="2">You are in project: <b><span th:text="${projectSelected.getProjectName()}">
                 </span></b></td>
+                </tr>
                     <tr>
                         <td>Project ID:</td>
                         <td th:text="${projectSelected.projectID}"></td>
@@ -81,51 +83,61 @@
     </div>
 
     <div class="flex-item2-middle">
-        <form th:action="@{/createTeammate/{projectName}(projectName=${projectSelected.projectName})}" method="get">
-        <table class="no-shadow">
+        <form th:action="@{/deleteTeammate}" th:object="${projectSelected}" method="post" >
+       <!-- <form th:action="@{/createTeammate/{projectName}(projectName=${projectSelected.projectName})}" method="get">-->
+        <table style="text-align: center" class="no-shadow">
             <thead>
             <tr>
-                <td> The amount of people on this project: <b><span th:text="${amountPersonsInTeam}">
-                </span></b></td>
+                <th class="centered-cell"> The amount of people on this project: <b><span th:text="${amountPersonsInTeam}">
+                </span></b></th>
+            </tr>
+            <tr>
+                <td class="centered-button" colspan="2"><button onclick="location.href='/createTeammate/'" type="button">Add new member</button></td>
+            </tr>
+            <tr>
+                <th>Available team members in current project:</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td class="centered-button" colspan="2"><button type="submit" >Add new member</button></td>
-            </tr>
-            <tr>
-               <th>Available team members<br> in current project:</th>
-            </tr>
+
             <tr th:each="teammateNew : ${teammates}">
                 <td th:text="${teammateNew}"></td>
+            </tr>
+            <tr>
+                <td class="centered-cell">
+                    <button type="submit">Remove member</button>
+            </td>
+            </tr>
+                <tr>
+                <td class="centered-cell">
+
+                    <div class="field main">
+                        <label class="remove-member" for="teammateEmail">Email:</label>
+                        <input type="email" id="teammateEmail" name="teammateEmail" required/>
+                    </div>
+                </td>
             </tr>
             </tbody>
         </table>
         </form>
-        <div class="centered-button-div">
-        <form action="#" method="post" th:action="@{/deleteTeammate}" th:object="${projectSelected}">
-            <label for="teammateEmail">Email:</label>
-            <input type="email" id="teammateEmail" name="teammateEmail" required/>
-            <button  type="submit">Remove member</button>
-        </form>
     </div>
-    </div>
+
+
 
     <div class="flex-item2-right">
         <table>
             <thead>
-            <tr><th class="dashboard-add-button" colspan="4">
+            <tr>
+                <th class="dashboard-add-button" colspan="3">
                 <button onclick="location.href='/createSubproject'" type="submit">Add new subproject</button></th>
             </tr>
             <tr>
-                <th colspan="4">Available subprojects in this project:</th>
+                <th colspan="3">Available subprojects in this project:</th>
             </tr>
             <tr>
                 <th class="extra-line-in-top">Name</th>
                 <th class="extra-line-in-top">Show</th>
                 <th class="extra-line-in-top">Remove</th>
-                <th class="extra-line-in-top">Edit</th>
-
             </tr>
             </thead>
             <tbody>
@@ -138,11 +150,6 @@
 
                 <td><a th:href="@{/deleteSubproject/{subprojectName}(subprojectName=${subprojectNew.subprojectName})}">
                     <img class="icon" src="/images/trashcan.png" alt="Trashcan">
-                </a></td>
-
-
-                <td><a th:href="@{/editSubproject/{subprojectName}(subprojectName=${subprojectNew.subprojectName})}">
-                    <img class="icon" src="/images/gears.png" alt="Gears">
                 </a></td>
             </tr>
             </tbody>

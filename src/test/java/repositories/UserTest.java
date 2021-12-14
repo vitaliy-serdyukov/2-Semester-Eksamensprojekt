@@ -1,5 +1,5 @@
 package repositories;
-import com.example.domain.CustomException;
+import com.example.domain.exceptions.ProjectInputException;
 import com.example.domain.models.User;
 import com.example.repositories.UserRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -21,7 +21,7 @@ public class UserTest {
         userRepo.writeUser(user1);
 
         //Assert
-        assertThrows(CustomException.class, () -> userRepo.writeUser(user1));
+        assertThrows(ProjectInputException.class, () -> userRepo.writeUser(user1));
     }
 
     @Test
@@ -36,7 +36,7 @@ public class UserTest {
         userRepo.returnUserByEmail(user3.getEmail());
 
         //Assert
-        assertThrows(CustomException.class, ()-> userRepo.returnUserByEmail(user3.getEmail()));
+        assertThrows(ProjectInputException.class, ()-> userRepo.returnUserByEmail(user3.getEmail()));
 
         }
 

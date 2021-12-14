@@ -91,6 +91,11 @@ th, td {
 }
 
 
+th.centered-cell, td.centered-cell {
+    text-align: center;
+}
+
+
 td.centered-button{
     text-align: center;
 
@@ -279,4 +284,8 @@ button:active,submit:active,reset:active {
 
 button.add-teammate{
     margin-top: 30px;
+}
+
+label.remove-member {
+    margin-left: 95px;
 }
