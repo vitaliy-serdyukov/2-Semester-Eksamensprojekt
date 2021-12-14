@@ -5,6 +5,7 @@ import com.example.domain.models.Project;
 import com.example.domain.models.User;
 import com.example.domain.services.LoginService;
 import com.example.domain.services.ProjectService;
+import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -64,12 +65,11 @@ import java.util.ArrayList;
       User userLogged = loginService.findUserByEmail(email);
 
       // add attribute to session
-      session.setAttribute("userLogged", userLogged); // evt. remove later?
+      session.setAttribute("userLogged", userLogged);
 
    /* Call arraylist and sort the projects by users email*/
       ArrayList<Project> projectsUserLogged = new ProjectService().findAllProjectsUser(email); // DATABASE-agtig kodning???
 
-     /* session.setAttribute("projectsUserLogged", projectsUserLogged);*/
 
       //  Assign model attribute to arraylist med  projects
       model.addAttribute("projectsUserLogged", projectsUserLogged);
@@ -114,6 +114,20 @@ import java.util.ArrayList;
       }
       return "login/index";
     }
+
+
+  // method for "Profile" link in navigation bar
+  @GetMapping("/profile")
+  public String showProfile(HttpServletRequest request, Model model) {
+    HttpSession session = request.getSession();
+    User userLogged = (User) session.getAttribute("userLogged");
+    model.addAttribute("userLogged", userLogged);
+
+    return "login/profile";
+  }
+
+
+
 
     @ExceptionHandler(LoginRegisterException.class)
     public String handleError(Model model, Exception exception) {

@@ -22,7 +22,7 @@ public class ProjectService {
     return projectRepository.readProjectInfo(projectName);
   }
 
-  public void updateProject(Project project) throws ProjectInputException {
+  public void updateProject(Project project)  {
     projectRepository.rewriteProject(project);
   }
 

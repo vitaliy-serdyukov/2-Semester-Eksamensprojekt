@@ -2,15 +2,13 @@ package com.example.web;
 
 
 import com.example.domain.exceptions.ProjectInputException;
+import com.example.domain.exceptions.ProjectUpdateException;
 import com.example.domain.exceptions.SubprojectInputException;
 import com.example.domain.exceptions.SubprojectUpdateException;
 import com.example.domain.models.Project;
 import com.example.domain.models.Subproject;
 import com.example.domain.models.Task;
-import com.example.domain.services.CalculatorService;
-import com.example.domain.services.DateService;
-import com.example.domain.services.SubprojectService;
-import com.example.domain.services.TaskService;
+import com.example.domain.services.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -67,7 +65,7 @@ public class SubprojectController {
     String subprojectName = request.getParameter("subprojectName");
 
     // validate subproject name for backspace or empty String input
-    if (subprojectName == null || subprojectName.trim().equals( "" )) {
+      if (!new ValidatorService().isValidName(subprojectName)){
       throw new SubprojectInputException("The subproject name cannot be empty, please, try again");
     }
 
@@ -92,8 +90,7 @@ public class SubprojectController {
     LocalDate subprojectEndDate = LocalDate.parse(subprojectEndDateStr, formatter);
 
     // validate end date
-    boolean isValidEndDate = new DateService().isValidEndDate(subprojectStartDate, subprojectEndDate);
-    if (!isValidEndDate){
+    if (!new DateService().isValidEndDate(subprojectStartDate, subprojectEndDate)){
       throw new SubprojectInputException("Entered end date is wrong, please, choose end date as minimum" +
           "as the next day after start date");
     }
@@ -151,22 +148,32 @@ public class SubprojectController {
 
 
   @PostMapping("/updateSubproject")
-  public String updateSubproject(HttpServletRequest request, RedirectAttributes redirectAttrs) {
-    //Retrieve request from session
+  public String updateSubproject(HttpServletRequest request, RedirectAttributes redirectAttrs)
+      throws SubprojectUpdateException {
 
+    //Retrieve request from session
     HttpSession session = request.getSession();
 
     // Retrieve values from HTML form via HTTPServlet request
     Subproject subprojectToUpdate = (Subproject) session.getAttribute("subprojectSelected");
 
     Subproject subprojectUpdated = new Subproject(
-        (subprojectToUpdate.getProjectID()),
         (subprojectToUpdate.getSubprojectID()),
+        (subprojectToUpdate.getProjectID()),
         (request.getParameter("subprojectName")),
         (Integer.parseInt(request.getParameter("hoursTotal"))),
         (LocalDate.parse(request.getParameter("startDate"), DateTimeFormatter.ofPattern("yyyy-MM-dd"))),
         (LocalDate.parse(request.getParameter("endDate"), DateTimeFormatter.ofPattern("yyyy-MM-dd"))),
         (request.getParameter("description")));
+
+    // validate subproject name for backspace or empty String input
+    // validate end date
+    if (!new ValidatorService().isValidName(subprojectUpdated.getSubprojectName()) ||
+        !new DateService().isValidEndDate(subprojectUpdated.getStartDate(), subprojectUpdated.getEndDate())){
+      throw new SubprojectUpdateException ("Either subproject name or end date is wrong..." +
+          "Name may not be empty and the end date has to be as minimum as the next day after start date." +
+          "Please, try again");
+    }
 
     subprojectService.updateSubProject(subprojectUpdated);
 
@@ -196,6 +203,10 @@ public class SubprojectController {
     redirectAttrs.addAttribute("projectName", projectSelected.getProjectName());
     return "redirect:/showProject/{projectName}";
   }
+
+
+
+
 
   @ExceptionHandler(SubprojectInputException.class)
   public String handleInputError(Model model, Exception exception) {

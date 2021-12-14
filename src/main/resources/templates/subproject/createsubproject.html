@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/styling.css" type="text/css">
     <link rel="stylesheet" href="/css/animation.css" type="text/css">
+    <link rel="icon" type="image/png" href="/images/logoProToolSmall.png"/>
      <title>Create subproject</title>
 
 </head>
@@ -17,7 +18,7 @@
                 <a href="/frontpage">Frontpage</a>
             </li>
             <li>
-                <a href="#">Profile</a>
+                <a href="/profile">Profile</a>
             </li>
             <li>
                 <a href="/returnToProject">Back to project</a>
@@ -45,7 +46,8 @@
                        th:field="*{subprojectName}" required/>
             </div>
             <div class="field">
-                <div th:text="${timeLeftProject}"></div><!--// OUTPUT???-->
+                <label>Hours available: </label>
+                <div th:text="${timeLeftProject}"></div>
             </div>
             <div class="field">
                 <label for="hours_total">Hours total, expected:</label>

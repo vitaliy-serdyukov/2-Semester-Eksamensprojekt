@@ -52,8 +52,8 @@ public class ProjectController {
     String projectName = request.getParameter("projectName");
 
     // validate project name for backspace or empty String input
-    if (projectName == null || projectName.trim().equals( "" )) {
-      throw new ProjectInputException("The project name cannot be empty, please, try again");
+    if (!new ValidatorService().isValidName(projectName)){
+      throw new ProjectInputException("The subproject name cannot be empty, please, try again");
     }
 
     String projectCategory = request.getParameter("category");
@@ -72,11 +72,10 @@ public class ProjectController {
     LocalDate projectEndDate = LocalDate.parse(projectEndDateStr, formatter);
 
     // validate end date
-     boolean isValidEndDate = new DateService().isValidEndDate(projectStartDate, projectEndDate);
-       if (!isValidEndDate){
-        throw new ProjectInputException("Entered end date is wrong, please, choose end date as minimum" +
-            "as the next day after start date");
-     }
+    if (!new DateService().isValidEndDate(projectStartDate, projectEndDate)){
+      throw new ProjectInputException("Entered end date is wrong, please, choose end date as minimum" +
+          "as the next day after start date");
+    }
 
     // Retrieve "email" String object from HTTP session
     String ownerEmail = (String) session.getAttribute("email");
@@ -140,10 +139,11 @@ public class ProjectController {
 
   @GetMapping("/editProject/{projectName}")
   public String editProject(HttpServletRequest request, Model model, @PathVariable(value = "projectName")
-      String projectName) throws ProjectInputException, ProjectUpdateException { //TO DO path in browser
+      String projectName) throws ProjectUpdateException {
 
     HttpSession session = request.getSession();
-    CalculatorService calculatorService = new CalculatorService(); // make privat final for whole Class?
+    CalculatorService calculatorService = new CalculatorService();
+
 
     // taking back out of session our selected project, now with subprojects
     Project projectSelected = (Project) session.getAttribute("projectSelected");
@@ -187,7 +187,9 @@ public class ProjectController {
 
 
   @PostMapping("/updateProject")
-  public String updateProject(HttpServletRequest request, RedirectAttributes redirectAttrs) throws ProjectInputException {
+  public String updateProject(HttpServletRequest request, RedirectAttributes redirectAttrs)
+      throws ProjectUpdateException {
+
     //Retrieve request from session
     HttpSession session = request.getSession();
 
@@ -203,6 +205,15 @@ public class ProjectController {
         (LocalDate.parse(request.getParameter("endDate"), DateTimeFormatter.ofPattern("yyyy-MM-dd"))),
         ((String) session.getAttribute("email")),
         (request.getParameter("description")));
+
+    // validate project name for backspace or empty String input
+    // validate end date
+    if (!new ValidatorService().isValidName(projectUpdated.getProjectName()) ||
+        !new DateService().isValidEndDate(projectUpdated.getStartDate(), projectUpdated.getEndDate())){
+      throw new ProjectUpdateException("Either project name or end date is wrong..." +
+          "Name may not be empty and the end date has to be as minimum as the next day after start date." +
+          "Please, try again");
+    }
 
     projectService.updateProject(projectUpdated);
 

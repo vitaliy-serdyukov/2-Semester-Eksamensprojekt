@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/styling.css" type="text/css">
     <link rel="stylesheet" href="/css/animation.css" type="text/css">
+    <link rel="icon" type="image/png" href="/images/logoProToolSmall.png"/>
     <title>Show task</title>
 </head>
 
@@ -17,7 +18,7 @@
                 <a href="/frontpage">Frontpage</a>
             </li>
             <li>
-                <a href="#">Profile</a>
+                <a href="/profile">Profile</a>
             </li>
             <li>
                 <a href="/returnToSubproject">Back to subproject</a>
@@ -33,15 +34,21 @@
 
 <div class="wrapper fadeInDown">
 <div class="flex-container">
-    <div class="flex-show-item50-left">
-        <table>
+<!--    <div class="flex-item2-middle">-->
+        <form class="show-model-info" th:action="@{/editTask/{taskName}(taskName=${taskSelected.taskName})}"
+              method="get">
+        <table class="no-shadow">
                 <thead>
                 <tr>
-                    <th>You are in Task:</th>
-                    <th></th>
+                    <th colspan="2" class="centered-button"><button type="submit">Calculate and edit<br>task</button>
+                    </th>
                 </tr>
                 </thead>
                 <tbody>
+                <tr>
+                    <td colspan="2">You are in task: <b><span th:text="${taskSelected.getTaskName()}">
+                </span></b></td>
+                <tr>
                 <tr>
                     <td>Subproject ID:</td>
                     <td th:text="${taskSelected.subprojectID}"></td>
@@ -66,17 +73,11 @@
                     <td>Description:</td>
                     <td th:text="${taskSelected.description}"></td>
                 </tr>
-                <tr>
-                    <td class="centered-button" colspan="2"><button class="button1"
-                                                 th:href="@{/editTask/{taskName}(taskName=${taskSelected.taskName})}">
-                        Edit task</button>
-                    </td>
-                </tr>
                 </tbody>
             </table>
         </form>
     </div>
-    </div>
+  <!--  </div>-->
 </div>
 </body>
 </html>
