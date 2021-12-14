@@ -1,43 +1,41 @@
 package repositories;
-import com.example.domain.CustomException;
 import com.example.domain.models.User;
 import com.example.repositories.UserRepository;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class UserTest {
+ public class UserTest {
+
+    UserRepository userRepository = new UserRepository();
 
 
-    @Test
-    @DisplayName("check if a user is created")
-    public void creatuser_UserCredentials(){
-
-        //Arrange
-        UserRepository userRepo = new UserRepository();
-        User user1 = new User("ems@1234", "1234", "emma", "r", "projekt", "12345");
-
-        // Act
-        userRepo.writeUser(user1);
-
-        //Assert
-        assertThrows(CustomException.class, () -> userRepo.writeUser(user1));
-    }
-
-    @Test
-    @DisplayName("check if user is returned by email")
-        public void check_UserIsReturnedByEmail() {
-
-        //Arrange
-        UserRepository userRepo = new UserRepository();
-        User user3 = new User("ems@123", "123");
+    @DisplayName("check if user is returned")
+    public void getReturnedUser() {
+        // Assert
+        // Normally mock data would be inserted here.
+        String userMail = "anna@3";
+        String expectedUserCompanyName = "a";
 
         //Act
-        userRepo.returnUserByEmail(user3.getEmail());
+        User user = userRepository.returnUserByEmail(userMail);
 
         //Assert
-        assertThrows(CustomException.class, ()-> userRepo.returnUserByEmail(user3.getEmail()));
+        assertEquals(expectedUserCompanyName, user.getCompanyName());
 
-        }
+
+
+    }
+        @DisplayName("test should fail because of an email that do exist")
+        public void assertThrows(User user){
+
+        //Arrange
+        String userMailWrong = "James@500";
+
+        // Assert + Act
+       assertThrows(userRepository.returnUserByEmail(userMailWrong));
+
+
+     }
+
 
 }

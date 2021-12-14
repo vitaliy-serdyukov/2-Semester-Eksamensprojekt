@@ -1,47 +1,69 @@
 package repositories;
 import com.example.domain.services.CalculatorService;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 
 public class CalculationTest {
 
+    CalculatorService calculatorService = new CalculatorService();
+
     @DisplayName("calculate enough time for project")
     @Test
-    public boolean enough_time() {
-        //double numberDaysExpected = countDaysExpected(startDate, endDate);
-        //double numberDaysNeeded = calculateDaysNeeded(hoursTotal, projectID);
+    public void enough_time() {
+
+
+        LocalDate startdate = LocalDate.of(2022,1,1);
+        LocalDate enddate = LocalDate.of(2022, 1, 20);
+        int hoursTotal = 30;
+        int id = 705;
+
+
         //Arrange
-        CalculatorService calculatorService = new CalculatorService();
-        calculatorService.isTimeEnough(LocalDate.of(2022, 1, 1), LocalDate.of(2022, 1, 20), 30, 1);
+        boolean actualvalue = calculatorService.isTimeEnough(LocalDate.of(2022,1,1),LocalDate.of(2022, 1, 20), 40, 705);
+
         //Act
-       // assertTrue(numberDaysNeeded > numberDaysExpected);
+        assertTrue(true);
         System.out.println("not enough days");
 
-        return false;
     }
 
 
-    @DisplayName("Calculate end date for project")
-    @Test
-    public void count_endDate(LocalDate startDate, int hoursTotal, int projectID) {
-        //Arrange
-        CalculatorService calculatorService1 = new CalculatorService();
-        LocalDate dateEnd = startDate;
-        double dayAmount = (hoursTotal);
-        int addedDays = 0;
-        //Assert
-        calculatorService1.countDateEnd(LocalDate.of(2022, 11, 1), 50, 1);
-        dateEnd = dateEnd.plusDays(1);
-        if (!(dateEnd.getDayOfWeek() == DayOfWeek.SATURDAY || dateEnd.getDayOfWeek() == DayOfWeek.SUNDAY)) {
-            ++addedDays;
 
-            assertTrue(addedDays < dayAmount);
-            System.out.println("correct end date");
-        }
+    @DisplayName("Calculate daily speed for project")
+    @Test
+    public void calculate_DailySpeed() {
+
+        //Arrange
+        int projectId = 325;
+        LocalDate startDate = LocalDate.of(2022,1,5);
+        LocalDate endDate = LocalDate.of(2022,1, 10);
+        int hourstotal = 20;
+
+
+        //
+        double cal = calculatorService.calculateSpeedDaily(LocalDate.of(2022, 1, 5), LocalDate.of(2022, 1, 10), 20);
+
+
+
+
+
+
+
+
+        //  double daysExpected = countDaysExpected(startDate, endDate) ;// days between 2 dates
+        //double speed = hoursTotal / daysExpected;
+        //return Math.round(speed * 100) / 100.0;
+
+
+        //Assert
+
+
     }
 }
 

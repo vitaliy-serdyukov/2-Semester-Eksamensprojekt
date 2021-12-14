@@ -70,6 +70,7 @@ public class CalculatorService {
     double daysExpected = countDaysExpected(startDate, endDate) ;// days between 2 dates
     double speed = hoursTotal / daysExpected; // hoursTotal is an amount of "expected" hours
     return Math.round(speed * 100) / 100.0;
+
   }
   
   
