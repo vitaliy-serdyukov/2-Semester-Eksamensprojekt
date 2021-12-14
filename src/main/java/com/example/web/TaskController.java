@@ -99,7 +99,7 @@ public class TaskController {
     Task taskSelected = taskService.showTaskInfo(taskName);
     session.setAttribute("taskSelected", taskSelected);
     model.addAttribute("taskSelected", taskSelected);
-    return "taskedit";
+    return "task/edittask";
   }
 
   @PostMapping("/updateTask")

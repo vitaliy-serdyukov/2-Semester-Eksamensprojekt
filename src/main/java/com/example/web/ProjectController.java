@@ -182,7 +182,7 @@ public class ProjectController {
         projectSelected.getHoursTotal());
     model.addAttribute("neededSpeed", neededSpeed);
 
-    return "projectedit";
+    return "project/editproject";
   }
 
 
@@ -241,7 +241,7 @@ public class ProjectController {
     /*  ArrayList<String> teammatesEmail = new TeammateService().readTeammates(projectTree.getProjectID());
       model.addAttribute("teammatesEmail", teammatesEmail);*/
 
-      return "treeview";
+      return "project/treeview";
     }
 
   @ExceptionHandler(ProjectInputException.class)

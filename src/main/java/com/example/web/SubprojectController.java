@@ -145,7 +145,7 @@ public class SubprojectController {
     Subproject subprojectSelected = subprojectService.showSubprojectInfo(subProjectName);
     session.setAttribute("subprojectSelected", subprojectSelected);
     model.addAttribute("subprojectSelected", subprojectSelected);
-    return "subprojectedit";
+    return "subproject/editsubproject";
   }
 
 

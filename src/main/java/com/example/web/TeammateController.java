@@ -29,7 +29,7 @@ public class TeammateController {
     session.setAttribute("projectSelected", projectSelected);
     model.addAttribute("projectSelected", projectSelected);
 
-    return "addteammate";
+    return "teammate/addteammate";
 
   }
 
@@ -67,8 +67,6 @@ public class TeammateController {
 
     redirectAttrs.addAttribute("projectName", projectSelected.getProjectName());
     return "redirect:/showProject/{projectName}";
-
-   /* return "redirect:/frontpage";*/
-  }
+    }
 
 }

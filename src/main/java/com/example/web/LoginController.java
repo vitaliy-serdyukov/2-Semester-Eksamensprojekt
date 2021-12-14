@@ -74,7 +74,7 @@ import java.util.ArrayList;
       //  Assign model attribute to arraylist med  projects
       model.addAttribute("projectsUserLogged", projectsUserLogged);
 
-      return "frontpage";
+      return "login/frontpage";
     }
 
 
