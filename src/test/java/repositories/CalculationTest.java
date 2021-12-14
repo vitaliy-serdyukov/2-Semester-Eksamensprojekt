@@ -39,29 +39,17 @@ public class CalculationTest {
     @Test
     public void calculate_DailySpeed() {
 
-        //Arrange
-        int projectId = 325;
-        LocalDate startDate = LocalDate.of(2022,1,5);
-        LocalDate endDate = LocalDate.of(2022,1, 10);
-        int hourstotal = 20;
 
-
-        //
-        double cal = calculatorService.calculateSpeedDaily(LocalDate.of(2022, 1, 5), LocalDate.of(2022, 1, 10), 20);
-
-
-
-
-
-
-
-
-        //  double daysExpected = countDaysExpected(startDate, endDate) ;// days between 2 dates
-        //double speed = hoursTotal / daysExpected;
-        //return Math.round(speed * 100) / 100.0;
+        //Act
+        double speedExpected = calculatorService.calculateSpeedDaily(LocalDate.of(2022, 1, 5), LocalDate.of(2022, 1, 10), 20);
 
 
         //Assert
+        Assertions.assertEquals(speedExpected, calculatorService.calculateSpeedDaily(LocalDate.of(2022, 1, 5), LocalDate.of(2022, 1, 10), 20));
+        System.out.println(speedExpected);
+
+
+
 
 
     }
