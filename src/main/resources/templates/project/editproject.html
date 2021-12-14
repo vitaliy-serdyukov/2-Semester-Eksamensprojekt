@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html lang="en">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -14,10 +14,13 @@
     <nav>
         <ul>
             <li>
-                <a href="/dashboard">Dashboard</a>
+                <a href="/frontpage">Frontpage</a>
             </li>
             <li>
                 <a href="#">Profile</a>
+            </li>
+            <li>
+                <a href="/returnToProject">Back to project</a>
             </li>
             <li>
                 <a style="margin-left: 700px" href="/logout"> Logout </a>
@@ -31,6 +34,7 @@
 
 <div class="wrapper fadeInDown">
 <div class="flex-container">
+
     <div class="flex-show-item50-left">
         <form action="#" method="post" th:action="@{/updateProject}" th:object="${projectSelected}">
         <table class="no-shadow">
@@ -123,7 +127,7 @@
                  <td th:text="${timeLeftProject}"/></td>
              </tr>
              <tr>
-                 <td>Amount of days, needed to reach the goal<br>(based on amount of hours): </td>
+                 <td>Amount of days, needed to reach the goal<br>(based on team productivity): </td>
                  <td th:text="${dayAmountNeeded}"/></td>
              </tr>
              <tr>

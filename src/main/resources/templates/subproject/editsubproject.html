@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/styling.css" type="text/css">
+    <link rel="stylesheet" href="/css/animation.css" type="text/css">
+    <title>Subproject edit</title>
+</head>
+
+<header>
+    <div class="wrapper fadeInDown">
+    <nav>
+        <ul>
+            <li>
+                <a href="/frontpage">Frontpage</a>
+            </li>
+            <li>
+                <a href="#">Profile</a>
+            </li>
+            <li>
+                <a style="margin-left: 700px" href="/logout"> Logout </a>
+            </li>
+        </ul>
+    </nav>
+    </div>
+</header>
+
+<body>
+<div class="wrapper fadeInDown">
+<div class="flex-container">
+    <form action="#" method="post" th:action="@{/updateSubproject}" th:object="${subprojectSelected}">
+        <table class="no-shadow">
+            <thead>
+            <tr>
+                <th colspan="2">You have entered following data for your subproject with:</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Project ID:</td>
+                <td th:text="${subprojectSelected.subprojectID}"></td>
+            </tr>
+            <tr>
+                <td>Project name:</td>
+                <td> <input type="text" th:field="${subprojectSelected.subprojectName}"
+                            th:value="${subprojectSelected.subprojectName}"/></td>
+            </tr>
+
+            <tr>
+                <td>Hours total:</td>
+                <td> <input type="number"  th:field="${subprojectSelected.hoursTotal}"
+                            th:value="${subprojectSelected.hoursTotal}"/></td>
+            </tr>
+            <tr>
+                <td>Start date:</td>
+                <td> <input type="date"  th:field="${subprojectSelected.startDate}" th:required="required"
+                            th:text="${subprojectSelected.startDate}"/></td>
+            </tr>
+            <tr>
+                <td>End date:</td>
+                <td> <input type="date"  th:field="${subprojectSelected.endDate}" th:required="required"
+                            th:text="${subprojectSelected.endDate}"/></td>
+            </tr>
+            <tr>
+                <td>Description:</td>
+                <td> <input type="text"  th:field="${subprojectSelected.description}"
+                            th:value="${subprojectSelected}"/></td>
+            </tr>
+            <tr>
+                <td class="centered-button" colspan="2"><button th:href="@{/updateSubproject}">
+                    Update subproject</button></td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
+
+    <!--<div class="flex-show-item50-right">
+    <table>
+        <thead>
+        <tr>
+            <th colspan="2">You have the following calculations:</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Amount of weekdays available<br>(based on start and end date): </td>
+            <td th:text="${dayAmountExpected}"/></td>
+        </tr>
+        <tr>
+            <td>Amount of persons on project:</td>
+            <td th:text="${teammatesAmount}"/></td>
+        </tr>
+        <tr>
+            <td>Productivity, hours/day:</td>
+            <td th:text="${totalHoursTeam}"/></td>
+        </tr>
+        <tr>
+            <td>Amount of hours available in project:</td>
+            <td th:text="${projectSelected.hoursTotal}"/></td>
+        </tr>
+        <tr>
+            <td>Amount of hours left in project:<br>(not allocated in subprojects)</td>
+            <td th:text="${timeLeftProject}"/></td>
+        </tr>
+        <tr>
+            <td>Amount of days, needed to reach the goal<br>(based on team productivity): </td>
+            <td th:text="${dayAmountNeeded}"/></td>
+        </tr>
+        <tr>
+            <td>Needed end date<br>(if we want to be in time): </td>
+            <td th:text="${realEndDate}"/></td>
+        </tr>
+        <tr>
+            <td>Or needed to deliver hours/day :<br> Amount of teammates have to be raised </td>
+            <td th:text="${neededSpeed}"/></td>
+        </tr>
+        <tr>
+            <td>Is the time enough to finish the project<br>under current conditions? </td>
+            <td th:text="${isEnough}"></td>
+            &lt;!&ndash;<td> <div th:if="${isEnough.TRUE}">Yes</div>
+ <div th:if="${isEnough.FALSE}">No</div></td>&ndash;&gt;
+        </tr>
+        </tbody>
+    </table>
+</div>-->
+</div>
+</div>
+</body>
+</html>

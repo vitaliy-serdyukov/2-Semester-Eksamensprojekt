@@ -1,6 +1,7 @@
 package com.example.domain.services;
 
-import com.example.domain.CustomException;
+import com.example.domain.exceptions.LoginRegisterException;
+import com.example.domain.exceptions.ProjectInputException;
 import com.example.domain.models.User;
 import com.example.repositories.UserRepository;
 
@@ -46,7 +47,7 @@ public class LoginService {
     return userRepository.returnUserByEmail(email);
   }
 
-  public void writeUser(User user) throws CustomException {
+  public void writeUser(User user) throws LoginRegisterException {
     userRepository.writeUser(user);
   }
 }

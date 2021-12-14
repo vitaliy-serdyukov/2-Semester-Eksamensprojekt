@@ -1,6 +1,6 @@
 package com.example.repositories;
 
-import com.example.domain.CustomException;
+import com.example.domain.exceptions.ProjectInputException;
 import com.example.domain.models.Project;
 
 
@@ -12,7 +12,7 @@ public class ProjectRepository {
 
 
   //For inserting a project into the DB.
-  public void writeProject(Project project) throws CustomException {
+  public void writeProject(Project project) throws ProjectInputException {
     try {
       Connection con = DBManager.getConnection();
       String SQL = "INSERT INTO projects (project_name, category, project_hours_total, project_start_date," +
