@@ -1,12 +1,12 @@
 package com.example.web;
 
-import com.example.domain.CustomException;
-import com.example.domain.models.Project;
+import com.example.domain.exceptions.*;
 import com.example.domain.models.Subproject;
 import com.example.domain.models.Task;
 import com.example.domain.services.TaskService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,7 +38,7 @@ public class TaskController {
     LocalDate maxEndDateTask = subprojectSelected.getEndDate();
     model.addAttribute("maxEndDateTask", maxEndDateTask);
 
-    return "createtask";
+    return "task/createtask";
     }
 
 
@@ -66,11 +66,7 @@ public class TaskController {
       LocalDate taskEndDate = LocalDate.parse(subprojectEndDateStr, formatter);
 
       String taskDescription = request.getParameter("description");
-/*
- if (taskName.equals("")) {
-      return "redirect:/frontpage";
-    } else {
-*/
+
       // Make "taskNew" object and assign new values
       Task taskNew = new Task(subprojectID, taskName, hoursTotal, taskStartDate,
           taskEndDate, taskDescription);
@@ -92,7 +88,7 @@ public class TaskController {
       session.setAttribute("taskSelected", taskSelected);
       model.addAttribute("taskSelected", taskSelected);
 
-      return "showtask";
+      return "task/showtask";
     }
 
 
@@ -103,11 +99,11 @@ public class TaskController {
     Task taskSelected = taskService.showTaskInfo(taskName);
     session.setAttribute("taskSelected", taskSelected);
     model.addAttribute("taskSelected", taskSelected);
-    return "taskedit";
+    return "task/edittask";
   }
 
   @PostMapping("/updateTask")
-  public String updateSubproject(HttpServletRequest request) throws CustomException {
+  public String updateSubproject(HttpServletRequest request) throws ProjectInputException {
     //Retrieve request from session
 
     HttpSession session = request.getSession();
@@ -147,5 +143,17 @@ public class TaskController {
     Subproject subprojectSelected = (Subproject) session.getAttribute("subprojectSelected");
     redirectAttrs.addAttribute("subprojectName", subprojectSelected.getSubprojectName());
     return "redirect:/showSubproject/{subprojectName}";
+  }
+
+  @ExceptionHandler(TaskInputException.class)
+  public String handleInputError(Model model, Exception exception) {
+    model.addAttribute("message", exception.getMessage());
+    return "task/taskInputExceptionPage";
+  }
+
+  @ExceptionHandler(TaskUpdateException.class)
+  public String handleUpdateError(Model model, Exception exception) {
+    model.addAttribute("message", exception.getMessage());
+    return "task/taskUpdateExceptionPage";
   }
 }

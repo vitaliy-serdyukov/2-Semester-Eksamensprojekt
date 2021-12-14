@@ -1,6 +1,7 @@
 package com.example.web;
 
-import com.example.domain.CustomException;
+import com.example.domain.exceptions.ProjectInputException;
+import com.example.domain.exceptions.ProjectUpdateException;
 import com.example.domain.models.Project;
 import com.example.domain.models.Subproject;
 
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,20 +37,25 @@ public class ProjectController {
 
     LocalDate minStartDateProject = new DateService().getToday();
     model.addAttribute("minStartDateProject", minStartDateProject);
-
-    return "createproject";
+    return "project/createproject";
   }
 
 
   // method for "Add project" fields and button on "frontpage"
   @PostMapping("/addProject")
-  public String saveProject(HttpServletRequest request) throws CustomException {
+  public String saveProject(HttpServletRequest request) throws ProjectInputException {
 
-    //Retrieve request from session
+    //return the valid session object associated with the request
     HttpSession session = request.getSession();
 
-    // Retrieve values from HTML form via WebRequest
+    // Retrieve values from HTML form via request
     String projectName = request.getParameter("projectName");
+
+    // validate project name for backspace or empty String input
+    if (projectName == null || projectName.trim().equals( "" )) {
+      throw new ProjectInputException("The project name cannot be empty, please, try again");
+    }
+
     String projectCategory = request.getParameter("category");
 
     String hoursTotalStr = request.getParameter("hoursTotal");
@@ -64,10 +71,10 @@ public class ProjectController {
     //convert String to LocalDate
     LocalDate projectEndDate = LocalDate.parse(projectEndDateStr, formatter);
 
+    // validate end date
      boolean isValidEndDate = new DateService().isValidEndDate(projectStartDate, projectEndDate);
-
-     if (!isValidEndDate){
-        throw new CustomException("Entered end date is wrong, please, choose end date as minimum" +
+       if (!isValidEndDate){
+        throw new ProjectInputException("Entered end date is wrong, please, choose end date as minimum" +
             "as the next day after start date");
      }
 
@@ -75,9 +82,7 @@ public class ProjectController {
     String ownerEmail = (String) session.getAttribute("email");
     String projectDescription = request.getParameter("description");
 
-    if (projectName == null || projectName.trim().equals( "" )) {
-      throw new CustomException("The project name cannot be empty, please, try again");
-    }
+
     // Make "projectNew" object and assign new values
     Project projectNew = new Project(projectName, projectCategory, hoursTotal, projectStartDate, projectEndDate,
         ownerEmail, projectDescription);
@@ -94,12 +99,14 @@ public class ProjectController {
     return "redirect:/frontpage";
   }
 
+
   @GetMapping("/showProject/{projectName}")
   public String showProject(HttpServletRequest request, Model model,
                             @PathVariable(value = "projectName") String projectName) {
     HttpSession session = request.getSession();
 
     Project projectSelected = projectService.showProjectInfo(projectName);
+
 
     ArrayList<Subproject> subprojectsTemp = new SubprojectService().
         findAllSubprojectsInProject(projectSelected.getProjectID());
@@ -126,12 +133,14 @@ public class ProjectController {
 
     model.addAttribute("subprojects", subprojects);
 
-    return "showproject";
+    return "project/showproject";
   }
+
+
 
   @GetMapping("/editProject/{projectName}")
   public String editProject(HttpServletRequest request, Model model, @PathVariable(value = "projectName")
-      String projectName) throws CustomException { //TO DO path in browser
+      String projectName) throws ProjectInputException, ProjectUpdateException { //TO DO path in browser
 
     HttpSession session = request.getSession();
     CalculatorService calculatorService = new CalculatorService(); // make privat final for whole Class?
@@ -144,9 +153,8 @@ public class ProjectController {
     model.addAttribute("teammatesAmount", teammatesAmount);
 
     if (teammatesAmount < 1){
-      throw new CustomException("The project must have at least one team member");
+      throw new ProjectUpdateException ("The project must have at least one team member");
     }
-
 
     int totalHoursTeam = teammateService.calculateTotalHoursPerDay(projectSelected.getProjectID());
     model.addAttribute("totalHoursTeam", totalHoursTeam);
@@ -174,12 +182,12 @@ public class ProjectController {
         projectSelected.getHoursTotal());
     model.addAttribute("neededSpeed", neededSpeed);
 
-    return "projectedit";
+    return "project/editproject";
   }
 
 
   @PostMapping("/updateProject")
-  public String updateProject(HttpServletRequest request) throws CustomException {
+  public String updateProject(HttpServletRequest request, RedirectAttributes redirectAttrs) throws ProjectInputException {
     //Retrieve request from session
     HttpSession session = request.getSession();
 
@@ -198,10 +206,11 @@ public class ProjectController {
 
     projectService.updateProject(projectUpdated);
 
-
     // Go to page
-    return "redirect:/frontpage";   // TO DO, evt return to frontpage select
+    redirectAttrs.addAttribute("projectName", projectUpdated.getProjectName());
+    return "redirect:/showProject/{projectName}";
   }
+
 
   @GetMapping("/deleteProject/{projectName}")
   public String deleteProject(@PathVariable(value = "projectName") String projectName) {
@@ -232,13 +241,21 @@ public class ProjectController {
     /*  ArrayList<String> teammatesEmail = new TeammateService().readTeammates(projectTree.getProjectID());
       model.addAttribute("teammatesEmail", teammatesEmail);*/
 
-      return "treeview";
+      return "project/treeview";
     }
 
-  @ExceptionHandler(CustomException.class)
-  public String handleError(Model model, Exception exception) {
+  @ExceptionHandler(ProjectInputException.class)
+  public String handleInputError(Model model, Exception exception) {
     model.addAttribute("message", exception.getMessage());
-    return "exceptionpageProject";
+    return "project/projectInputExceptionPage";
 
   }
+
+  @ExceptionHandler(ProjectUpdateException.class)
+  public String handleUpdateError(Model model, Exception exception) {
+    model.addAttribute("message", exception.getMessage());
+    return "project/projectUpdateExceptionPage";
+
+  }
+
 }

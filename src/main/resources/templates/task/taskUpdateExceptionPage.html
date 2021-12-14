@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/styling.css" type="text/css">
+    <link rel="stylesheet" href="/css/animation.css" type="text/css">
+    <title>Task update exception page</title>
+</head>
+<body>
+<div class="wrapper fadeInDown">
+    <div class="flex-container">
+        <form class="create-project">
+            <h1>An Error Occured!</h1>
+            <p><b><span th:text="${message}"></span></b></p>
+            <div class="centered-button-div">
+                <button onclick="location.href='/returnToTask'" type="button">Return to task</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

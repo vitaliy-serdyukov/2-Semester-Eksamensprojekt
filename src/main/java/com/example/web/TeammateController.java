@@ -1,8 +1,7 @@
 package com.example.web;
 
-import com.example.domain.CustomException;
+import com.example.domain.exceptions.ProjectInputException;
 import com.example.domain.models.Project;
-import com.example.domain.services.ProjectService;
 import com.example.domain.services.TeammateService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,22 +19,23 @@ public class TeammateController {
 
   private final TeammateService teammateService = new TeammateService();
 
-  @GetMapping("/createTeammate/{projectName}")
-  public String addTeammate(HttpServletRequest request, Model model,
-                            @PathVariable(value = "projectName") String projectName) {
+  @GetMapping("/createTeammate")
+  public String addTeammate(HttpServletRequest request, Model model/*,
+                            @PathVariable(value = "projectName") String projectName*/) {
 
     HttpSession session = request.getSession();
-    Project projectSelected = new ProjectService().showProjectInfo(projectName);
+  /*  Project projectSelected = new ProjectService().showProjectInfo(projectName);*/
+    Project projectSelected = (Project) session.getAttribute("projectSelected");
     session.setAttribute("projectSelected", projectSelected);
     model.addAttribute("projectSelected", projectSelected);
 
-    return "addteammate";
+    return "teammate/addteammate";
 
   }
 
   @PostMapping("/addTeammate")
 
-  public String addTeammate(HttpServletRequest request, RedirectAttributes redirectAttrs) throws CustomException
+  public String addTeammate(HttpServletRequest request, RedirectAttributes redirectAttrs) throws ProjectInputException
     /* @PathVariable(value = "projectName") String projectName)*/ {
 
     HttpSession session = request.getSession();
@@ -67,8 +67,6 @@ public class TeammateController {
 
     redirectAttrs.addAttribute("projectName", projectSelected.getProjectName());
     return "redirect:/showProject/{projectName}";
-
-   /* return "redirect:/frontpage";*/
-  }
+    }
 
 }
