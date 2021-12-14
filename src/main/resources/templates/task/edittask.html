@@ -5,6 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/styling.css" type="text/css">
+    <link rel="icon" type="image/png" href="/images/logoProToolSmall.png"/>
     <title>Project edit</title>
 </head>
 
@@ -15,7 +16,7 @@
                 <a href="/frontpage">Frontpage</a>
             </li>
             <li>
-                <a href="#">Profile</a>
+                <a href="/profile">Profile</a>
             </li>
             <li>
                 <a style="margin-left: 700px" href="/logout"> Logout </a>
@@ -26,43 +27,45 @@
 
 <body>
 <div class="flex-container" style="margin-top: 100px">
-    <form style="border: none" action="#" method="post" th:action="@{/updateTask}" th:object="${taskSelected}">
-        <table>
+    <form action="#" method="post" th:action="@{/updateTask}" th:object="${taskSelected}">
+        <table class="no-shadow">
             <thead>
             <tr>
-                <th>You are editing:</th>
-                <th></th>
+                <th colspan="2">You have entered following data for your task with:</th>
             </tr>
             </thead>
             <tbody>
             <tr>
                 <td>Task name:</td>
-                <td th:text="${taskSelected.taskName}"></td>
+                <td<th:text="${taskSelected.taskName}"></td>
             </tr>
             <tr>
-                <td>Project name:</td>
-                <td> <input type="text" th:field="${taskSelected.taskName}" th:value="${taskSelected.taskName}"/></td>
+                <td>Subproject name:</td>
+                <td> <input type="text" th:field="${taskSelected.taskName}"
+                            th:value="${taskSelected.taskName}"/></td>
             </tr>
-
             <tr>
                 <td>Hours total:</td>
-                <td> <input type="number"  th:field="${taskSelected.hoursTotal}" th:value="${taskSelected.hoursTotal}"/></td>
+                <td><input type="number" th:field="${taskSelected.hoursTotal}" th:value="${taskSelected.hoursTotal}"/></td>
             </tr>
             <tr>
                 <td>Start date:</td>
-                <td> <input type="date"  th:field="${taskSelected.startDate}" th:required="required" th:text="${taskSelected.startDate}"/></td>
+                <td><input type="date" th:field="${taskSelected.startDate}" th:required="required"
+                           th:value="${taskSelected.startDate}"/></td>
             </tr>
             <tr>
                 <td>End date:</td>
-                <td> <input type="date"  th:field="${taskSelected.endDate}" th:required="required" th:text="${taskSelected.endDate}"/></td>
+                <td><input type="date" th:field="${taskSelected.endDate}" th:required="required"
+                           th:value="${taskSelected.endDate}"/></td>
             </tr>
             <tr>
                 <td>Description:</td>
-                <td> <input type="text"  th:field="${taskSelected.description}" th:value="${taskSelected.description}"/></td>
+                <td><input type="text"  th:field="${taskSelected.description}"
+                           th:value="${taskSelected.description}"/></td>
             </tr>
             <tr>
-                <td><button class="button1" th:href="@{/updateTask}">
-                    UPDATE!</button></td>
+                <td class="centered-button" colspan="2"><button th:href="@{/updateTask}">
+                   Update task</button></td>
                 <td></td>
             </tr>
             </tbody>

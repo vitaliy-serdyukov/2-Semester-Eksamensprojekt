@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/styling.css" type="text/css">
+    <link rel="stylesheet" href="/css/animation.css" type="text/css">
+    <link rel="icon" type="image/png" href="/images/logoProToolSmall.png"/>
+    <title>Profile</title>
+
+
+</head>
+
+<header>
+    <div class="wrapper fadeInDown">
+        <nav>
+            <ul>
+                <li>
+                    <a href="/frontpage">Frontpage</a>
+                </li>
+                <li>
+                    <a style="margin-left: 1000px" href="/logout"> Logout </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<body>
+
+<div class="wrapper fadeInDown">
+    <div class="flex-container">
+        <div class="flex-item2-middle">
+
+
+            <table class="user-info">
+                <thead>
+                <tr>
+                    <th class="centered-cell" colspan="2">You are logged in as:</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>First name:</td>
+                    <td th:text="${userLogged.firstName}"></td>
+                </tr>
+                <tr>
+                    <td>Last name:</td>
+                    <td th:text="${userLogged.lastName}">
+                <tr>
+                    <td>Company:</td>
+                    <td th:text="${userLogged.companyName}"></td>
+                </tr>
+                <tr>
+                    <td>E-mail:</td>
+                    <td th:text="${userLogged.email}"></td>
+                </tr>
+                <tr>
+                    <td>Password:</td>
+                    <td>*********</td>
+                </tr>
+                <tr>
+                    <td>Phone number:</td>
+                    <td th:text="${userLogged.phoneNumber}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

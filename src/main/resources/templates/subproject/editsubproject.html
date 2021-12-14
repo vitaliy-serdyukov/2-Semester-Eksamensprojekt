@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/styling.css" type="text/css">
     <link rel="stylesheet" href="/css/animation.css" type="text/css">
+    <link rel="icon" type="image/png" href="/images/logoProToolSmall.png"/>
     <title>Subproject edit</title>
 </head>
 
@@ -17,7 +18,7 @@
                 <a href="/frontpage">Frontpage</a>
             </li>
             <li>
-                <a href="#">Profile</a>
+                <a href="/profile">Profile</a>
             </li>
             <li>
                 <a style="margin-left: 700px" href="/logout"> Logout </a>
@@ -39,29 +40,28 @@
             </thead>
             <tbody>
             <tr>
-                <td>Project ID:</td>
+                <td>Subproject ID:</td>
                 <td th:text="${subprojectSelected.subprojectID}"></td>
             </tr>
             <tr>
-                <td>Project name:</td>
+                <td>Subproject name:</td>
                 <td> <input type="text" th:field="${subprojectSelected.subprojectName}"
                             th:value="${subprojectSelected.subprojectName}"/></td>
             </tr>
-
             <tr>
                 <td>Hours total:</td>
-                <td> <input type="number"  th:field="${subprojectSelected.hoursTotal}"
+                <td><input type="number"  th:field="${subprojectSelected.hoursTotal}"
                             th:value="${subprojectSelected.hoursTotal}"/></td>
             </tr>
             <tr>
                 <td>Start date:</td>
-                <td> <input type="date"  th:field="${subprojectSelected.startDate}" th:required="required"
-                            th:text="${subprojectSelected.startDate}"/></td>
+                <td><input type="date"  th:field="${subprojectSelected.startDate}" th:required="required"
+                            th:value="${subprojectSelected.startDate}"/></td>
             </tr>
             <tr>
                 <td>End date:</td>
-                <td> <input type="date"  th:field="${subprojectSelected.endDate}" th:required="required"
-                            th:text="${subprojectSelected.endDate}"/></td>
+                <td><input type="date"  th:field="${subprojectSelected.endDate}" th:required="required"
+                            th:value="${subprojectSelected.endDate}"/></td>
             </tr>
             <tr>
                 <td>Description:</td>

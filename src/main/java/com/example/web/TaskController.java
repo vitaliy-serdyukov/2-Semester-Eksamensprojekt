@@ -3,7 +3,9 @@ package com.example.web;
 import com.example.domain.exceptions.*;
 import com.example.domain.models.Subproject;
 import com.example.domain.models.Task;
+import com.example.domain.services.DateService;
 import com.example.domain.services.TaskService;
+import com.example.domain.services.ValidatorService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -44,7 +46,7 @@ public class TaskController {
 
     // method for "Add Task" fields and button on "createtask"
     @PostMapping("/addTask")
-    public String saveTask(HttpServletRequest request, RedirectAttributes redirectAttrs)  {
+    public String saveTask(HttpServletRequest request, RedirectAttributes redirectAttrs) throws TaskInputException {
       //Retrieve request from session
       HttpSession session = request.getSession();
       Subproject subprojectSelected = (Subproject) session.getAttribute("subprojectSelected");
@@ -52,6 +54,12 @@ public class TaskController {
       int subprojectID = subprojectSelected.getSubprojectID();
 
       String taskName = request.getParameter("taskName");
+
+      // validate task name for backspace or empty String input
+      if (!new ValidatorService().isValidName(taskName)){
+        throw new TaskInputException("The subproject name cannot be empty, please, try again");
+      }
+
       String hoursTotalStr = request.getParameter("hoursTotal");
       int hoursTotal = Integer.parseInt(hoursTotalStr);
 
@@ -64,6 +72,12 @@ public class TaskController {
       String subprojectEndDateStr = request.getParameter("endDate");
       //convert String to LocalDate
       LocalDate taskEndDate = LocalDate.parse(subprojectEndDateStr, formatter);
+
+      // validate end date
+      if (!new DateService().isValidEndDate(taskStartDate, taskEndDate)){
+        throw new TaskInputException("Entered end date is wrong, please, choose end date as minimum" +
+            "as the next day after start date");
+      }
 
       String taskDescription = request.getParameter("description");
 
@@ -103,13 +117,15 @@ public class TaskController {
   }
 
   @PostMapping("/updateTask")
-  public String updateSubproject(HttpServletRequest request) throws ProjectInputException {
-    //Retrieve request from session
+  public String updateSubproject(HttpServletRequest request, RedirectAttributes redirectAttrs)
+      throws TaskUpdateException {
 
+    //Retrieve request from session
     HttpSession session = request.getSession();
 
-    // Retrieve values from HTML form via WebRequest
+    // Retrieve values from HTML form via HTTPServlet request
     Task taskToUpdate = (Task) session.getAttribute("taskSelected");
+
     Task taskUpdated = new Task(
         (taskToUpdate.getSubprojectID()),
         (request.getParameter("taskName")),
@@ -118,11 +134,20 @@ public class TaskController {
         (LocalDate.parse(request.getParameter("endDate"), DateTimeFormatter.ofPattern("yyyy-MM-dd"))),
         (request.getParameter("description")));
 
+    // validate task name for backspace or empty String input
+    // validate end date
+    if (!new ValidatorService().isValidName(taskUpdated.getTaskName()) ||
+        !new DateService().isValidEndDate(taskUpdated.getStartDate(), taskUpdated.getEndDate())){
+      throw new TaskUpdateException("Either task name or end date is wrong..." +
+          "Name may not be empty and the end date has to be as minimum as the next day after start date." +
+          "Please, try again");
+    }
+
     taskService.updateTask(taskUpdated, taskToUpdate.getTaskName());
 
 
-    // Go to page
-    return "redirect:/frontpage";   // TO DO, evt return to frontpage select
+    redirectAttrs.addAttribute("taskName", taskUpdated.getTaskName());
+    return "redirect:/showTask/{taskName}";
   }
 
     @GetMapping("/deleteTask/{taskName}")
@@ -144,6 +169,9 @@ public class TaskController {
     redirectAttrs.addAttribute("subprojectName", subprojectSelected.getSubprojectName());
     return "redirect:/showSubproject/{subprojectName}";
   }
+
+
+
 
   @ExceptionHandler(TaskInputException.class)
   public String handleInputError(Model model, Exception exception) {
