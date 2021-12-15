@@ -29,19 +29,18 @@ public class ProjectController {
   private final ProjectService projectService = new ProjectService();
   private final TeammateService teammateService = new TeammateService();
 
-
+  // navigate to "create project" form, "Add project" button on "frontpage"
   @GetMapping("/createProject")
   public String createProject(Model model) {
     Project projectNew = new Project();
     model.addAttribute("projectNew", projectNew);
-
     LocalDate minStartDateProject = LocalDate.now();
     model.addAttribute("minStartDateProject", minStartDateProject);
     return "project/createproject";
   }
 
 
-  // method for "Add project" fields and button on "frontpage"
+  //  gathering data and sending user to "frontpage" again
   @PostMapping("/addProject")
   public String saveProject(HttpServletRequest request) throws ProjectInputException {
 
@@ -59,6 +58,7 @@ public class ProjectController {
     String projectCategory = request.getParameter("category");
 
     String hoursTotalStr = request.getParameter("hoursTotal");
+    // getting int from our String
     int hoursTotal = Integer.parseInt(hoursTotalStr);
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -66,6 +66,7 @@ public class ProjectController {
 
     //convert String to LocalDate
     LocalDate projectStartDate = LocalDate.parse(projectStartDateStr, formatter);
+
     String projectEndDateStr = request.getParameter("endDate");
 
     //convert String to LocalDate
@@ -81,8 +82,7 @@ public class ProjectController {
     String ownerEmail = (String) session.getAttribute("email");
     String projectDescription = request.getParameter("description");
 
-
-    // Make "projectNew" object and assign new values
+    // Assign ny values to projectNew object
     Project projectNew = new Project(projectName, projectCategory, hoursTotal, projectStartDate, projectEndDate,
         ownerEmail, projectDescription);
 
@@ -91,7 +91,7 @@ public class ProjectController {
     projectService.createProject(projectNew);
     session.setAttribute("projectNew", projectNew);
 
-    ArrayList<Project> projects = new ProjectService().findAllProjectsUser(ownerEmail); // DATABASE-agtig kodning???
+    ArrayList<Project> projects = new ProjectService().findAllProjectsUser(ownerEmail);
     session.setAttribute("projects", projects);
 
     // Go to page
@@ -208,10 +208,12 @@ public class ProjectController {
 
     // validate project name for backspace or empty String input and validate end date
         ValidatorService validatorService = new ValidatorService();
-    if (!validatorService.isValidName(projectUpdated.getProjectName()) ||
+
+    if (!validatorService.isValidStartDateProject(projectUpdated.getStartDate()) ||
+        !validatorService.isValidName(projectUpdated.getProjectName()) ||
         !validatorService.isValidEndDate(projectUpdated.getStartDate(), projectUpdated.getEndDate())){
       throw new ProjectUpdateException("Either project name or end date is wrong..." +
-          "Name may not be empty and the end date has to be as minimum as the next day after start date." +
+          "Name may not be empty, start date may not be before today and the end date has to be as minimum as the next day after start date." +
           "Please, try again");
     }
 

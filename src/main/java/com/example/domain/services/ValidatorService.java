@@ -15,10 +15,25 @@ public class ValidatorService {
 
   public boolean isValidEndDate (LocalDate startDate, LocalDate endDate) {
 
-    LocalDate today = LocalDate.now();
+
     if (endDate.isAfter(startDate)){
       return true;
     }
     return false;
+  }
+
+  public boolean isValidStartDateProject(LocalDate startDate){
+    LocalDate today = LocalDate.now();
+    if (startDate.isBefore(today)){
+      return false;
+    }
+    return true;
+  }
+
+  public boolean isValidStartDateSubproject(LocalDate projectStartDate, LocalDate supbprogectStartDate ){
+    if (supbprogectStartDate.isBefore(projectStartDate)){
+      return false;
+    }
+    return true;
   }
 }

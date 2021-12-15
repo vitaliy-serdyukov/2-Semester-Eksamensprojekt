@@ -1,6 +1,7 @@
 package com.example.domain.services;
 
 import com.example.domain.models.Project;
+import com.example.domain.models.Subproject;
 import com.example.repositories.TeammateRepository;
 
 import java.time.DayOfWeek;
@@ -71,11 +72,6 @@ public class CalculatorService {
   }
 
 
-  public int calculateTimeLeftProject(Project project){
-    int timeLeftProject = project.getHoursTotal() - calculateTimeTakenProject(project);
-    return timeLeftProject;
-  }
-
   // must be written in accordance Information expert pattern
   public int calculateTimeTakenProject(Project project){
     int timeTotalProject = 0;
@@ -84,20 +80,25 @@ public class CalculatorService {
     }
     project.getSubprojects().clear();
     return timeTotalProject;
-
   }
 
+  public int calculateTimeLeftProject(Project project){
+    int timeLeftProject = project.getHoursTotal() - calculateTimeTakenProject(project);
+    return timeLeftProject;
+  }
 
-
-
- /* public int calculateTimeSubproject(Subproject subproject){
+  // must be written in accordance Information expert pattern
+  public int calculateTimeTakenSubproject(Subproject subproject){
     int timeTotalSubproject = 0;
     for (int i = 0; i < subproject.getTasks().size(); i++) {
       timeTotalSubproject += subproject.getTasks().get(i).getHoursTotal();
     }
+    subproject.getTasks().clear();
     return timeTotalSubproject;
-  }*/
+  }
 
-
-
+  public int calculateTimeLeftSubproject(Subproject subproject){
+    int timeLeftSubproject = subproject.getHoursTotal() - calculateTimeTakenSubproject(subproject);
+    return timeLeftSubproject;
+  }
 }

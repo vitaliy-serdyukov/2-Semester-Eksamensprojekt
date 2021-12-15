@@ -141,9 +141,9 @@
              </tr>
              <tr>
                  <td>Is the time enough to finish the project<br>under current conditions? </td>
-                 <td th:text="${isEnough}"></td>
-                                <!--<td> <div th:if="${isEnough.TRUE}">Yes</div>
-                     <div th:if="${isEnough.FALSE}">No</div></td>-->
+                 <td> <span th:if="${isEnough == true}">Yes</span>
+                     <span th:unless="${isEnough == true}">No</span>
+                 </td>
              </tr>
              </tbody>
          </table>

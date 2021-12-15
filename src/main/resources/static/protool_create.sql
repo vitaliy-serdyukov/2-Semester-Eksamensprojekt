@@ -30,7 +30,8 @@ CREATE TABLE `projects` (
   `description` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`project_id`),
   KEY `owner_email_idx` (`owner_email`),
-  CONSTRAINT `owner_email` FOREIGN KEY (`owner_email`) REFERENCES `users` (`user_email`) ON DELETE CASCADE ON UPDATE NO ACTION);
+  CONSTRAINT `owner_email` FOREIGN KEY (`owner_email`) REFERENCES `users` (`user_email`)
+  ON DELETE CASCADE ON UPDATE NO ACTION);
 
 
 
@@ -44,7 +45,8 @@ CREATE TABLE `subprojects` (
   `subproject_description` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`subproject_id`),
   KEY `project_id_idx` (`project_id`),
-  CONSTRAINT `project_id_subproject` FOREIGN KEY (`project_id`) REFERENCES `projects` (`project_id`) ON DELETE CASCADE ON UPDATE NO ACTION);
+  CONSTRAINT `project_id_subproject` FOREIGN KEY (`project_id`) REFERENCES `projects` (`project_id`)
+  ON DELETE CASCADE ON UPDATE NO ACTION);
 
 
 CREATE TABLE `tasks` (
@@ -55,7 +57,8 @@ CREATE TABLE `tasks` (
   `task_end_date` date DEFAULT NULL,
   `task_description` varchar(100) DEFAULT NULL,
   KEY `subproject_id_idx` (`subproject_id`),
-  CONSTRAINT `subproject_id` FOREIGN KEY (`subproject_id`) REFERENCES `subprojects` (`subproject_id`) ON DELETE CASCADE ON UPDATE NO ACTION);
+  CONSTRAINT `subproject_id` FOREIGN KEY (`subproject_id`) REFERENCES `subprojects` (`subproject_id`)
+  ON DELETE CASCADE ON UPDATE NO ACTION);
 
 
 CREATE TABLE `teammates` (
@@ -63,14 +66,5 @@ CREATE TABLE `teammates` (
   `member_email` varchar(100) NOT NULL,
   `teammate_hours` int NOT NULL,
   KEY `project_id_idx` (`project_id`),
-  CONSTRAINT `project_id_members` FOREIGN KEY (`project_id`) REFERENCES `projects` (`project_id`) ON DELETE CASCADE ON UPDATE NO ACTION);
-
-
-
-
-
-
-
-
-
-
+  CONSTRAINT `project_id_members` FOREIGN KEY (`project_id`) REFERENCES `projects` (`project_id`)
+  ON DELETE CASCADE ON UPDATE NO ACTION);

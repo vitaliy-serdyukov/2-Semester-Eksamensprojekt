@@ -115,6 +115,7 @@ public class SubprojectController {
                                @PathVariable(value = "subprojectName") String subprojectName) {
     HttpSession session = request.getSession();
 
+    // taking back out of session our selected subproject, now with subprojects
     Subproject subprojectSelected = subprojectService.showSubprojectInfo(subprojectName);
 
     ArrayList<Task> tasksTemp = new TaskService().
@@ -137,15 +138,50 @@ public class SubprojectController {
 
 
   @GetMapping("/editSubproject/{subprojectName}")
-  public String editSubProject(HttpServletRequest request, Model model, @PathVariable(value = "subprojectName") String subProjectName) { //TO DO path in browser
+  public String editSubProject(HttpServletRequest request, Model model, @PathVariable(value = "subprojectName") String subProjectName) throws SubprojectUpdateException { //TO DO path in browser
     HttpSession session = request.getSession();
-    Subproject subprojectSelected = subprojectService.showSubprojectInfo(subProjectName);
-    session.setAttribute("subprojectSelected", subprojectSelected);
+    TeammateService teammateService = new TeammateService();
+    CalculatorService calculatorService = new CalculatorService();
+
+     // taking back out of session our selected subproject, now with tasks
+    Subproject subprojectSelected = (Subproject) session.getAttribute("subprojectSelected");
     model.addAttribute("subprojectSelected", subprojectSelected);
+
+    int teammatesAmount = teammateService.countTeammates(subprojectSelected.getProjectID());
+    model.addAttribute("teammatesAmount", teammatesAmount);
+
+    if (teammatesAmount < 1){
+      throw new SubprojectUpdateException(("The project must have at least one team member"));
+    }
+
+    int totalHoursTeam = teammateService.calculateTotalHoursPerDay(subprojectSelected.getProjectID());
+    model.addAttribute("totalHoursTeam", totalHoursTeam);
+
+    int timeLeftSubproject = calculatorService.calculateTimeLeftSubproject(subprojectSelected);
+    model.addAttribute("timeLeftProject", timeLeftSubproject);
+
+    double dayAmountNeeded = calculatorService.calculateDaysNeeded(subprojectSelected.getHoursTotal(),
+        subprojectSelected.getProjectID());
+    model.addAttribute("dayAmountNeeded", dayAmountNeeded);
+
+    double dayAmountExpected = calculatorService.countDaysExpected(subprojectSelected.getStartDate(),
+        subprojectSelected.getEndDate());
+    model.addAttribute("dayAmountExpected", dayAmountExpected);
+
+    LocalDate realEndDate = calculatorService.countDateEnd(subprojectSelected.getStartDate(),
+        subprojectSelected.getHoursTotal(), subprojectSelected.getProjectID());
+    model.addAttribute("realEndDate", realEndDate);
+
+    boolean isEnough = calculatorService.isTimeEnough(subprojectSelected.getStartDate(), subprojectSelected.getEndDate(),
+        subprojectSelected.getHoursTotal(), subprojectSelected.getProjectID());
+    model.addAttribute("isEnough", isEnough);
+
+    double neededSpeed = calculatorService.calculateSpeedDaily(subprojectSelected.getStartDate(), subprojectSelected.getEndDate(),
+        subprojectSelected.getHoursTotal());
+    model.addAttribute("neededSpeed", neededSpeed);
+
     return "subproject/editsubproject";
   }
-
-
 
   @PostMapping("/updateSubproject")
   public String updateSubproject(HttpServletRequest request, RedirectAttributes redirectAttrs)
@@ -155,7 +191,9 @@ public class SubprojectController {
     HttpSession session = request.getSession();
 
     // Retrieve values from HTML form via HTTPServlet request
+     Project projectSelected = (Project) session.getAttribute("projectSelected");
     Subproject subprojectToUpdate = (Subproject) session.getAttribute("subprojectSelected");
+
 
     Subproject subprojectUpdated = new Subproject(
         (subprojectToUpdate.getSubprojectID()),
@@ -168,7 +206,8 @@ public class SubprojectController {
 
     // validate subproject name for backspace or empty String input and validate end date
     ValidatorService validatorService = new ValidatorService();
-    if (!validatorService.isValidName(subprojectUpdated.getSubprojectName()) ||
+    if (!validatorService.isValidStartDateSubproject(projectSelected.getStartDate(), subprojectUpdated.getStartDate()) ||
+        !validatorService.isValidName(subprojectUpdated.getSubprojectName()) ||
         !validatorService.isValidEndDate(subprojectUpdated.getStartDate(), subprojectUpdated.getEndDate())){
       throw new SubprojectUpdateException ("Either subproject name or end date is wrong..." +
           "Name may not be empty and the end date has to be as minimum as the next day after start date." +

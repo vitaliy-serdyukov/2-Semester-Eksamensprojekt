@@ -31,6 +31,7 @@
 <body>
 <div class="wrapper fadeInDown">
 <div class="flex-container">
+    <div class="flex-item2-left">
     <form action="#" method="post" th:action="@{/updateSubproject}" th:object="${subprojectSelected}">
         <table class="no-shadow">
             <thead>
@@ -77,7 +78,7 @@
     </form>
 </div>
 
-    <!--<div class="flex-show-item50-right">
+    <div class="flex-show-item50-right">
     <table>
         <thead>
         <tr>
@@ -90,7 +91,7 @@
             <td th:text="${dayAmountExpected}"/></td>
         </tr>
         <tr>
-            <td>Amount of persons on project:</td>
+            <td>Amount of persons on subproject:</td>
             <td th:text="${teammatesAmount}"/></td>
         </tr>
         <tr>
@@ -98,11 +99,11 @@
             <td th:text="${totalHoursTeam}"/></td>
         </tr>
         <tr>
-            <td>Amount of hours available in project:</td>
-            <td th:text="${projectSelected.hoursTotal}"/></td>
+            <td>Amount of hours available in subproject:</td>
+            <td th:text="${subprojectSelected.hoursTotal}"/></td>
         </tr>
         <tr>
-            <td>Amount of hours left in project:<br>(not allocated in subprojects)</td>
+            <td>Amount of hours left in subproject:<br>(not allocated in tasks)</td>
             <td th:text="${timeLeftProject}"/></td>
         </tr>
         <tr>
@@ -118,14 +119,14 @@
             <td th:text="${neededSpeed}"/></td>
         </tr>
         <tr>
-            <td>Is the time enough to finish the project<br>under current conditions? </td>
-            <td th:text="${isEnough}"></td>
-            &lt;!&ndash;<td> <div th:if="${isEnough.TRUE}">Yes</div>
- <div th:if="${isEnough.FALSE}">No</div></td>&ndash;&gt;
+            <td>Is the time enough to finish the subproject<br>under current conditions? </td>
+            <td> <span th:if="${isEnough == true}">Yes</span>
+                <span th:unless="${isEnough == true}">No</span>
+            </td>
         </tr>
         </tbody>
     </table>
-</div>-->
+</div>
 </div>
 </div>
 </body>
