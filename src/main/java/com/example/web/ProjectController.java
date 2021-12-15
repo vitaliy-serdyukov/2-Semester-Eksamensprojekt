@@ -106,40 +106,34 @@ public class ProjectController {
 
     Project projectSelected = projectService.showProjectInfo(projectName);
 
-
     ArrayList<Subproject> subprojectsTemp = new SubprojectService().
         findAllSubprojectsInProject(projectSelected.getProjectID());
 
     projectSelected.addSubprojects(subprojectsTemp);
-
-
     session.setAttribute("projectSelected", projectSelected);
     model.addAttribute("projectSelected", projectSelected);
+    model.addAttribute("subprojects", projectSelected.getSubprojects());
 
     Subproject subprojectNew = new Subproject();
     model.addAttribute("subprojectNew", subprojectNew);
-    String teammateNew = new String();
+    String teammateNew = "";
     model.addAttribute("teammateNew", teammateNew);
 
     ArrayList<String> teammates = teammateService.readTeammates(projectSelected.getProjectID());
     model.addAttribute("teammates", teammates);
 
-
     int amountPersonsInTeam = teammateService.countTeammates(projectSelected.getProjectID());
     model.addAttribute("amountPersonsInTeam", amountPersonsInTeam);
 
-    ArrayList<Subproject> subprojects = projectSelected.getSubprojects(); // DATABASE-agtig kodning???
-
-    model.addAttribute("subprojects", subprojects);
-
     return "project/showproject";
+
   }
 
 
 
   @GetMapping("/editProject/{projectName}")
-  public String editProject(HttpServletRequest request, Model model, @PathVariable(value = "projectName")
-      String projectName) throws ProjectUpdateException {
+  public String editProject(HttpServletRequest request, Model model/*, @PathVariable(value = "projectName")
+      String projectName*/) throws ProjectUpdateException {
 
     HttpSession session = request.getSession();
     CalculatorService calculatorService = new CalculatorService();
@@ -147,7 +141,10 @@ public class ProjectController {
 
     // taking back out of session our selected project, now with subprojects
     Project projectSelected = (Project) session.getAttribute("projectSelected");
+
     model.addAttribute("projectSelected", projectSelected);
+    System.out.println(projectSelected.getSubprojects());
+
 
     int teammatesAmount = teammateService.countTeammates(projectSelected.getProjectID());
     model.addAttribute("teammatesAmount", teammatesAmount);
@@ -182,6 +179,7 @@ public class ProjectController {
         projectSelected.getHoursTotal());
     model.addAttribute("neededSpeed", neededSpeed);
 
+    System.out.println(projectSelected.getSubprojects());
     return "project/editproject";
   }
 
@@ -194,10 +192,11 @@ public class ProjectController {
     HttpSession session = request.getSession();
 
     // Retrieve values from HTML form via HttpServletRequest
-    Project projectToUpdate = (Project) session.getAttribute("projectSelected");
+    Project projectSelected = (Project) session.getAttribute("projectSelected");
+    System.out.println(projectSelected.getSubprojects());
 
     Project projectUpdated = new Project(
-        (projectToUpdate.getProjectID()),
+        (projectSelected.getProjectID()),
         (request.getParameter("projectName")),
         (request.getParameter("category")),
         (Integer.parseInt(request.getParameter("hoursTotal"))),
@@ -206,6 +205,8 @@ public class ProjectController {
         ((String) session.getAttribute("email")),
         (request.getParameter("description")));
 
+        projectUpdated.setSubprojects(projectSelected.getSubprojects());
+
     // validate project name for backspace or empty String input and validate end date
         ValidatorService validatorService = new ValidatorService();
 
@@ -213,11 +214,16 @@ public class ProjectController {
         !validatorService.isValidName(projectUpdated.getProjectName()) ||
         !validatorService.isValidEndDate(projectUpdated.getStartDate(), projectUpdated.getEndDate())){
       throw new ProjectUpdateException("Either project name or end date is wrong..." +
-          "Name may not be empty, start date may not be before today and the end date has to be as minimum as the next day after start date." +
+          "Name may not be empty, start date may not be before today and" +
+          " the end date has to be as minimum as the next day after start date." +
           "Please, try again");
     }
 
     projectService.updateProject(projectUpdated);
+    projectSelected = projectUpdated;
+    System.out.println(projectSelected);
+    System.out.println(projectSelected.getSubprojects());
+    session.setAttribute("projectSelected", projectSelected);
 
     // Go to page
     redirectAttrs.addAttribute("projectName", projectUpdated.getProjectName());

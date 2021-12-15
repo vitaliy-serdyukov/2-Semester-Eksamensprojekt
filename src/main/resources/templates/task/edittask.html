@@ -19,6 +19,9 @@
                 <a href="/profile">Profile</a>
             </li>
             <li>
+                <a href="/returnToTask">Back to task</a>
+            </li>
+            <li>
                 <a style="margin-left: 700px" href="/logout"> Logout </a>
             </li>
         </ul>
@@ -27,6 +30,7 @@
 
 <body>
 <div class="flex-container" style="margin-top: 100px">
+    <div class="flex-show-item50-right">
     <form action="#" method="post" th:action="@{/updateTask}" th:object="${taskSelected}">
         <table class="no-shadow">
             <thead>
@@ -37,10 +41,6 @@
             <tbody>
             <tr>
                 <td>Task name:</td>
-                <td<th:text="${taskSelected.taskName}"></td>
-            </tr>
-            <tr>
-                <td>Subproject name:</td>
                 <td> <input type="text" th:field="${taskSelected.taskName}"
                             th:value="${taskSelected.taskName}"/></td>
             </tr>
@@ -71,6 +71,53 @@
             </tbody>
         </table>
     </form>
+</div>
+
+    <div class="flex-show-item50-right">
+        <table>
+            <thead>
+            <tr>
+                <th colspan="2">You have the following calculations:</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Amount of weekdays available<br>(based on start and end date): </td>
+                <td th:text="${dayAmountExpected}"/></td>
+            </tr>
+            <tr>
+                <td>Amount of persons on task:</td>
+                <td th:text="${teammatesAmount}"/></td>
+            </tr>
+            <tr>
+                <td>Productivity, hours/day:</td>
+                <td th:text="${totalHoursTeam}"/></td>
+            </tr>
+            <tr>
+                <td>Amount of hours available in Task:</td>
+                <td th:text="${taskSelected.hoursTotal}"/></td>
+            </tr>
+            <tr>
+                <td>Amount of days, needed to reach the goal<br>(based on team productivity): </td>
+                <td th:text="${dayAmountNeeded}"/></td>
+            </tr>
+            <tr>
+                <td>Needed end date<br>(if we want to be in time): </td>
+                <td th:text="${realEndDate}"/></td>
+            </tr>
+            <tr>
+                <td>Or needed to deliver hours/day<br>to be in time<br>(amount of teammates have to be raised) </td>
+                <td th:text="${neededSpeed}"/></td>
+            </tr>
+            <tr>
+                <td>Is the time enough to finish the subproject<br>under current conditions? </td>
+                <td> <span th:if="${isEnough == true}">Yes</span>
+                    <span th:unless="${isEnough == true}">No</span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 </body>
 </html>

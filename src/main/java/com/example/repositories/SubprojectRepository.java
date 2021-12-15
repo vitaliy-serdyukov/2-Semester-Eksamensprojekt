@@ -39,7 +39,7 @@ public class SubprojectRepository {
       Connection con = DBManager.getConnection();
       String SQL = "SELECT * FROM subprojects WHERE project_id = ?";
       PreparedStatement ps = con.prepareStatement(SQL);
-      ps.setInt(1,projectID);
+      ps.setInt(1, projectID);
       ResultSet rs = ps.executeQuery();
       while (rs.next()) {
         tmp = new Subproject(
@@ -50,7 +50,8 @@ public class SubprojectRepository {
             rs.getObject(5, LocalDate.class),
             rs.getObject(6, LocalDate.class),
             rs.getString(7));
-        subprojectsTemp.add(tmp);
+        subprojectsTemp.add(tmp); //  objekter uden ProjectID
+        System.out.println(tmp);
       }
     } catch (SQLException ex) {
       System.out.println(ex.getMessage());

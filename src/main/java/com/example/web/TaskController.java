@@ -1,9 +1,12 @@
 package com.example.web;
 
 import com.example.domain.exceptions.*;
+import com.example.domain.models.Project;
 import com.example.domain.models.Subproject;
 import com.example.domain.models.Task;
+import com.example.domain.services.CalculatorService;
 import com.example.domain.services.TaskService;
+import com.example.domain.services.TeammateService;
 import com.example.domain.services.ValidatorService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,6 +41,9 @@ public class TaskController {
 
     LocalDate maxEndDateTask = subprojectSelected.getEndDate();
     model.addAttribute("maxEndDateTask", maxEndDateTask);
+
+    int timeLeftSubproject = new CalculatorService().calculateTimeLeftSubproject(subprojectSelected);
+    model.addAttribute("timeLeftSubproject", timeLeftSubproject);
 
     return "task/createtask";
     }
@@ -107,11 +113,46 @@ public class TaskController {
 
 
   @GetMapping("/editTask/{taskName}")
-  public String editTask(HttpServletRequest request, Model model, @PathVariable(value = "taskName") String taskName) { //TO DO path in browser
+  public String editTask(HttpServletRequest request, Model model, @PathVariable(value = "taskName") String taskName)
+      throws TaskUpdateException {
     HttpSession session = request.getSession();
-    Task taskSelected = taskService.showTaskInfo(taskName);
-    session.setAttribute("taskSelected", taskSelected);
+    TeammateService teammateService = new TeammateService();
+    CalculatorService calculatorService = new CalculatorService();
+
+    Subproject subprojectSelected = (Subproject) session.getAttribute("subprojectSelected");
+    Task taskSelected = (Task) session.getAttribute("taskSelected");
     model.addAttribute("taskSelected", taskSelected);
+
+    int teammatesAmount = teammateService.countTeammates(subprojectSelected.getProjectID());
+    model.addAttribute("teammatesAmount", teammatesAmount);
+
+    if (teammatesAmount < 1){
+      throw new TaskUpdateException("The project must have at least one team member");
+    }
+
+    int totalHoursTeam = teammateService.calculateTotalHoursPerDay(subprojectSelected.getProjectID());
+    model.addAttribute("totalHoursTeam", totalHoursTeam);
+
+    double dayAmountNeeded = calculatorService.calculateDaysNeeded(taskSelected.getHoursTotal(),
+        subprojectSelected.getProjectID());
+    model.addAttribute("dayAmountNeeded", dayAmountNeeded);
+
+    double dayAmountExpected = calculatorService.countDaysExpected(taskSelected.getStartDate(),
+        taskSelected.getEndDate());
+    model.addAttribute("dayAmountExpected", dayAmountExpected);
+
+    LocalDate realEndDate = calculatorService.countDateEnd(taskSelected.getStartDate(),
+        taskSelected.getHoursTotal(), subprojectSelected.getProjectID());
+    model.addAttribute("realEndDate", realEndDate);
+
+    boolean isEnough = calculatorService.isTimeEnough(taskSelected.getStartDate(), taskSelected.getEndDate(),
+        taskSelected.getHoursTotal(), subprojectSelected.getProjectID());
+    model.addAttribute("isEnough", isEnough);
+
+    double neededSpeed = calculatorService.calculateSpeedDaily(taskSelected.getStartDate(), taskSelected.getEndDate(),
+        taskSelected.getHoursTotal());
+    model.addAttribute("neededSpeed", neededSpeed);
+
     return "task/edittask";
   }
 
@@ -123,6 +164,7 @@ public class TaskController {
     HttpSession session = request.getSession();
 
     // Retrieve values from HTML form via HTTPServlet request
+    Subproject subprojectSelected = (Subproject) session.getAttribute("subprojectSelected");
     Task taskToUpdate = (Task) session.getAttribute("taskSelected");
 
     Task taskUpdated = new Task(
@@ -135,7 +177,8 @@ public class TaskController {
 
     // validate task name for backspace or empty String input and validate end date
     ValidatorService validatorService = new ValidatorService();
-    if (!validatorService.isValidName(taskUpdated.getTaskName()) ||
+    if (!validatorService.isValidStartDateTask(subprojectSelected.getStartDate(), taskUpdated.getStartDate())||
+        !validatorService.isValidName(taskUpdated.getTaskName()) ||
         !validatorService.isValidEndDate(taskUpdated.getStartDate(), taskUpdated.getEndDate())){
       throw new TaskUpdateException("Either task name or end date is wrong..." +
           "Name may not be empty and the end date has to be as minimum as the next day after start date." +
@@ -167,6 +210,14 @@ public class TaskController {
     Subproject subprojectSelected = (Subproject) session.getAttribute("subprojectSelected");
     redirectAttrs.addAttribute("subprojectName", subprojectSelected.getSubprojectName());
     return "redirect:/showSubproject/{subprojectName}";
+  }
+
+  @GetMapping("/returnToTask")
+  public String returnToProject(HttpServletRequest request, RedirectAttributes redirectAttrs) {
+    HttpSession session = request.getSession();
+    Task taskSelected = (Task) session.getAttribute("taskSelected");
+    redirectAttrs.addAttribute("taskName", taskSelected.getTaskName());
+    return "redirect:/showTask/{taskName}";
   }
 
 

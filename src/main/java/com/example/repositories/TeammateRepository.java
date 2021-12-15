@@ -82,7 +82,6 @@ public class TeammateRepository {
       ResultSet rs = ps.executeQuery();
       if (rs.next()) {
         hoursTotal = rs.getInt(1);
-        System.out.println("total hours" + hoursTotal);
         return hoursTotal;
       }
     } catch (SQLException ex) {

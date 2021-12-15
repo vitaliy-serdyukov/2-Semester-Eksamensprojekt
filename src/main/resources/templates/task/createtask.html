@@ -21,6 +21,9 @@
                 <a href="/profile">Profile</a>
             </li>
             <li>
+                <a href="/returnToSubproject">Back to subproject</a>
+            </li>
+            <li>
                 <a style="margin-left: 700px" href="/logout"> Logout </a>
             </li>
         </ul>
@@ -42,6 +45,10 @@
                 <input type="text" max="30" maxlength="100" id="task_name" name="task_name"
                        th:field="*{taskName}" required/>
         </div>
+            <div class="field">
+                <label>Hours available: </label>
+                <div th:text="${timeLeftSubproject}"></div>
+            </div>
         <div class="field">
             <label for="hours_total">Hours total, expected:</label>
             <input type="number" min="1" id="hours_total" name="hours_total" th:field="*{hoursTotal}"/>

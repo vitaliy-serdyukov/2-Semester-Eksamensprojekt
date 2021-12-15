@@ -1,6 +1,7 @@
 package com.example.domain.services;
 
 
+
 import java.time.LocalDate;
 
 public class ValidatorService {
@@ -30,8 +31,16 @@ public class ValidatorService {
     return true;
   }
 
-  public boolean isValidStartDateSubproject(LocalDate projectStartDate, LocalDate supbprogectStartDate ){
-    if (supbprogectStartDate.isBefore(projectStartDate)){
+  public boolean isValidStartDateSubproject(LocalDate projectStartDate, LocalDate supbprojectStartDate ){
+    if (supbprojectStartDate.isBefore(projectStartDate)){
+      return false;
+    }
+    return true;
+  }
+
+
+  public boolean isValidStartDateTask(LocalDate subprojectStartDate, LocalDate taskStartDate ){
+    if (taskStartDate.isBefore(subprojectStartDate)){
       return false;
     }
     return true;
