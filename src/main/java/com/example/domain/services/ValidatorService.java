@@ -1,6 +1,7 @@
 package com.example.domain.services;
 
 
+import java.time.LocalDate;
 
 public class ValidatorService {
 
@@ -11,5 +12,13 @@ public class ValidatorService {
     }
     return true;
   }
-}
 
+  public boolean isValidEndDate (LocalDate startDate, LocalDate endDate) {
+
+    LocalDate today = LocalDate.now();
+    if (endDate.isAfter(startDate)){
+      return true;
+    }
+    return false;
+  }
+}

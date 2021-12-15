@@ -90,7 +90,7 @@ public class SubprojectController {
     LocalDate subprojectEndDate = LocalDate.parse(subprojectEndDateStr, formatter);
 
     // validate end date
-    if (!new DateService().isValidEndDate(subprojectStartDate, subprojectEndDate)){
+    if (!new ValidatorService().isValidEndDate(subprojectStartDate, subprojectEndDate)){
       throw new SubprojectInputException("Entered end date is wrong, please, choose end date as minimum" +
           "as the next day after start date");
     }
@@ -166,10 +166,10 @@ public class SubprojectController {
         (LocalDate.parse(request.getParameter("endDate"), DateTimeFormatter.ofPattern("yyyy-MM-dd"))),
         (request.getParameter("description")));
 
-    // validate subproject name for backspace or empty String input
-    // validate end date
-    if (!new ValidatorService().isValidName(subprojectUpdated.getSubprojectName()) ||
-        !new DateService().isValidEndDate(subprojectUpdated.getStartDate(), subprojectUpdated.getEndDate())){
+    // validate subproject name for backspace or empty String input and validate end date
+    ValidatorService validatorService = new ValidatorService();
+    if (!validatorService.isValidName(subprojectUpdated.getSubprojectName()) ||
+        !validatorService.isValidEndDate(subprojectUpdated.getStartDate(), subprojectUpdated.getEndDate())){
       throw new SubprojectUpdateException ("Either subproject name or end date is wrong..." +
           "Name may not be empty and the end date has to be as minimum as the next day after start date." +
           "Please, try again");

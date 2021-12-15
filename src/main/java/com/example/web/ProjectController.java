@@ -35,7 +35,7 @@ public class ProjectController {
     Project projectNew = new Project();
     model.addAttribute("projectNew", projectNew);
 
-    LocalDate minStartDateProject = new DateService().getToday();
+    LocalDate minStartDateProject = LocalDate.now();
     model.addAttribute("minStartDateProject", minStartDateProject);
     return "project/createproject";
   }
@@ -72,7 +72,7 @@ public class ProjectController {
     LocalDate projectEndDate = LocalDate.parse(projectEndDateStr, formatter);
 
     // validate end date
-    if (!new DateService().isValidEndDate(projectStartDate, projectEndDate)){
+    if (!new ValidatorService().isValidEndDate(projectStartDate, projectEndDate)){
       throw new ProjectInputException("Entered end date is wrong, please, choose end date as minimum" +
           "as the next day after start date");
     }
@@ -206,10 +206,10 @@ public class ProjectController {
         ((String) session.getAttribute("email")),
         (request.getParameter("description")));
 
-    // validate project name for backspace or empty String input
-    // validate end date
-    if (!new ValidatorService().isValidName(projectUpdated.getProjectName()) ||
-        !new DateService().isValidEndDate(projectUpdated.getStartDate(), projectUpdated.getEndDate())){
+    // validate project name for backspace or empty String input and validate end date
+        ValidatorService validatorService = new ValidatorService();
+    if (!validatorService.isValidName(projectUpdated.getProjectName()) ||
+        !validatorService.isValidEndDate(projectUpdated.getStartDate(), projectUpdated.getEndDate())){
       throw new ProjectUpdateException("Either project name or end date is wrong..." +
           "Name may not be empty and the end date has to be as minimum as the next day after start date." +
           "Please, try again");

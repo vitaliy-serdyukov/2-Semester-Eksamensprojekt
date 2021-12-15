@@ -3,7 +3,6 @@ package com.example.web;
 import com.example.domain.exceptions.*;
 import com.example.domain.models.Subproject;
 import com.example.domain.models.Task;
-import com.example.domain.services.DateService;
 import com.example.domain.services.TaskService;
 import com.example.domain.services.ValidatorService;
 import org.springframework.stereotype.Controller;
@@ -74,7 +73,7 @@ public class TaskController {
       LocalDate taskEndDate = LocalDate.parse(subprojectEndDateStr, formatter);
 
       // validate end date
-      if (!new DateService().isValidEndDate(taskStartDate, taskEndDate)){
+      if (!new ValidatorService().isValidEndDate(taskStartDate, taskEndDate)){
         throw new TaskInputException("Entered end date is wrong, please, choose end date as minimum" +
             "as the next day after start date");
       }
@@ -134,10 +133,10 @@ public class TaskController {
         (LocalDate.parse(request.getParameter("endDate"), DateTimeFormatter.ofPattern("yyyy-MM-dd"))),
         (request.getParameter("description")));
 
-    // validate task name for backspace or empty String input
-    // validate end date
-    if (!new ValidatorService().isValidName(taskUpdated.getTaskName()) ||
-        !new DateService().isValidEndDate(taskUpdated.getStartDate(), taskUpdated.getEndDate())){
+    // validate task name for backspace or empty String input and validate end date
+    ValidatorService validatorService = new ValidatorService();
+    if (!validatorService.isValidName(taskUpdated.getTaskName()) ||
+        !validatorService.isValidEndDate(taskUpdated.getStartDate(), taskUpdated.getEndDate())){
       throw new TaskUpdateException("Either task name or end date is wrong..." +
           "Name may not be empty and the end date has to be as minimum as the next day after start date." +
           "Please, try again");
