@@ -98,7 +98,7 @@
             <td th:text="${teammatesAmount}"/></td>
         </tr>
         <tr>
-            <td>Productivity, hours/day:</td>
+            <td>Team productivity, hours/day:</td>
             <td th:text="${totalHoursTeam}"/></td>
         </tr>
         <tr>
@@ -107,7 +107,7 @@
         </tr>
         <tr>
             <td>Amount of hours left in subproject:<br>(not allocated in tasks)</td>
-            <td th:text="${timeLeftProject}"/></td>
+            <td th:text="${hoursLeftSubproject}"/></td>
         </tr>
         <tr>
             <td>Amount of days, needed to reach the goal<br>(based on team productivity): </td>
@@ -118,7 +118,8 @@
             <td th:text="${realEndDate}"/></td>
         </tr>
         <tr>
-            <td>Or needed to deliver hours/day<br>to be in time<br>(amount of teammates have to be raised) </td>
+
+            <td>Or needed to deliver hours/day<br>to be in time<br>(amount of teammates have to be changed) </td>
             <td th:text="${neededSpeed}"/></td>
         </tr>
         <tr>

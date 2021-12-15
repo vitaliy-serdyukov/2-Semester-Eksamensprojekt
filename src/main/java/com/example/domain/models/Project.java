@@ -26,7 +26,6 @@ public class Project {
   private ArrayList<Subproject> subprojects;
 
 
-
   public Project(int projectID, String projectName, String category, int hoursTotal, LocalDate startDate,
                  LocalDate endDate, String ownerEmail, String description) {
     this.projectID = projectID;
@@ -144,6 +143,24 @@ public class Project {
   public void setDescription(String description) {
     this.description = description;
   }
+
+
+  public int getHoursTakenProject() {
+    int result = 0;
+
+    for(Subproject subproject : subprojects) {
+        result += subproject.getHoursTotal();
+    }
+    subprojects.clear();
+    return result;
+    }
+
+  public int getHoursLeftProject(){
+    int timeLeftProject = this.getHoursTotal() - this.getHoursTakenProject();
+    return timeLeftProject;
+  }
+
+
 
   @Override
   public String toString() {

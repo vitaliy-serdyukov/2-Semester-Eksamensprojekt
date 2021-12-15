@@ -141,6 +141,23 @@ public class Subproject {
     this.description = description;
   }
 
+
+  public int getHoursTakenSubproject() {
+    int result = 0;
+
+    for(Task task : tasks) {
+      result += task.getHoursTotal();
+    }
+    tasks.clear();
+    return result;
+  }
+
+  public int getHoursLeftSubproject(){
+    int timeLeftSubproject = this.getHoursTotal() - this.getHoursTakenSubproject();
+    return timeLeftSubproject;
+  }
+
+
   @Override
   public String toString() {
     return "SubProject{" +

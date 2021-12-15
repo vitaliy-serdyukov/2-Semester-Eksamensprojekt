@@ -1,7 +1,6 @@
 package com.example.domain.services;
 
-import com.example.domain.models.Project;
-import com.example.domain.models.Subproject;
+
 import com.example.repositories.TeammateRepository;
 
 import java.time.DayOfWeek;
@@ -15,12 +14,12 @@ public class CalculatorService {
 
   public double calculateDaysNeeded(int hoursTotal, int projectID) { // days needed
     double totalHoursTeam = (double) teammateRepository.getHoursTeam(projectID);
-    double dayAmountTemp =  hoursTotal / totalHoursTeam;
+    double dayAmountTemp = hoursTotal / totalHoursTeam;
     return Math.round(dayAmountTemp * 100.0) / 100.0;
   }
 
   public LocalDate countDateEnd(LocalDate startDate, int hoursTotal, int projectID) {
-    double dayAmount = calculateDaysNeeded(hoursTotal,projectID);
+    double dayAmount = calculateDaysNeeded(hoursTotal, projectID);
 
     LocalDate dateEnd = startDate;
     int addedDays = 0;
@@ -33,7 +32,7 @@ public class CalculatorService {
     return dateEnd;
   }
 
-  public double countDaysExpected (LocalDate startDate, LocalDate endDate){ // days between 2 dates
+  public double countDaysExpected(LocalDate startDate, LocalDate endDate) { // days between 2 dates
 
     Date date1 = java.sql.Date.valueOf(startDate);
     Date date2 = java.sql.Date.valueOf(endDate);
@@ -46,59 +45,33 @@ public class CalculatorService {
 
     while (cal1.before(cal2)) {
       if ((Calendar.SATURDAY != cal1.get(Calendar.DAY_OF_WEEK))
-          &&(Calendar.SUNDAY != cal1.get(Calendar.DAY_OF_WEEK))) {
+          && (Calendar.SUNDAY != cal1.get(Calendar.DAY_OF_WEEK))) {
         numberDaysExpected++;
       }
-      cal1.add(Calendar.DATE,1);
+      cal1.add(Calendar.DATE, 1);
     }
     return numberDaysExpected;
 
   }
 
-  public boolean isTimeEnough (LocalDate startDate, LocalDate endDate, int hoursTotal, int projectID){
+  public boolean isTimeEnough(LocalDate startDate, LocalDate endDate, int hoursTotal, int projectID) {
     double numberDaysExpected = countDaysExpected(startDate, endDate);
     double numberDaysNeeded = calculateDaysNeeded(hoursTotal, projectID);
-    if (numberDaysNeeded > numberDaysExpected ) {
+    if (numberDaysNeeded > numberDaysExpected) {
       return false;
     }
     return true;
   }
 
-  public double calculateSpeedDaily(LocalDate startDate, LocalDate endDate, int hoursTotal){
-    double daysExpected = countDaysExpected(startDate, endDate) ;// days between 2 dates
+  public double calculateSpeedDaily(LocalDate startDate, LocalDate endDate, int hoursTotal) {
+    double daysExpected = countDaysExpected(startDate, endDate);// days between 2 dates
     double speed = hoursTotal / daysExpected; // hoursTotal is an amount of "expected" hours
     return Math.round(speed * 100) / 100.0;
 
   }
 
 
-  // must be written in accordance Information expert pattern
-  public int calculateTimeTakenProject(Project project){
-    int timeTotalProject = 0;
-     for (int i = 0; i < project.getSubprojects().size(); i++) {
-      timeTotalProject += project.getSubprojects().get(i).getHoursTotal();
-    }
-    project.getSubprojects().clear();
-    return timeTotalProject;
-  }
 
-  public int calculateTimeLeftProject(Project project){
-    int timeLeftProject = project.getHoursTotal() - calculateTimeTakenProject(project);
-    return timeLeftProject;
-  }
 
-  // must be written in accordance Information expert pattern
-  public int calculateTimeTakenSubproject(Subproject subproject){
-    int timeTotalSubproject = 0;
-    for (int i = 0; i < subproject.getTasks().size(); i++) {
-      timeTotalSubproject += subproject.getTasks().get(i).getHoursTotal();
-    }
-    subproject.getTasks().clear();
-    return timeTotalSubproject;
-  }
-
-  public int calculateTimeLeftSubproject(Subproject subproject){
-    int timeLeftSubproject = subproject.getHoursTotal() - calculateTimeTakenSubproject(subproject);
-    return timeLeftSubproject;
-  }
 }
+

@@ -45,8 +45,8 @@ public class SubprojectController {
     LocalDate maxEndDateSubproject = projectSelected.getEndDate();
     model.addAttribute("maxEndDateSubproject", maxEndDateSubproject);
 
-    int timeLeftProject = new CalculatorService().calculateTimeLeftProject(projectSelected);
-    model.addAttribute("timeLeftProject", timeLeftProject);
+    int hoursLeftProject = projectSelected.getHoursLeftProject();
+    model.addAttribute("hoursLeftProject", hoursLeftProject);
 
     return "subproject/createsubproject";
   }
@@ -72,13 +72,11 @@ public class SubprojectController {
     String hoursTotalStr = request.getParameter("hoursTotal");
     int hoursTotal = Integer.parseInt(hoursTotalStr);
 
-
-    int timeLeftProject = new CalculatorService().calculateTimeLeftProject(projectSelected);
-    if (timeLeftProject < hoursTotal) {
-      throw new SubprojectInputException("It was unable to create a subproject, because the entered amount of hours exceeds" +
-          "available amount of hours in project left ");
+    int hoursLeftProject = projectSelected.getHoursLeftProject();
+        if (hoursLeftProject < hoursTotal) {
+      throw new SubprojectInputException("It was unable to create a subproject, because the entered amount of hours" +
+          " exceeds available amount of hours in project left ");
     }
-
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     String subprojectStartDateStr = request.getParameter("startDate");
@@ -143,7 +141,7 @@ public class SubprojectController {
     TeammateService teammateService = new TeammateService();
     CalculatorService calculatorService = new CalculatorService();
 
-     // taking back out of session our selected subproject, now with tasks
+    // taking back out of session our selected subproject, now with tasks
     Subproject subprojectSelected = (Subproject) session.getAttribute("subprojectSelected");
     model.addAttribute("subprojectSelected", subprojectSelected);
 
@@ -157,8 +155,8 @@ public class SubprojectController {
     int totalHoursTeam = teammateService.calculateTotalHoursPerDay(subprojectSelected.getProjectID());
     model.addAttribute("totalHoursTeam", totalHoursTeam);
 
-    int timeLeftSubproject = calculatorService.calculateTimeLeftSubproject(subprojectSelected);
-    model.addAttribute("timeLeftProject", timeLeftSubproject);
+    int hoursLeftSubproject = subprojectSelected.getHoursLeftSubproject();
+    model.addAttribute("hoursLeftSubproject", hoursLeftSubproject);
 
     double dayAmountNeeded = calculatorService.calculateDaysNeeded(subprojectSelected.getHoursTotal(),
         subprojectSelected.getProjectID());

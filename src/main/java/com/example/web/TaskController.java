@@ -42,8 +42,8 @@ public class TaskController {
     LocalDate maxEndDateTask = subprojectSelected.getEndDate();
     model.addAttribute("maxEndDateTask", maxEndDateTask);
 
-    int timeLeftSubproject = new CalculatorService().calculateTimeLeftSubproject(subprojectSelected);
-    model.addAttribute("timeLeftSubproject", timeLeftSubproject);
+    int hoursLeftSubproject = subprojectSelected.getHoursLeftSubproject();
+    model.addAttribute("hoursLeftSubproject", hoursLeftSubproject);
 
     return "task/createtask";
     }
@@ -67,6 +67,12 @@ public class TaskController {
 
       String hoursTotalStr = request.getParameter("hoursTotal");
       int hoursTotal = Integer.parseInt(hoursTotalStr);
+
+      int hoursLeftSubproject = subprojectSelected.getHoursLeftSubproject();
+        if (hoursLeftSubproject < hoursTotal) {
+        throw new TaskInputException("It was unable to create a subproject, because the entered amount of hours" +
+            " exceeds available amount of hours in project left ");
+      }
 
       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 

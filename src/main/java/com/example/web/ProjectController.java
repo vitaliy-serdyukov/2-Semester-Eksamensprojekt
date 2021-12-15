@@ -156,8 +156,8 @@ public class ProjectController {
     int totalHoursTeam = teammateService.calculateTotalHoursPerDay(projectSelected.getProjectID());
     model.addAttribute("totalHoursTeam", totalHoursTeam);
 
-    int timeLeftProject = calculatorService.calculateTimeLeftProject(projectSelected);
-    model.addAttribute("timeLeftProject", timeLeftProject);
+    int hoursLeftProject = projectSelected.getHoursLeftProject();
+    model.addAttribute("hoursLeftProject", hoursLeftProject); // virker???
 
     double dayAmountNeeded = calculatorService.calculateDaysNeeded(projectSelected.getHoursTotal(),
         projectSelected.getProjectID());
