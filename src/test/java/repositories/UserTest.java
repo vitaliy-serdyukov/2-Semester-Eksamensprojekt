@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
     @DisplayName("check if user is returned")
     public void getReturnedUser() {
-        // Assert
+        // Arrange
         // Normally mock data would be inserted here.
         String userMail = "anna@3";
         String expectedUserCompanyName = "a";
@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
     }
         @DisplayName("test should fail because of an email that do exist")
-        public void assertThrows(User user){
+        public void  assertThrows(User user){
 
         //Arrange
         String userMailWrong = "James@500";

@@ -18,18 +18,13 @@ public class CalculationTest {
     public void enough_time() {
 
 
-        LocalDate startdate = LocalDate.of(2022,1,1);
-        LocalDate enddate = LocalDate.of(2022, 1, 20);
-        int hoursTotal = 30;
-        int id = 705;
-
 
         //Arrange
-        boolean actualvalue = calculatorService.isTimeEnough(LocalDate.of(2022,1,1),LocalDate.of(2022, 1, 20), 40, 705);
+        boolean actualvalue = calculatorService.isTimeEnough(LocalDate.of(2022,1,1),LocalDate.of(2022, 1, 20), 10, 705);
 
-        //Act
+        //Act + Assert
         assertTrue(true);
-        System.out.println("not enough days");
+        System.out.println(" enough days");
 
     }
 
@@ -40,11 +35,11 @@ public class CalculationTest {
     public void calculate_DailySpeed() {
 
 
-        //Act
+        //Arrange
         double speedExpected = calculatorService.calculateSpeedDaily(LocalDate.of(2022, 1, 5), LocalDate.of(2022, 1, 10), 20);
 
 
-        //Assert
+        //Assert + Act
         Assertions.assertEquals(speedExpected, calculatorService.calculateSpeedDaily(LocalDate.of(2022, 1, 5), LocalDate.of(2022, 1, 10), 20));
         System.out.println(speedExpected);
 
