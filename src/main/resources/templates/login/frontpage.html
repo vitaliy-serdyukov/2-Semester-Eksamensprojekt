@@ -36,28 +36,30 @@
 <div class="wrapper fadeInDown">
 <div class="flex-container">
           <div class="flex-item2-middle">
-
-       <!-- <p style="text-align: left">Show available Projects:</p>-->
         <table>
             <thead>
             <tr>
-                <th class="dashboard-add-button" colspan="4"> <button class="dash" onclick="location.href='/createProject'" type="submit">Add new Project
+                <th class="dashboard-add-button" colspan="5"> <button class="dash" onclick="location.href='/createProject'" type="submit">Add new Project
                 </button></th>
             </tr>
 
             <tr>
-                <th class="extra-line-in-top"> Project<br>name</th>
-                <th class="extra-line-in-top"> Show<br>project</th>
-                <th class="extra-line-in-top"> Remove<br>project</th>
-                   </tr>
+                <th class="extra-line-in-top">Name</th>
+                <th class="extra-line-in-top">Start</th>
+                <th class="extra-line-in-top">End</th>
+                <th class="extra-line-in-top">Show</th>
+                <th class="extra-line-in-top">Remove</th>
+            </tr>
             </thead>
             <tbody>
             <tr th:each="projectNew : ${projectsUserLogged}">
                 <td th:text="${projectNew.projectName}"></td>
-                <td><a th:href="@{/showProject/{projectName}(projectName=${projectNew.projectName})}">
+                <td><div class="dates-show" th:text="${projectNew.startDate}"></div></td>
+                <td><div class="dates-show" th:text="${projectNew.endDate}"></div></td>
+                <td class="centered-cell"><a th:href="@{/showProject/{projectName}(projectName=${projectNew.projectName})}">
                     <img class="icon" src="/images/eye2.png" alt="Eye">
                 </a></td>
-                <td><a th:href="@{/deleteProject/{projectName}(projectName=${projectNew.projectName})}">
+                <td class="centered-cell"><a th:href="@{/deleteProject/{projectName}(projectName=${projectNew.projectName})}">
                     <img class="icon" src="/images/trashcan.png" alt="Trashcan">
                 </a></td>
             </tr>

@@ -92,7 +92,7 @@ th.centered-cell, td.centered-cell {
 }
 
 
-td.centered-button{
+td.centered-button, th.centered-button{
     text-align: center;
 
 }
@@ -141,7 +141,7 @@ tr { background-color: rgb(255, 255, 255);
 
 .flex-item2-middle {
     padding: 10px;
-    flex: 35%;
+    flex: 25%;
     margin:10px;
     border-radius: 10px;
     align-content: center;
@@ -149,7 +149,7 @@ tr { background-color: rgb(255, 255, 255);
 
 .flex-item2-right {
     padding: 10px;
-    flex: 35%;
+    flex: 45%;
     margin: 10px 0 10px 0;
     border-radius: 10px;
     align-content: center;
@@ -375,4 +375,13 @@ ul.tree>li:after {
 .tree li a:hover+ul ul::before, .tree li a:focus+ul ul::before{
     border-color:  #000000; /*connector color on hover*/
     background-color: black;
+}
+
+.dates-show{
+    font-size: 14px;
+    font-weight: bold;
+}
+
+td.centered-cell{
+    text-align: center;
 }
