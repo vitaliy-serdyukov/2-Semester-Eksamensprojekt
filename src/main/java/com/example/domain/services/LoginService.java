@@ -1,10 +1,8 @@
 package com.example.domain.services;
-
 import com.example.domain.exceptions.LoginRegisterException;
 import com.example.domain.exceptions.ProjectInputException;
 import com.example.domain.models.User;
 import com.example.repositories.UserRepository;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
