@@ -41,7 +41,7 @@
       <table class="no-shadow">
         <thead>
         <tr>
-        <th colspan="2" class="centered-button"><button type="submit">Calculate and edit<br>subproject</button></th>
+        <th colspan="2" class="centered-button"><button type="submit">Calculate and edit subproject</button></th>
         </tr>
         <tr>
           <th colspan="2"><b>You are in subproject:</b></th>
@@ -77,32 +77,32 @@
       <table>
         <thead>
         <tr>
-        <th class="dashboard-add-button" colspan="3">
+        <th class="dashboard-add-button" colspan="5">
           <button onclick="location.href='/createTask'" type="submit">Add new task</button>
         </th>
         </tr>
         <tr>
-          <th colspan="3">Available tasks in this subproject:</th>
+          <th colspan="5">Available tasks in this subproject:</th>
         </tr>
         <tr>
           <th class="extra-line-in-top">Name</th>
+          <th class="extra-line-in-top">Start</th>
+          <th class="extra-line-in-top">End</th>
           <th class="extra-line-in-top">Show</th>
           <th class="extra-line-in-top">Remove</th>
-      <!--    <th class="extra-line-in-top">Edit</th>-->
         </tr>
         </thead>
         <tbody>
         <tr th:each="taskNew : ${tasks}">
           <td th:text="${taskNew.taskName}"></td>
-          <td><a th:href="@{/showTask/{taskName}(taskName=${taskNew.taskName})}">
+          <td><div class="dates-show" th:text="${taskNew.startDate}"></div></td>
+          <td><div class="dates-show" th:text="${taskNew.endDate}"></div></td>
+          <td class="centered-cell"><a th:href="@{/showTask/{taskName}(taskName=${taskNew.taskName})}">
             <img class="icon" src="/images/eye2.png" alt="Eye">
           </a></td>
-          <td><a th:href="@{/deleteTask/{taskName}(taskName=${taskNew.taskName})}">
+          <td class="centered-cell"><a th:href="@{/deleteTask/{taskName}(taskName=${taskNew.taskName})}">
             <img class="icon" src="/images/trashcan.png" alt="Trashcan">
           </a></td>
-         <!-- <td><a th:href="@{/editTask/{taskName}(taskName=${taskNew.taskName})}">
-            <img class="icon" src="/images/gears.png" alt="Gears">
-          </a></td>-->
         </tr>
         </tbody>
       </table>
