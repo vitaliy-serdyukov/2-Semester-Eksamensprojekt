@@ -2,7 +2,6 @@ package com.example.web;
 
 
 import com.example.domain.exceptions.ProjectInputException;
-import com.example.domain.exceptions.ProjectUpdateException;
 import com.example.domain.exceptions.SubprojectInputException;
 import com.example.domain.exceptions.SubprojectUpdateException;
 import com.example.domain.models.Project;
@@ -99,7 +98,7 @@ public class SubprojectController {
     Subproject subprojectNew = new Subproject(projectID, subprojectName, hoursTotal, subprojectStartDate,
         subprojectEndDate, subprojectDescription);
 
-    // Work + data is delegated to login service
+    // Work + data is delegated to subproject service
     subprojectService.createSubproject(subprojectNew);
     redirectAttrs.addAttribute("projectName", projectSelected.getProjectName());
     // Go to page
@@ -116,27 +115,26 @@ public class SubprojectController {
     // taking back out of session our selected subproject, now with subprojects
     Subproject subprojectSelected = subprojectService.showSubprojectInfo(subprojectName);
 
-    ArrayList<Task> tasksTemp = new TaskService().
-        findAllTasksInSubproject(subprojectSelected.getSubprojectID());
+    ArrayList<Task> tasksTemp = new TaskService().findAllTasksInSubproject(subprojectSelected.getSubprojectID());
 
     subprojectSelected.addTasks(tasksTemp);
-
     session.setAttribute("subprojectSelected", subprojectSelected);
+
     model.addAttribute("subprojectSelected", subprojectSelected);
+    model.addAttribute("tasks", subprojectSelected.getTasks());
 
     Task taskNew = new Task();
     model.addAttribute("taskNew", taskNew);
 
-    ArrayList<Task> tasks = subprojectSelected.getTasks();
-
-    model.addAttribute("tasks", tasks);
     return "subproject/showsubproject";
   }
 
 
 
   @GetMapping("/editSubproject/{subprojectName}")
-  public String editSubProject(HttpServletRequest request, Model model, @PathVariable(value = "subprojectName") String subProjectName) throws SubprojectUpdateException { //TO DO path in browser
+  public String editSubProject(HttpServletRequest request, Model model, @PathVariable(value = "subprojectName")
+      String subProjectName) throws SubprojectUpdateException {
+
     HttpSession session = request.getSession();
     TeammateService teammateService = new TeammateService();
     CalculatorService calculatorService = new CalculatorService();
@@ -174,8 +172,8 @@ public class SubprojectController {
         subprojectSelected.getHoursTotal(), subprojectSelected.getProjectID());
     model.addAttribute("isEnough", isEnough);
 
-    double neededSpeed = calculatorService.calculateSpeedDaily(subprojectSelected.getStartDate(), subprojectSelected.getEndDate(),
-        subprojectSelected.getHoursTotal());
+    double neededSpeed = calculatorService.calculateSpeedDaily(subprojectSelected.getStartDate(),
+        subprojectSelected.getEndDate(), subprojectSelected.getHoursTotal());
     model.addAttribute("neededSpeed", neededSpeed);
 
     return "subproject/editsubproject";
@@ -189,21 +187,24 @@ public class SubprojectController {
     HttpSession session = request.getSession();
 
     // Retrieve values from HTML form via HTTPServlet request
-     Project projectSelected = (Project) session.getAttribute("projectSelected");
-    Subproject subprojectToUpdate = (Subproject) session.getAttribute("subprojectSelected");
+    Project projectSelected = (Project) session.getAttribute("projectSelected");
+    Subproject subprojectSelected = (Subproject) session.getAttribute("subprojectSelected");
 
 
     Subproject subprojectUpdated = new Subproject(
-        (subprojectToUpdate.getSubprojectID()),
-        (subprojectToUpdate.getProjectID()),
+        (subprojectSelected.getSubprojectID()),
+        (subprojectSelected.getProjectID()),
         (request.getParameter("subprojectName")),
         (Integer.parseInt(request.getParameter("hoursTotal"))),
         (LocalDate.parse(request.getParameter("startDate"), DateTimeFormatter.ofPattern("yyyy-MM-dd"))),
         (LocalDate.parse(request.getParameter("endDate"), DateTimeFormatter.ofPattern("yyyy-MM-dd"))),
         (request.getParameter("description")));
 
+        subprojectUpdated.setTasks(subprojectSelected.getTasks());
+
     // validate subproject name for backspace or empty String input and validate end date
     ValidatorService validatorService = new ValidatorService();
+
     if (!validatorService.isValidStartDateSubproject(projectSelected.getStartDate(), subprojectUpdated.getStartDate()) ||
         !validatorService.isValidName(subprojectUpdated.getSubprojectName()) ||
         !validatorService.isValidEndDate(subprojectUpdated.getStartDate(), subprojectUpdated.getEndDate())){
@@ -212,9 +213,11 @@ public class SubprojectController {
           "Please, try again");
     }
 
-    subprojectService.updateSubProject(subprojectUpdated);
+    subprojectService.updateSubproject(subprojectUpdated);
+    subprojectSelected = subprojectUpdated;
+    session.setAttribute("subprojectSelected", subprojectSelected);
 
-    redirectAttrs.addAttribute("subprojectName", subprojectUpdated.getSubprojectName());
+    redirectAttrs.addAttribute("subprojectName", subprojectSelected.getSubprojectName());
     return "redirect:/showSubproject/{subprojectName}";
   }
 

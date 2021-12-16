@@ -61,6 +61,8 @@ public class Subproject {
     this(subprojectID, projectID, subprojectName, hoursTotal, startDate, endDate,description, null);
   }
 
+
+
   public void addProject(Project project) {
     this.project = project;
   }
@@ -148,20 +150,18 @@ public class Subproject {
     for(Task task : tasks) {
       result += task.getHoursTotal();
     }
-    tasks.clear();
-    return result;
+     return result;
   }
 
   public int getHoursLeftSubproject(){
-    int timeLeftSubproject = this.getHoursTotal() - this.getHoursTakenSubproject();
-    return timeLeftSubproject;
+    return this.getHoursTotal() - this.getHoursTakenSubproject();
   }
 
 
   @Override
   public String toString() {
     return "SubProject{" +
-        "subProjectID=" + subprojectID +
+        "subProjectID=" + subprojectID +  "projectID=" + projectID  +
         ", subProjectName='" + subprojectName + '\'' +
         ", hoursTotal=" + hoursTotal +
         ", startDate='" + startDate + '\'' +

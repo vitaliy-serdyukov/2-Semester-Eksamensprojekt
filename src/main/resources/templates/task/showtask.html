@@ -34,7 +34,6 @@
 
 <div class="wrapper fadeInDown">
 <div class="flex-container">
-<!--    <div class="flex-item2-middle">-->
         <form class="show-model-info" th:action="@{/editTask/{taskName}(taskName=${taskSelected.taskName})}"
               method="get">
         <table class="no-shadow">
@@ -43,16 +42,11 @@
                     <th colspan="2" class="centered-button"><button type="submit">Calculate and edit<br>task</button>
                     </th>
                 </tr>
+                <tr>
+                    <th colspan="2"><b>You are in task:</b></th>
+                </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td colspan="2">You are in task: <b><span th:text="${taskSelected.getTaskName()}">
-                </span></b></td>
-                <tr>
-                <tr>
-                    <td>Subproject ID:</td>
-                    <td th:text="${taskSelected.subprojectID}"></td>
-                </tr>
                 <tr>
                     <td>Task name:</td>
                     <td th:text="${taskSelected.taskName}"></td>

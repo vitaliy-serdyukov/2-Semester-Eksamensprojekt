@@ -87,7 +87,7 @@ public class ProjectController {
         ownerEmail, projectDescription);
 
 
-    // Work + data is delegated to login service
+    // Work + data is delegated to project service
     projectService.createProject(projectNew);
     session.setAttribute("projectNew", projectNew);
 
@@ -111,6 +111,7 @@ public class ProjectController {
 
     projectSelected.addSubprojects(subprojectsTemp);
     session.setAttribute("projectSelected", projectSelected);
+
     model.addAttribute("projectSelected", projectSelected);
     model.addAttribute("subprojects", projectSelected.getSubprojects());
 
@@ -126,7 +127,6 @@ public class ProjectController {
     model.addAttribute("amountPersonsInTeam", amountPersonsInTeam);
 
     return "project/showproject";
-
   }
 
 
@@ -138,13 +138,9 @@ public class ProjectController {
     HttpSession session = request.getSession();
     CalculatorService calculatorService = new CalculatorService();
 
-
     // taking back out of session our selected project, now with subprojects
     Project projectSelected = (Project) session.getAttribute("projectSelected");
-
     model.addAttribute("projectSelected", projectSelected);
-    System.out.println(projectSelected.getSubprojects());
-
 
     int teammatesAmount = teammateService.countTeammates(projectSelected.getProjectID());
     model.addAttribute("teammatesAmount", teammatesAmount);
@@ -179,7 +175,6 @@ public class ProjectController {
         projectSelected.getHoursTotal());
     model.addAttribute("neededSpeed", neededSpeed);
 
-    System.out.println(projectSelected.getSubprojects());
     return "project/editproject";
   }
 
@@ -193,7 +188,6 @@ public class ProjectController {
 
     // Retrieve values from HTML form via HttpServletRequest
     Project projectSelected = (Project) session.getAttribute("projectSelected");
-    System.out.println(projectSelected.getSubprojects());
 
     Project projectUpdated = new Project(
         (projectSelected.getProjectID()),
@@ -221,12 +215,10 @@ public class ProjectController {
 
     projectService.updateProject(projectUpdated);
     projectSelected = projectUpdated;
-    System.out.println(projectSelected);
-    System.out.println(projectSelected.getSubprojects());
     session.setAttribute("projectSelected", projectSelected);
 
     // Go to page
-    redirectAttrs.addAttribute("projectName", projectUpdated.getProjectName());
+    redirectAttrs.addAttribute("projectName", projectSelected.getProjectName());
     return "redirect:/showProject/{projectName}";
   }
 
@@ -237,13 +229,12 @@ public class ProjectController {
     return "redirect:/frontpage";
   }
 
-  @GetMapping("/treeview")
+  @GetMapping("/treeview") // An experiment, under construction, not finished yet
   public String treeView(HttpServletRequest request, Model model) {
     HttpSession session = request.getSession();
 
     Project projectTree = (Project) session.getAttribute("projectSelected");
     model.addAttribute("projectTree", projectTree);
-
 
     ArrayList<Subproject> subprojectsTree = projectTree.getSubprojects();
     model.addAttribute("subprojectsTree", subprojectsTree);
@@ -256,9 +247,6 @@ public class ProjectController {
 
     Task taskTree = new Task();
     model.addAttribute("taskTree", taskTree);
-
-    /*  ArrayList<String> teammatesEmail = new TeammateService().readTeammates(projectTree.getProjectID());
-      model.addAttribute("teammatesEmail", teammatesEmail);*/
 
       return "project/treeview";
     }
@@ -274,7 +262,5 @@ public class ProjectController {
   public String handleUpdateError(Model model, Exception exception) {
     model.addAttribute("message", exception.getMessage());
     return "project/projectUpdateExceptionPage";
-
   }
-
 }

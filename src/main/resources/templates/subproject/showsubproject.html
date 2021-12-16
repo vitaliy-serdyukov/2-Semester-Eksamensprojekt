@@ -43,19 +43,11 @@
         <tr>
         <th colspan="2" class="centered-button"><button type="submit">Calculate and edit<br>subproject</button></th>
         </tr>
+        <tr>
+          <th colspan="2"><b>You are in subproject:</b></th>
+        </tr>
         </thead>
         <tbody>
-        <tr>
-          <td colspan="2">You are in subproject: <b><span th:text="${subprojectSelected.getSubprojectName()}">
-                </span></b></td>
-        <tr>
-          <td>Subproject ID:</td>
-          <td th:text="${subprojectSelected.subprojectID}"></td>
-        </tr>
-        <tr>
-          <td>Project ID:</td>
-          <td th:text="${subprojectSelected.projectID}"></td>
-        </tr>
         <tr>
           <td>Subproject name:</td>
           <td th:text="${subprojectSelected.subprojectName}"></td>

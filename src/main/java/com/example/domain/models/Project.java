@@ -151,13 +151,11 @@ public class Project {
     for(Subproject subproject : subprojects) {
         result += subproject.getHoursTotal();
     }
-    subprojects.clear();
     return result;
     }
 
   public int getHoursLeftProject(){
-    int timeLeftProject = this.getHoursTotal() - this.getHoursTakenProject();
-    return timeLeftProject;
+    return this.getHoursTotal() - this.getHoursTakenProject();
   }
 
 

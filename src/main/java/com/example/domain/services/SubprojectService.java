@@ -21,7 +21,7 @@ public class SubprojectService {
     return subprojectRepository.readSubprojectInfo(subprojectName);
   }
 
-  public void updateSubProject(Subproject subProject)  {
+  public void updateSubproject(Subproject subProject)  {
     subprojectRepository.rewriteSubProject(subProject);
   }
 

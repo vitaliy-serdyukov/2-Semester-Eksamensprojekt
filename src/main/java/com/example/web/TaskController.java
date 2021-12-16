@@ -1,7 +1,6 @@
 package com.example.web;
 
 import com.example.domain.exceptions.*;
-import com.example.domain.models.Project;
 import com.example.domain.models.Subproject;
 import com.example.domain.models.Task;
 import com.example.domain.services.CalculatorService;
@@ -62,7 +61,7 @@ public class TaskController {
 
       // validate task name for backspace or empty String input
       if (!new ValidatorService().isValidName(taskName)){
-        throw new TaskInputException("The subproject name cannot be empty, please, try again");
+        throw new TaskInputException("The task name cannot be empty, please, try again");
       }
 
       String hoursTotalStr = request.getParameter("hoursTotal");
@@ -70,7 +69,7 @@ public class TaskController {
 
       int hoursLeftSubproject = subprojectSelected.getHoursLeftSubproject();
         if (hoursLeftSubproject < hoursTotal) {
-        throw new TaskInputException("It was unable to create a subproject, because the entered amount of hours" +
+        throw new TaskInputException("It was unable to create a task, because the entered amount of hours" +
             " exceeds available amount of hours in project left ");
       }
 
@@ -96,7 +95,7 @@ public class TaskController {
       Task taskNew = new Task(subprojectID, taskName, hoursTotal, taskStartDate,
           taskEndDate, taskDescription);
 
-      // Work + data is delegated to login service
+      // Work + data is delegated to task service
       taskService.createTask(taskNew);
       redirectAttrs.addAttribute("subprojectName", subprojectSelected.getSubprojectName());
       // Go to page
@@ -110,9 +109,9 @@ public class TaskController {
       HttpSession session = request.getSession();
 
       Task taskSelected = taskService.showTaskInfo(taskName);
+
       session.setAttribute("taskSelected", taskSelected);
       model.addAttribute("taskSelected", taskSelected);
-
       return "task/showtask";
     }
 
@@ -171,10 +170,10 @@ public class TaskController {
 
     // Retrieve values from HTML form via HTTPServlet request
     Subproject subprojectSelected = (Subproject) session.getAttribute("subprojectSelected");
-    Task taskToUpdate = (Task) session.getAttribute("taskSelected");
+    Task taskSelected = (Task) session.getAttribute("taskSelected");
 
     Task taskUpdated = new Task(
-        (taskToUpdate.getSubprojectID()),
+        (taskSelected.getSubprojectID()),
         (request.getParameter("taskName")),
         (Integer.parseInt(request.getParameter("hoursTotal"))),
         (LocalDate.parse(request.getParameter("startDate"), DateTimeFormatter.ofPattern("yyyy-MM-dd"))),
@@ -191,7 +190,9 @@ public class TaskController {
           "Please, try again");
     }
 
-    taskService.updateTask(taskUpdated, taskToUpdate.getTaskName());
+    taskService.updateTask(taskUpdated, taskSelected.getTaskName());
+    taskSelected = taskUpdated;
+    session.setAttribute("taskSelected",  taskSelected);
 
 
     redirectAttrs.addAttribute("taskName", taskUpdated.getTaskName());
@@ -225,8 +226,6 @@ public class TaskController {
     redirectAttrs.addAttribute("taskName", taskSelected.getTaskName());
     return "redirect:/showTask/{taskName}";
   }
-
-
 
 
   @ExceptionHandler(TaskInputException.class)

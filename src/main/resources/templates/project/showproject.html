@@ -37,18 +37,15 @@
         <form th:action="@{/editProject/{projectName}(projectName=${projectSelected.projectName})}" method="get">
         <table class="no-shadow">
                 <thead>
+                <tr>
                 <th colspan="2" class="centered-button"><button type="submit">Calculate and edit<br>project</button>
                 </th>
+                </tr>
+                <tr>
+                    <th colspan="2"><b>You are in project:</b></th>
+                </tr>
                 </thead>
                 <tbody>
-                <tr>
-                <td colspan="2">You are in project: <b><span th:text="${projectSelected.getProjectName()}">
-                </span></b></td>
-                </tr>
-                    <tr>
-                        <td>Project ID:</td>
-                        <td th:text="${projectSelected.projectID}"></td>
-                    </tr>
                     <tr>
                         <td>Project name:</td>
                         <td th:text="${projectSelected.projectName}"></td>
@@ -69,10 +66,10 @@
                         <td>End date:</td>
                         <td th:text="${projectSelected.endDate}"></td>
                     </tr>
-                    <tr>
+                   <!-- <tr>
                         <td>Owner email:</td>
                         <td th:text="${projectSelected.ownerEmail}"></td>
-                    </tr>
+                    </tr>-->
                     <tr>
                         <td>Description:</td>
                         <td th:text="${projectSelected.description}"></td>

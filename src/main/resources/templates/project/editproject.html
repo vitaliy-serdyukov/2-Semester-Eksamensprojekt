@@ -46,10 +46,6 @@
             </thead>
             <tbody>
             <tr>
-                <td>Project ID:</td>
-                <td th:text="${projectSelected.projectID}"></td>
-            </tr>
-            <tr>
                 <td>Project name:</td>
                 <td> <input type="text" th:field="${projectSelected.projectName}"
                             th:value="${projectSelected.projectName}"/></td>
@@ -82,11 +78,7 @@
                 <td> <input type="date"  th:field="${projectSelected.endDate}" th:required="required"
                             th:value="${projectSelected.endDate}"/></td>
             </tr>
-            <tr>
-                <td>Owner email:</td>
-                <td th:text="${projectSelected.ownerEmail}"></td>
-            </tr>
-            <tr>
+           <tr>
                 <td>Description:</td>
                 <td> <input type="text"  th:field="${projectSelected.description}"
                             th:value="${projectSelected.description}"/></td>

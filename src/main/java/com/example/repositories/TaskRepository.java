@@ -90,7 +90,7 @@ public class TaskRepository {
       ps.setObject(3, taskUpdated.getStartDate());
       ps.setObject(4, taskUpdated.getEndDate());
       ps.setString(5, taskUpdated.getDescription());
-      ps.setString(6, oldTaskName); // ???
+      ps.setString(6, oldTaskName);
       ps.setInt(7,taskUpdated.getSubprojectID());
       ps.executeUpdate();
     } catch (SQLException ex) {

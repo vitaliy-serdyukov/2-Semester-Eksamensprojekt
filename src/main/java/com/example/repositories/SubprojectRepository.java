@@ -51,7 +51,6 @@ public class SubprojectRepository {
             rs.getObject(6, LocalDate.class),
             rs.getString(7));
         subprojectsTemp.add(tmp); //  objekter uden ProjectID
-        System.out.println(tmp);
       }
     } catch (SQLException ex) {
       System.out.println(ex.getMessage());

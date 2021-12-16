@@ -69,9 +69,4 @@ public class CalculatorService {
     return Math.round(speed * 100) / 100.0;
 
   }
-
-
-
-
 }
-
