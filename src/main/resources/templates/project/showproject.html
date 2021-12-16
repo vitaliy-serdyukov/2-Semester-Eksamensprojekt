@@ -66,10 +66,6 @@
                         <td>End date:</td>
                         <td th:text="${projectSelected.endDate}"></td>
                     </tr>
-                   <!-- <tr>
-                        <td>Owner email:</td>
-                        <td th:text="${projectSelected.ownerEmail}"></td>
-                    </tr>-->
                     <tr>
                         <td>Description:</td>
                         <td th:text="${projectSelected.description}"></td>
@@ -106,13 +102,10 @@
                     <button type="submit">Remove member</button>
             </td>
             </tr>
-                <tr>
+             <tr>
                 <td class="centered-cell">
-
-                    <div class="field main">
                         <label class="remove-member" for="teammateEmail">Email:</label>
                         <input type="email" id="teammateEmail" name="teammateEmail" required/>
-                    </div>
                 </td>
             </tr>
             </tbody>
@@ -126,14 +119,16 @@
         <table>
             <thead>
             <tr>
-                <th class="dashboard-add-button" colspan="3">
+                <th class="dashboard-add-button" colspan="5">
                 <button onclick="location.href='/createSubproject'" type="submit">Add new subproject</button></th>
             </tr>
             <tr>
-                <th colspan="3">Available subprojects in this project:</th>
+                <th colspan="5">Available subprojects in this project:</th>
             </tr>
             <tr>
                 <th class="extra-line-in-top">Name</th>
+                <th class="extra-line-in-top">Start</th>
+                <th class="extra-line-in-top">End</th>
                 <th class="extra-line-in-top">Show</th>
                 <th class="extra-line-in-top">Remove</th>
             </tr>
@@ -141,12 +136,13 @@
             <tbody>
             <tr th:each="subprojectNew : ${subprojects}">
                 <td th:text="${subprojectNew.subprojectName}"></td>
-
-                <td><a th:href="@{/showSubproject/{subprojectName}(subprojectName=${subprojectNew.subprojectName})}">
+                <td><div class="dates-show" th:text="${subprojectNew.startDate}"></div></td>
+                <td><div class="dates-show" th:text="${subprojectNew.endDate}"></div></td>
+                <td class="centered-cell"><a th:href="@{/showSubproject/{subprojectName}(subprojectName=${subprojectNew.subprojectName})}">
                     <img class="icon" src="/images/eye2.png" alt="Eye">
                 </a></td>
 
-                <td><a th:href="@{/deleteSubproject/{subprojectName}(subprojectName=${subprojectNew.subprojectName})}">
+                <td class="centered-cell"><a th:href="@{/deleteSubproject/{subprojectName}(subprojectName=${subprojectNew.subprojectName})}">
                     <img class="icon" src="/images/trashcan.png" alt="Trashcan">
                 </a></td>
             </tr>

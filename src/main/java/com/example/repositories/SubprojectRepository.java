@@ -3,6 +3,7 @@ package com.example.repositories;
 
 import com.example.domain.models.Subproject;
 
+import java.io.EOFException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 public class SubprojectRepository {
 
   //For inserting a subproject into the DB
-  public void writeSubproject(Subproject subproject) {
+  public void writeSubproject(Subproject subproject) throws EOFException {
     try {
       Connection con = DBManager.getConnection();
       String SQL = "INSERT INTO subprojects (project_id, subproject_name, subproject_hours_total, subproject_start_date," +

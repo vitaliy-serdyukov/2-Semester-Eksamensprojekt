@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.EOFException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ public class SubprojectController {
 
     HttpSession session = request.getSession();
     Project projectSelected = (Project) session.getAttribute("projectSelected");
+    model.addAttribute("projectSelected", projectSelected);
 
     LocalDate minStartDateSubproject = projectSelected.getStartDate();
     model.addAttribute("minStartDateSubproject", minStartDateSubproject);
@@ -53,7 +55,8 @@ public class SubprojectController {
 
   // method for "Add Subproject" fields and button on "createsubproject"
   @PostMapping("/addSubproject")
-  public String saveSubproject(HttpServletRequest request, RedirectAttributes redirectAttrs) throws ProjectInputException, SubprojectInputException {
+  public String saveSubproject(HttpServletRequest request, RedirectAttributes redirectAttrs)
+      throws SubprojectInputException, EOFException {
 
     //Retrieve request from session
     HttpSession session = request.getSession();

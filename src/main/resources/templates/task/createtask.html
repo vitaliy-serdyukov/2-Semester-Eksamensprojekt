@@ -49,6 +49,14 @@
                 <label>Hours available: </label>
                 <div th:text="${hoursLeftSubproject}"></div>
             </div>
+            <div class="field">
+                <label>Start date available: </label>
+                <div th:text="${subprojectSelected.getStartDate()}"></div>
+            </div>
+            <div class="field">
+                <label>End date available: </label>
+                <div th:text="${subprojectSelected.getEndDate()}"></div>
+            </div>
         <div class="field">
             <label for="hours_total">Hours total, expected:</label>
             <input type="number" min="1" id="hours_total" name="hours_total" th:field="*{hoursTotal}"/>

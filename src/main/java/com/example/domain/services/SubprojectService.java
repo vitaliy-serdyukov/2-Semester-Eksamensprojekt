@@ -3,13 +3,14 @@ package com.example.domain.services;
 import com.example.domain.models.Subproject;
 import com.example.repositories.SubprojectRepository;
 
+import java.io.EOFException;
 import java.util.ArrayList;
 
 public class SubprojectService {
 
   private final SubprojectRepository subprojectRepository = new SubprojectRepository();
 
-  public void createSubproject(Subproject subproject)  {
+  public void createSubproject(Subproject subproject) throws EOFException {
     subprojectRepository.writeSubproject(subproject);
   }
 

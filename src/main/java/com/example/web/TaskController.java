@@ -34,6 +34,7 @@ public class TaskController {
 
     HttpSession session = request.getSession();
     Subproject subprojectSelected = (Subproject) session.getAttribute("subprojectSelected");
+    model.addAttribute("subprojectSelected", subprojectSelected);
 
     LocalDate minStartDateTask = subprojectSelected.getStartDate();
     model.addAttribute("minStartDateTask", minStartDateTask);
