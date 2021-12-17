@@ -1,6 +1,5 @@
 package com.example.repositories;
 
-import com.example.domain.exceptions.ProjectInputException;
 import com.example.domain.models.Project;
 
 
@@ -11,8 +10,8 @@ import java.util.ArrayList;
 public class ProjectRepository {
 
 
-  //For inserting a project into the DB.
-  public void writeProject(Project project) throws ProjectInputException {
+  //For inserting a project into the DB
+  public void writeProject(Project project) {
     try {
       Connection con = DBManager.getConnection();
       String SQL = "INSERT INTO projects (project_name, category, project_hours_total, project_start_date," +
@@ -32,7 +31,7 @@ public class ProjectRepository {
     }
    }
 
-
+  // all projects of one user
   public ArrayList<Project> readProjectsUser(String email) {
     ArrayList<Project> projectsTemp = new ArrayList<>();
     Project tmp = null;
@@ -60,7 +59,7 @@ public class ProjectRepository {
     return projectsTemp;
   }
 
-
+  // project info
   public Project readProjectInfo(String projectName) {
     Project tmp = null;
     try {
@@ -86,7 +85,7 @@ public class ProjectRepository {
     return tmp;
   }
 
-
+  // project update
   public void rewriteProject(Project project) {
 
     try {
@@ -107,6 +106,7 @@ public class ProjectRepository {
     }
   }
 
+  // remove project from DB
   public void deleteProjectFromDB(String projectName) {
     try {
       Connection con = DBManager.getConnection();

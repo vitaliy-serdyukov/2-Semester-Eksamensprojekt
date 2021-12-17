@@ -5,7 +5,7 @@ import com.example.domain.models.User;
 import java.sql.*;
 
 
-//This method writes to the DB scheme users. It will enter the values connected to the provided user object.
+// This method writes to the DB scheme users. It will enter the values connected to the provided user object.
 public class UserRepository {
 
     public void writeUser(User user){
@@ -49,6 +49,7 @@ public class UserRepository {
         return tmp;
     }
 
+    // return ResultSet med users, used in checkIfUserExists method
     public ResultSet returnResultSetUsers() {
         ResultSet resSet = null;
         String select = "SELECT user_email, password, first_name, last_name, company_name, phone_number FROM users";
@@ -61,6 +62,7 @@ public class UserRepository {
         return resSet;
     }
 
+    // return ResultSet med e+mails, used in checkIfUserExistsRegister method
     public ResultSet getAllUsersFromDB() {
         ResultSet resSet = null;
         String select = "SELECT user_email FROM users";

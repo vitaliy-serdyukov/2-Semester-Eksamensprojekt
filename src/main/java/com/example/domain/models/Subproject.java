@@ -4,7 +4,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Subproject {
 
@@ -56,16 +55,14 @@ public class Subproject {
     tasks = new ArrayList<>();
   }
 
-  public Subproject(int subprojectID, int projectID, String subprojectName, int hoursTotal, LocalDate startDate, LocalDate endDate,
-                    String description){
+  public Subproject(int subprojectID, int projectID, String subprojectName, int hoursTotal, LocalDate startDate,
+                    LocalDate endDate, String description){
     this(subprojectID, projectID, subprojectName, hoursTotal, startDate, endDate,description, null);
   }
 
-
-
-  public void addProject(Project project) {
+ /* public void addProject(Project project) {
     this.project = project;
-  }
+  }*/
 
   public Project getProject() {
     return project;
@@ -91,16 +88,8 @@ public class Subproject {
     return subprojectID;
   }
 
-  public void setSubprojectID(int subprojectID) {
-    this.subprojectID = subprojectID;
-  }
-
   public int getProjectID() {
     return projectID;
-  }
-
-  public void setProjectID(int projectID) {
-    this.projectID = projectID;
   }
 
   public String getSubprojectName() {
@@ -157,16 +146,4 @@ public class Subproject {
     return this.getHoursTotal() - this.getHoursTakenSubproject();
   }
 
-
-  @Override
-  public String toString() {
-    return "SubProject{" +
-        "subProjectID=" + subprojectID +  "projectID=" + projectID  +
-        ", subProjectName='" + subprojectName + '\'' +
-        ", hoursTotal=" + hoursTotal +
-        ", startDate='" + startDate + '\'' +
-        ", endDate='" + endDate + '\'' +
-        ", description='" + description + '\'' +
-        '}';
-  }
 }

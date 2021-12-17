@@ -54,14 +54,9 @@ public class Project {
   public Project() {
   }
 
- /* public void addSubprojects(Subproject subproject) {
-    this.subprojects.add(subproject);
-  }*/
-
   public void addSubprojects(ArrayList<Subproject> subprojects) {
     this.subprojects = subprojects;
   }
-
 
 
   public User getUser() {
@@ -84,10 +79,6 @@ public class Project {
     return projectID;
   }
 
-  public void setProjectID(int projectID) {
-    this.projectID = projectID;
-  }
-
   public String getProjectName() {
     return projectName;
   }
@@ -98,10 +89,6 @@ public class Project {
 
   public String getCategory() {
     return category;
-  }
-
-  public void setCategory(String category) {
-    this.category = category;
   }
 
   public int getHoursTotal() {
@@ -132,9 +119,6 @@ public class Project {
     return ownerEmail;
   }
 
-  public void setOwnerEmail(String ownerEmail) {
-    this.ownerEmail = ownerEmail;
-  }
 
   public String getDescription() {
     return description;
@@ -148,29 +132,14 @@ public class Project {
   public int getHoursTakenProject() {
     int result = 0;
 
-    for(Subproject subproject : subprojects) {
-        result += subproject.getHoursTotal();
+    for (Subproject subproject : subprojects) {
+      result += subproject.getHoursTotal();
     }
     return result;
-    }
+  }
 
-  public int getHoursLeftProject(){
+  public int getHoursLeftProject() {
     return this.getHoursTotal() - this.getHoursTakenProject();
   }
 
-
-
-  @Override
-  public String toString() {
-    return "Project{" +
-        "projectID=" + projectID +
-        ", projectName='" + projectName + '\'' +
-        ", category='" + category + '\'' +
-        ", hoursTotal=" + hoursTotal +
-        ", startDate='" + startDate + '\'' +
-        ", endDate='" + endDate + '\'' +
-        ", ownerEmail='" + ownerEmail + '\'' +
-        ", description='" + description + '\'' +
-        '}';
-  }
 }

@@ -54,7 +54,7 @@ import java.util.ArrayList;
       } else {
         throw new LoginRegisterException("User is not exists, please try again");
       }
-         }
+    }
 
     // users main page after login
     @GetMapping("/frontpage")

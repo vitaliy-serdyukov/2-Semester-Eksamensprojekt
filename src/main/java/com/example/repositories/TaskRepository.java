@@ -30,6 +30,7 @@ public class TaskRepository {
     }
   }
 
+  // all tasks in one subproject
   public ArrayList<Task> readTasksSubproject(int subprojectID) {
     ArrayList<Task> tasksTemp = new ArrayList<>();
     Task tmp = null;
@@ -55,6 +56,7 @@ public class TaskRepository {
     return tasksTemp;
   }
 
+  // task info
   public Task readTaskInfo(String taskName) {
     Task tmp = null;
     try {
@@ -78,6 +80,7 @@ public class TaskRepository {
     return tmp;
   }
 
+  // update task
   public void rewriteTask(Task taskUpdated, String oldTaskName) {
     try {
       Connection con = DBManager.getConnection();
@@ -98,6 +101,7 @@ public class TaskRepository {
     }
   }
 
+  // remove task
   public void deleteTaskFromDB(String taskName) {
     try {
       Connection con = DBManager.getConnection();
