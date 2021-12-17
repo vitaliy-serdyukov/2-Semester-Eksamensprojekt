@@ -78,8 +78,7 @@
 
     <div class="flex-item2-middle">
         <form th:action="@{/deleteTeammate}" th:object="${projectSelected}" method="post" >
-       <!-- <form th:action="@{/createTeammate/{projectName}(projectName=${projectSelected.projectName})}" method="get">-->
-        <table style="text-align: center" class="no-shadow">
+             <table style="text-align: center" class="no-shadow">
             <thead>
             <tr>
                 <th class="centered-cell"> The amount of people on this project: <b><span th:text="${amountPersonsInTeam}">
@@ -138,11 +137,13 @@
                 <td th:text="${subprojectNew.subprojectName}"></td>
                 <td><div class="dates-show" th:text="${subprojectNew.startDate}"></div></td>
                 <td><div class="dates-show" th:text="${subprojectNew.endDate}"></div></td>
-                <td class="centered-cell"><a th:href="@{/showSubproject/{subprojectName}(subprojectName=${subprojectNew.subprojectName})}">
+                <td class="centered-cell">
+                    <a th:href="@{/showSubproject/{subprojectName}(subprojectName=${subprojectNew.subprojectName})}">
                     <img class="icon" src="/images/eye2.png" alt="Eye">
                 </a></td>
 
-                <td class="centered-cell"><a th:href="@{/deleteSubproject/{subprojectName}(subprojectName=${subprojectNew.subprojectName})}">
+                <td class="centered-cell">
+                    <a th:href="@{/deleteSubproject/{subprojectName}(subprojectName=${subprojectNew.subprojectName})}">
                     <img class="icon" src="/images/trashcan.png" alt="Trashcan">
                 </a></td>
             </tr>

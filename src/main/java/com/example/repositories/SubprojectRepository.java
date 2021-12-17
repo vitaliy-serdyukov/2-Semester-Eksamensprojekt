@@ -3,7 +3,6 @@ package com.example.repositories;
 
 import com.example.domain.models.Subproject;
 
-import java.io.EOFException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,8 +12,9 @@ import java.util.ArrayList;
 
 public class SubprojectRepository {
 
+
   //For inserting a subproject into the DB
-  public void writeSubproject(Subproject subproject) throws EOFException {
+  public void writeSubproject(Subproject subproject){
     try {
       Connection con = DBManager.getConnection();
       String SQL = "INSERT INTO subprojects (project_id, subproject_name, subproject_hours_total, subproject_start_date," +
@@ -32,7 +32,7 @@ public class SubprojectRepository {
     }
   }
 
-
+  // all subprojects in one project
   public ArrayList<Subproject> readSubprojectsProject(int projectID) {
     ArrayList<Subproject> subprojectsTemp = new ArrayList<>();
     Subproject tmp = null;
@@ -59,7 +59,7 @@ public class SubprojectRepository {
     return subprojectsTemp;
   }
 
-
+  // subproject info
   public Subproject readSubprojectInfo(String subprojectName) {
     Subproject tmp = null;
     try {
@@ -84,7 +84,7 @@ public class SubprojectRepository {
     return tmp;
   }
 
-
+  // update subproject
   public void rewriteSubProject(Subproject subProject)  {
     try {
       Connection con = DBManager.getConnection();
@@ -104,6 +104,7 @@ public class SubprojectRepository {
     }
   }
 
+  // remove subproject from DB
   public void deleteSubprojectFromDB(String subprojectName) {
     try {
       Connection con = DBManager.getConnection();

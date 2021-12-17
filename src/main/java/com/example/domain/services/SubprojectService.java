@@ -10,7 +10,7 @@ public class SubprojectService {
 
   private final SubprojectRepository subprojectRepository = new SubprojectRepository();
 
-  public void createSubproject(Subproject subproject) throws EOFException {
+  public void createSubproject(Subproject subproject) {
     subprojectRepository.writeSubproject(subproject);
   }
 
