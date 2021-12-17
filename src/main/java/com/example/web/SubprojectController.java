@@ -1,7 +1,6 @@
 package com.example.web;
 
 
-import com.example.domain.exceptions.ProjectInputException;
 import com.example.domain.exceptions.SubprojectInputException;
 import com.example.domain.exceptions.SubprojectUpdateException;
 import com.example.domain.models.Project;
@@ -56,7 +55,7 @@ public class SubprojectController {
   // method for "Add Subproject" fields and button on "createsubproject"
   @PostMapping("/addSubproject")
   public String saveSubproject(HttpServletRequest request, RedirectAttributes redirectAttrs)
-      throws SubprojectInputException, EOFException {
+      throws SubprojectInputException {
 
     //Retrieve request from session
     HttpSession session = request.getSession();

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public class TeammateRepository {
 
+  // write teammates to DB
   public void noteTeammates (int projectID, String teammateEmail, int teammateHours){
     try {
       Connection con = DBManager.getConnection();
@@ -19,6 +20,7 @@ public class TeammateRepository {
     }
   }
 
+  // read teammates in project
   public ArrayList<String> readTeammatesProject(int projectID) {
     ArrayList<String> teammatesTemp = new ArrayList<>();
     String tmp = null;
@@ -38,7 +40,7 @@ public class TeammateRepository {
     return teammatesTemp;
   }
 
-
+  // remove a teammate
   public void removeTeammate(String teammateEmail, int projectID) {
     try {
       Connection con = DBManager.getConnection();
@@ -52,7 +54,7 @@ public class TeammateRepository {
     }
   }
 
-
+  // count teammates in project
   public int countTeammates (int projectID){
    int amount;
     try {
@@ -71,7 +73,7 @@ public class TeammateRepository {
      return 0;
   }
 
-
+  // count sum of hours of teammates in project
   public int getHoursTeam(int projectID){
     int hoursTotal;
     try {
