@@ -25,4 +25,4 @@ For it to be coorporative through some sort of sharing.
 Thanks to the following people who have contributed to this project:
 * [@EmmaRebner](https://github.com/EmmaRebner)
 * [@ChristianWalmar](https://github.com/ChristianWalmar)
-* [@vitaliy-serdyukov] (https://github.com/vitaliy-serdyukov)
+* [@vitaliy-serdyukov](https://github.com/vitaliy-serdyukov)
