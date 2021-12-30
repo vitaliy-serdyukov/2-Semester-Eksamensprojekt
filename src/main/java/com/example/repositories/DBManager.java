@@ -1,31 +1,27 @@
 package com.example.repositories;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Properties;
 
+
+// modified DB manager that uses environment variables instead of loading DB credentials from the application
+// properties file
 public class DBManager {
-
     private static String user;
     private static String password;
     private static String url;
     private static Connection connection = null;
 
+
     public static Connection getConnection() {
-        if (connection != null) return connection;
-        try (InputStream input = new FileInputStream("src/main/resources/application.properties")) {
-            Properties properties = new Properties();
-            properties.load(input);
-            url = properties.getProperty("url");// url = System.getenv("url");
-            user = properties.getProperty("user");// user = System.getenv("user");
-            password = properties.getProperty("password");// password = System.getenv("password");
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        if (connection != null) {
+            return connection;
         }
+        url = System.getenv("url");
+        user = System.getenv("user");
+        password = System.getenv("password");
+
         try {
             connection = DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
